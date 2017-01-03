@@ -7,7 +7,7 @@
 #define CBLOCKS_INPUT_HPP
 #include <functional>
 #include <vector>
-#include <SDL.h>
+#include <SDL2\SDL.h>
 namespace CBlocks {
 	template<typename E>
 	constexpr auto to_underlying(E e) noexcept {

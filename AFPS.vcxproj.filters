@@ -57,6 +57,12 @@
     <ClCompile Include="src\mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\events.hpp">
@@ -113,5 +119,23 @@
     <ClInclude Include="include\scene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\unlit_textured.vert" />
+    <None Include="shaders\basic.vert" />
+    <None Include="shaders\spriteBatch.frag" />
+    <None Include="shaders\spriteBatch.vert" />
+    <None Include="shaders\ttf.frag" />
+    <None Include="shaders\ttf.vert" />
+    <None Include="shaders\unlit_textured.frag" />
+    <None Include="shaders\basic.frag" />
+    <None Include=".gitignore" />
+    <None Include=".gitattributes" />
   </ItemGroup>
 </Project>

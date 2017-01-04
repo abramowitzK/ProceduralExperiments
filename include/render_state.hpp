@@ -75,21 +75,20 @@ namespace CBlocks {
 		CullFace CullFace;
 		PolygonMode PolyMode;
 	};
-	static const RenderState DefaultRenderState =
-			{
-					CullState::On,
-					BlendState::Off,
-					DepthState::On,
+	static const RenderState DefaultRenderState = {
+			CullState::On,
+			BlendState::Off,
+			DepthState::On,
 
-					BlendFunc::Zero,
-					BlendFunc::Zero,
-					DepthFunc::Less,
+			BlendFunc::Zero,
+			BlendFunc::Zero,
+			DepthFunc::Less,
 
-					{0.0, 0.0, 0.0, 1.0},
-					FrontFace::Ccw,
-					CullFace::Back,
-					PolygonMode::Fill
-			};
+			{0.0, 0.0, 0.0, 1.0},
+			FrontFace::Ccw,
+			CullFace::Back,
+			PolygonMode::Line
+	};
 	static const RenderState DefaultTTFState = {
 			CullState::On,
 			BlendState::On,

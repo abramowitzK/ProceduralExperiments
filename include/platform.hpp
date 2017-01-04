@@ -41,12 +41,6 @@ namespace CBlocks {
 		SDL_Init(SDL_INIT_EVERYTHING);
 		mFreq = static_cast<double>(SDL_GetPerformanceFrequency());
 		mStart = SDL_GetPerformanceCounter();
-#ifdef  Debug
-		AllocConsole();
-		freopen("CON", "w", stdout);
-		freopen("CON", "w", stderr);
-		printf("Hello!\n");
-#endif
 	}
 	Platform::~Platform(){
 		SDL_DestroyWindow(mWindowHandle);

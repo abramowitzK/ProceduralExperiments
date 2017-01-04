@@ -8,7 +8,7 @@ using namespace std;
 namespace CBlocks {
 	class Chunk {
 	public:
-		static const int CHUNK_SIZE = 16;
+		static const int CHUNK_SIZE = 1;
 
 		Chunk();
 

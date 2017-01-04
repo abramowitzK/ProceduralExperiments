@@ -33,18 +33,6 @@ namespace CBlocks {
 			position += glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f)*dt*acceleration*speed;
 		if (EventManager::get_key_down(Keys::s))
 			position -= forward*dt*acceleration*speed;
-		//if (abs(velocity.x) < acceleration)
-		//	velocity.x = 0;
-		//else
-		//	velocity.x -= acceleration;
-		//if (abs(velocity.y) < acceleration)
-		//	velocity.y = 0;
-		//else
-		//	velocity.y -= acceleration;
-		//if (abs(velocity.z) < acceleration)
-		//	velocity.z = 0;
-		//else
-		//	velocity.z -= acceleration;
 		auto look_x = EventManager::get_mouse_relative_x()/9.0*2.0*glm::pi<float>()*4.0f;
 		auto look_y = EventManager::get_mouse_relative_y()/9.0*2.0*glm::pi<float>()*4.0f;
 

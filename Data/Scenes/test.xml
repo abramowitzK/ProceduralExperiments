@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+  <ResourceList>
+    <Textures>
+      <Texture>grass.png</Texture>
+      <Texture>kyle.jpg</Texture>
+      <Texture>crosshairs.png</Texture>
+    </Textures>
+    <Models>
+      <Model>teapot.obj</Model>
+    </Models>
+  </ResourceList>
+</Scene>

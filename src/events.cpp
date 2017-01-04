@@ -3,7 +3,10 @@
 * Copyright (c) 2016 Kyle All rights reserved.
 */
 #include "events.hpp"
+
 namespace CBlocks {
+	KeyState EventManager::sKeyboardState;
+	MouseState EventManager::sMouseState;
 	EventManager::EventManager() {
 		mIntents.resize(UINT8_MAX);
 		mSubscribers.resize(UINT8_MAX);
@@ -13,40 +16,16 @@ namespace CBlocks {
 		while(SDL_PollEvent(&mEvent)) {
 			switch(mEvent.type) {
 				case SDL_KEYDOWN:
-					if(mEvent.key.keysym.scancode == SDL_SCANCODE_W) {
-						mIntents[to_underlying(Intents::MoveForward)] = true;
-					}
-					if(mEvent.key.keysym.scancode == SDL_SCANCODE_A) {
-						mIntents[to_underlying(Intents::StrafeLeft)] = true;
-					}
-					if(mEvent.key.keysym.scancode == SDL_SCANCODE_S) {
-						mIntents[to_underlying(Intents::MoveBackward)] = true;
-					}
-					if(mEvent.key.keysym.scancode == SDL_SCANCODE_D) {
-						mIntents[to_underlying(Intents::StrafeRight)] = true;
-					}
+					sKeyboardState.KeyDown(mEvent.key.keysym.scancode);
 					break;
 				case SDL_KEYUP:
-					if(mEvent.key.keysym.scancode == SDL_SCANCODE_W) {
-						mIntents[to_underlying(Intents::MoveForward)] = false;
-					}
-					if(mEvent.key.keysym.scancode == SDL_SCANCODE_A) {
-						mIntents[to_underlying(Intents::StrafeLeft)] = false;
-					}
-					if(mEvent.key.keysym.scancode == SDL_SCANCODE_S) {
-						mIntents[to_underlying(Intents::MoveBackward)] = false;
-					}
-					if(mEvent.key.keysym.scancode == SDL_SCANCODE_D) {
-						mIntents[to_underlying(Intents::StrafeRight)] = false;
-					}
+					sKeyboardState.KeyUp(mEvent.key.keysym.scancode);
 					break;
 				case SDL_QUIT:
 					mIntents[to_underlying(Intents::Shutdown)] = true;
 					break;
 				case SDL_MOUSEMOTION:
-					mIntents[to_underlying(Intents::Look)] = true;
-					mMouseRelX = mEvent.motion.xrel;
-					mMouseRelY = mEvent.motion.yrel;
+					sMouseState.SetRelative(mEvent.motion.xrel, mEvent.motion.yrel);
 					break;
 				case SDL_WINDOWEVENT:
 					switch(mEvent.window.event) {
@@ -66,14 +45,31 @@ namespace CBlocks {
 		notify_subscribers();
 	}
 
+	bool EventManager::get_key_down(Keys key) {
+		return sKeyboardState.IsKeyPressed(key);
+	}
+
+	float EventManager::get_mouse_relative_x() {
+		return sMouseState.GetMouseX();
+	}
+
+	float EventManager::get_mouse_relative_y() {
+		return sMouseState.GetMouseY();
+	}
+
+	void EventManager::update_previous() {
+		sMouseState.UpdatePrev();
+		sKeyboardState.UpdatePrev();
+	}
+
 	void EventManager::notify_subscribers() {
 		for(unsigned i = 0; i < mIntents.size(); i++) {
 			if(mIntents[i]) {
 				for(const auto &func: mSubscribers[i]) {
 					func();
 				}
+				mIntents[i] = false;
 			}
 		}
-		std::fill(mIntents.begin()+5, mIntents.end(), 0);
 	}
 }

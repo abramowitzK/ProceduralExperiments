@@ -12,9 +12,7 @@
 #include <mouse_state.hpp>
 namespace CBlocks {
 	enum Keys {
-		a = SDL_SCANCODE_A,
-		b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
-
+		a = SDL_SCANCODE_A, b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 	};
 	template<typename E>
 	constexpr auto to_underlying(E e) noexcept {
@@ -23,6 +21,7 @@ namespace CBlocks {
 	enum class Intents : uint8_t {
 		Shutdown,
 		Resize,
+		Escape,
 	};
 	struct EventManager {
 		EventManager();

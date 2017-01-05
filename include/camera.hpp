@@ -10,7 +10,7 @@
 namespace CBlocks {
 	struct Camera {
 		Camera(EventManager& manager, int w, int h);
-		void update(float dt);
+		void update(double dt);
 		void render();
 		Vector4 up, forward, position, rotation;
 		Matrix4 view, projection;

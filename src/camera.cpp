@@ -24,15 +24,15 @@ namespace CBlocks {
 		speed = 10.0f;
 		velocity = { 0.f,0.f,0.f,1.0f};
 	}
-	void Camera::update(float dt) {
+	void Camera::update(double dt) {
 		if(EventManager::get_key_down(Keys::w))
-			position += forward*dt*acceleration*speed;
+			position += forward*(float)dt*acceleration*speed;
 		if (EventManager::get_key_down(Keys::a))
-			position -= glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f)*dt*acceleration*speed;
+			position -= glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f)*(float)dt*acceleration*speed;
 		if (EventManager::get_key_down(Keys::d))
-			position += glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f)*dt*acceleration*speed;
+			position += glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f)*(float)dt*acceleration*speed;
 		if (EventManager::get_key_down(Keys::s))
-			position -= forward*dt*acceleration*speed;
+			position -= forward*(float)dt*acceleration*speed;
 		auto look_x = EventManager::get_mouse_relative_x()/9.0*2.0*glm::pi<float>()*4.0f;
 		auto look_y = EventManager::get_mouse_relative_y()/9.0*2.0*glm::pi<float>()*4.0f;
 

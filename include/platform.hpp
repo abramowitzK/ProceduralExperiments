@@ -31,6 +31,7 @@ namespace CBlocks {
 		}
 		double get_time();
 		void swap_buffers();
+		void capture_mouse(bool capture);
 	private:
 		SDL_Window *mWindowHandle;
 		SDL_GLContext mContext;
@@ -55,8 +56,8 @@ namespace CBlocks {
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 		mWindowHandle = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 		mContext = SDL_GL_CreateContext(mWindowHandle);
-		SDL_SetWindowFullscreen(mWindowHandle, SDL_WINDOW_FULLSCREEN_DESKTOP);
-		SDL_SetWindowSize(mWindowHandle,1920,1080);
+		//SDL_SetWindowFullscreen(mWindowHandle, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		//SDL_SetWindowSize(mWindowHandle,1920,1080);
 	}
 
 	double Platform::get_time(){
@@ -64,6 +65,13 @@ namespace CBlocks {
 	}
 	void Platform::swap_buffers(){
 		SDL_GL_SwapWindow(mWindowHandle);
+	}
+
+	void Platform::capture_mouse(bool capture) {
+		if (capture)
+			SDL_SetRelativeMouseMode(SDL_TRUE);
+		else
+			SDL_SetRelativeMouseMode(SDL_FALSE);
 	}
 }
 

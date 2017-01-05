@@ -24,7 +24,7 @@ namespace CBlocks {
 
 	void ResourceManager::LoadTexture(std::string name) {
 		Texture t = create_2d_texture(TexturePath + name);
-		m_textures.insert({ name, t });
+		mTextures.insert({ name, t });
 	}
 
 	void ResourceManager::LoadModel(const char * path) {}

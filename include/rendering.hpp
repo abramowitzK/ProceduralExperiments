@@ -16,27 +16,46 @@
 #include "events.hpp"
 #include "camera.hpp"
 #include "chunk.h"
+#include <map>
+#include <memory>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 namespace CBlocks {
+	struct Character {
+		GLuint TextureID;
+		glm::ivec2 Size;
+		glm::ivec2 Bearing;
+		GLuint Advance;
+	};
 	struct Renderer {
 	public:
 		Renderer(int width, int height);
-		void update(float dt) { mCamera->update(dt); }
+		void update(double dt) { mCamera->update(dt); }
 		void render();
 		void clear_screen(bool depth, bool color);
 		void handle_resize(int width, int height);
 		void create_camera(EventManager& manager);
 		void render_chunk();
+		void RenderTTF(const std::string& text, float x, float y, float scale, glm::vec4 color);
 		RenderState current_render_state = DefaultRenderState;
 	private:
 		RenderState mDefault = DefaultRenderState;
-		Shader* mDefaultShader;
+		shared_ptr<Shader> mDefaultShader;
+		shared_ptr<Shader> mDefaultTtfShader;
 		Texture tex;
 		SpriteBatch* sb;
 		Sprite sprite;
-		Camera* mCamera;
+		shared_ptr<Camera> mCamera;
 		int mWidth;
 		int mHeight;
 		Chunk* mChunk;
+		std::map<GLchar, Character> mChars;
+		FT_Library mFt;
+		FT_Face mDefaultFont;
+		GLuint mTtfVao;
+		GLuint mTtfVbo;
+		RenderState mTtf;
 	};
 }
 

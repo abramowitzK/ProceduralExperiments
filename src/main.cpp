@@ -6,11 +6,15 @@
 #include "events.hpp"
 #include "rendering.hpp"
 
-
-#undef main
 using namespace CBlocks;
-
-int main(int argc, char** argv){
+#undef main
+int CALLBACK WinMain(
+	 HINSTANCE hInstance,
+	 HINSTANCE hPrevInstance,
+	 LPSTR     lpCmdLine,
+	 int       nCmdShow
+)
+{
 	Platform platform;
 	EventManager input;
 	int width = 1280;
@@ -23,6 +27,7 @@ int main(int argc, char** argv){
 	input.subscribe_to_argless_event(Intents::Shutdown, shutdown);
 	input.subscribe_to_resize_event([&platform](int a, int b){platform.handle_resize(a,b);});
 	input.subscribe_to_resize_event([&renderer](int a, int b){renderer.handle_resize(a,b);});
+	input.subscribe_to_argless_event(Intents::Escape, [&platform](){platform.capture_mouse(false);});
 	//input.subscribe_to_mouse_motion_event([](int x, int y){printf("%d %d\n", x, y);});
 	double current_time = platform.get_time();
 	double accumulator = 0;
@@ -46,5 +51,6 @@ int main(int argc, char** argv){
 		platform.swap_buffers();
 		input.update_previous();
 	}
+	return 0;
 }
 

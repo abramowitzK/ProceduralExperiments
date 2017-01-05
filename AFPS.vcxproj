@@ -80,6 +80,7 @@
     <Link>
       <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Debug</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(SolutionDir)third_party\bin\Debug\*.dll" "$(OutDir)"</Command>
@@ -96,6 +97,7 @@
     <Link>
       <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Debug</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(SolutionDir)third_party\bin\Debug\*.dll" "$(OutDir)"</Command>
@@ -116,6 +118,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Release</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(SolutionDir)third_party\bin\Release\*.dll" "$(OutDir)"</Command>
@@ -136,13 +139,18 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Release</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(SolutionDir)third_party\bin\Release\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game_object.cpp" />
+    <ClCompile Include="include\transform.hpp" />
     <ClCompile Include="src\mesh.cpp" />
+    <ClCompile Include="src\terrain.cpp" />
+    <ClCompile Include="include\mesh.hpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\block.cpp" />
@@ -163,8 +171,10 @@
     <ClInclude Include="include\block.h" />
     <ClInclude Include="include\camera.hpp" />
     <ClInclude Include="include\chunk.h" />
+    <ClInclude Include="include\component.hpp" />
     <ClInclude Include="include\events.hpp" />
     <ClInclude Include="include\FastNoise.h" />
+    <ClInclude Include="include\game_object.hpp" />
     <ClInclude Include="include\key_state.hpp" />
     <ClInclude Include="include\mouse_state.hpp" />
     <ClInclude Include="include\platform.hpp" />
@@ -177,6 +187,7 @@
     <ClInclude Include="include\sprite_batch.hpp" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="include\structures.hpp" />
+    <ClInclude Include="include\terrain.hpp" />
     <ClInclude Include="include\texture.hpp" />
     <ClInclude Include="include\vector_math.hpp" />
     <ClInclude Include="include\tinyxml2.h" />

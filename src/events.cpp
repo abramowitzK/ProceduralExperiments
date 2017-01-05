@@ -16,6 +16,10 @@ namespace CBlocks {
 		while(SDL_PollEvent(&mEvent)) {
 			switch(mEvent.type) {
 				case SDL_KEYDOWN:
+					if (mEvent.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+						mIntents[to_underlying(Intents::Escape)] = true;
+						break;
+					}
 					sKeyboardState.KeyDown(mEvent.key.keysym.scancode);
 					break;
 				case SDL_KEYUP:
@@ -50,11 +54,11 @@ namespace CBlocks {
 	}
 
 	float EventManager::get_mouse_relative_x() {
-		return sMouseState.GetMouseX();
+		return (float)sMouseState.GetMouseX();
 	}
 
 	float EventManager::get_mouse_relative_y() {
-		return sMouseState.GetMouseY();
+		return (float)sMouseState.GetMouseY();
 	}
 
 	void EventManager::update_previous() {

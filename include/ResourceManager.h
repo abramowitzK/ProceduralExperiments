@@ -4,6 +4,10 @@
 #include <vector>
 #include <unordered_map>
 #include <texture.hpp>
+#include <assimp\Importer.hpp>
+#include <assimp\postprocess.h>
+#include <assimp\scene.h>
+#include <mesh.hpp>
 namespace CBlocks {
 	using namespace std;
 	class ResourceManager {
@@ -12,7 +16,7 @@ namespace CBlocks {
 		~ResourceManager();
 		void LoadScene(const std::string& name);
 		Texture* GetTexture(string name) {
-			return &m_textures[name];
+			return &mTextures[name];
 		}
 
 	private:
@@ -25,7 +29,9 @@ namespace CBlocks {
 		const std::string AudioPath = ResourcePath + "Sounds\\";
 		const std::string ScenePath = ResourcePath + "Scenes\\";
 
-		unordered_map<string, Texture> m_textures;
+		std::vector<MeshData> mMeshData;
+		unordered_map<string, Mesh> mMeshes;
+		unordered_map<string, Texture> mTextures;
 	};
 
 }

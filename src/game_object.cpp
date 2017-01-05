@@ -1,9 +1,9 @@
 #include "game_object.hpp"
 
 namespace CBlocks {
-	GameObject::GameObject() : mParent(nullptr) {}
+	GameObject::GameObject() : parent(nullptr) {}
 
-	GameObject::GameObject(GameObject * parent) : mParent(parent){
+	GameObject::GameObject(GameObject * parent) : parent(parent){
 	}
 
 	GameObject::~GameObject() {
@@ -21,5 +21,8 @@ namespace CBlocks {
 		for (const auto& go : mChildren) {
 			go->render(renderer);
 		}
+	}
+	void GameObject::add_component(Component comp) {
+		mComponents.push_back(comp);
 	}
 }

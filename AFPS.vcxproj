@@ -76,6 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include; $(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -97,6 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include; $(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -120,6 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(AWE_DIR)include; $(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -141,6 +144,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(AWE_DIR)include; $(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

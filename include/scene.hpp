@@ -9,9 +9,11 @@ namespace CBlocks {
 		~Scene();
 		void render(Renderer* renderer);
 		void update(double dt);
+		GameObject* create_object();
+		GameObject root;
 	private:
-		GameObject* mRoot;
-
+	
+		std::vector<GameObject> mObjects;
 	};
 }
 #endif // !CBLOCKS_SCENE_HPP

@@ -9,16 +9,8 @@
 #include <glm\gtx\matrix_interpolation.hpp>
 #include <glm\glm.hpp>
 #include <glm\gtx\transform.hpp>
+#include <vector_math.hpp>
 namespace CBlocks {
-	/**
-	This is an opengl compatible matrix from glm.
-	*/
-	typedef glm::mat4 Matrix4;
-	typedef glm::vec4 Vector4;
-	typedef glm::quat Quaternion;
-	typedef glm::vec3 Vector3;
-	typedef glm::vec2 Vector2;
-
 	/**
 	Purpose: Represents the transformation of a game object. Every game object is required to have
 	a transform so therefore I will not make it a subclass of Component;
@@ -28,7 +20,7 @@ namespace CBlocks {
 		/**
 		Constructs a Transform Object
 		*/
-		Transform() : m_parent(nullptr), m_translation(Vector3()), m_rotation(Quaternion()), m_scale(Vector3()) {}
+		Transform() : mParent(nullptr), mTranslation(Vector3()), mRotation(Quaternion()), mScale(Vector3()) {}
 		~Transform() {}
 
 		/**
@@ -36,9 +28,9 @@ namespace CBlocks {
 		@returns A 4x4 homogenous matrix of floats in column Major order representing the transformation in world coordinates
 		*/
 		inline Matrix4 GetTransform() const {
-			Matrix4 rot = glm::mat4_cast(m_rotation);
-			Matrix4 scale = glm::scale(m_scale);
-			Matrix4 translation = glm::translate(m_translation);
+			Matrix4 rot = glm::mat4_cast(mRotation);
+			Matrix4 scale = glm::scale(mScale);
+			Matrix4 translation = glm::translate(mTranslation);
 			Matrix4 identity = Matrix4(1.0);
 			return scale * rot * translation * identity;
 		}
@@ -48,19 +40,26 @@ namespace CBlocks {
 		@param y The y value of the transformation
 		@param z The z value of the transformation
 		*/
-		inline void SetTranslation(const float x, const float y, const float z) {
-			m_translation.x = x;
-			m_translation.y = y;
-			m_translation.z = z;
+		inline void set_translation(const float x, const float y, const float z) {
+			mTranslation.x = x;
+			mTranslation.y = y;
+			mTranslation.z = z;
+		}
+		/**
+		Sets the translation in world coordinates
+		@param translation The xyz values of the transformation
+		*/
+		inline void set_translation(Vector3 translation) {
+			mTranslation = translation;
 		}
 		/**
 		Sets the uniform scale. Will scale equally in all directions
 		@param xyz The scaling factor
 		*/
-		inline void SetScale(const float xyz) {
-			m_scale.x = xyz;
-			m_scale.y = xyz;
-			m_scale.z = xyz;
+		inline void set_scale(const float xyz) {
+			mScale.x = xyz;
+			mScale.y = xyz;
+			mScale.z = xyz;
 		}
 		/*
 		Sets the scale. This should be used only for non uniform scaling
@@ -68,10 +67,17 @@ namespace CBlocks {
 		@param y The y direction scaling factor
 		@param z The z direction scaling factor
 		*/
-		inline void SetScale(const float x, const float y, const float z) {
-			m_scale.x = x;
-			m_scale.y = y;
-			m_scale.z = z;
+		inline void set_scale(const float x, const float y, const float z) {
+			mScale.x = x;
+			mScale.y = y;
+			mScale.z = z;
+		}
+		/**
+		Sets the scale by a vector instead of individual components
+		@param scale The scaling factors
+		*/
+		inline void set_scale(Vector3 scale) {
+			mScale = scale;
 		}
 		/**
 		Sets the rotation using Euler angles. This uses a Quaternion internally. User facing euler angles are expected however.
@@ -79,27 +85,34 @@ namespace CBlocks {
 		@param y The rotation in degrees in the y direction
 		@param z The rotation in degrees in the z direction
 		*/
-		inline void SetRotation(const float x, const float y, const float z) {
-			m_rotation = Quaternion(Vector3(x, y, z));
+		inline void set_rotation(const float x, const float y, const float z) {
+			mRotation = Quaternion(Vector3(x, y, z));
+		}
+		/**
+		Sets the rotation using Euler angles. This uses a Quaternion internally. User facing euler angles are expected however.
+		@param rot The rotation in degrees in the xyz directions
+		*/
+		inline void set_rotation(Vector3 rot) {
+			mRotation = Quaternion(rot);
 		}
 
-		inline void Translate(const float x, const float y, const float z) {
-			m_translation += Vector3(x, y, z);
+		inline void translate(const float x, const float y, const float z) {
+			mTranslation += Vector3(x, y, z);
 		}
-		inline Vector3 GetPosition() const {
-			return m_translation;
+		inline Vector3 get_position() const {
+			return mTranslation;
 		}
-		inline Vector3 GetScale() const {
-			return m_scale;
+		inline Vector3 get_scale() const {
+			return mScale;
 		}
-		inline Quaternion GetRotation() const {
-			return m_rotation;
+		inline Quaternion get_rotation() const {
+			return mRotation;
 		}
 	private:
-		Transform* m_parent;
-		Vector3 m_translation;
-		Quaternion m_rotation;
-		Vector3 m_scale;
+		Transform* mParent;
+		Vector3 mTranslation;
+		Quaternion mRotation;
+		Vector3 mScale;
 	};
 }
 

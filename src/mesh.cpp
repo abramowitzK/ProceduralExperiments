@@ -1,7 +1,7 @@
 #include <mesh.hpp>
 namespace CBlocks {
 	Mesh::Mesh(MeshData& data) {
-		mNumIndices = data.indices.size();
+		mNumIndices = (int)data.indices.size();
 		init(data);
 	}
 

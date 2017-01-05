@@ -10,4 +10,16 @@
       <Model>plane.obj</Model>
     </Models>
   </ResourceList>
+  <SceneGraph>
+    <GameObject name="plane">
+      <Transform>
+        <Pos>0,0,0</Pos>
+        <Rot>90,0,0</Rot>
+        <Scale>1,1,1</Scale>
+      </Transform>
+      <Components>
+        <Model>plane.obj</Model>
+      </Components>
+    </GameObject>
+  </SceneGraph>
 </Scene>

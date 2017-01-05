@@ -9,6 +9,7 @@
 #include <assimp\scene.h>
 #include <mesh.hpp>
 #include <scene.hpp>
+using namespace tinyxml2;
 namespace CBlocks {
 	using namespace std;
 	class ResourceManager {
@@ -22,6 +23,7 @@ namespace CBlocks {
 		inline Mesh* get_mesh(const std::string& name) {
 			return mMeshes[name];
 		}
+		Component* parse_component(XMLElement& comp);
 	private:
 		void LoadTexture(const std::string& name);
 		void LoadModel(const std::string& name);

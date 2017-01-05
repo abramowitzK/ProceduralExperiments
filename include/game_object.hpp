@@ -7,16 +7,18 @@
 
 namespace CBlocks {
 	struct GameObject {
-		GameObject();
-		GameObject(GameObject* mParent);
+		friend struct Scene;
 		~GameObject();
 		std::vector<GameObject*> mChildren;
 		void update(double dt);
 		void render(Renderer* renderer);
+		void add_component(Component comp);
+		GameObject* parent;
+		Transform transform;
 	private:
-		GameObject* mParent;
+		GameObject();
+		GameObject(GameObject* parent);
 		std::vector<Component> mComponents;
-		Transform mTransform;
 	};
 
 }

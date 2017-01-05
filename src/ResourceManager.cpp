@@ -20,9 +20,30 @@ namespace CBlocks {
 		for (auto e = modelList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			LoadModel(e->GetText());
 		}
+
 		Scene* s = new Scene();
+		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
+		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
+			auto o = s->create_object();
+			o->parent = &s->root;
+			auto tf = e->FirstChildElement("Transform");
+			o->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
+			o->transform.set_rotation(parse_vector3(tf->FirstChildElement("Rot")->GetText()));
+			o->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
+			auto componentList = e->FirstChildElement("Components");
+			for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
+				o->add_component(*(parse_component(*c)));
+			}
+		}
 		return s;
 
+	}
+
+	Component* ResourceManager::parse_component(XMLElement & comp) {
+		if (strcmp("Model", comp.Value()) == 0) {
+			return mMeshes[comp.GetText()];
+		}
+		return nullptr;
 	}
 
 	void ResourceManager::LoadTexture(const std::string& name){

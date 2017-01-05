@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene>
   <ResourceList>
+    <Materials>
+      
+    </Materials>
     <Textures>
       <Texture>grass.png</Texture>
       <Texture>kyle.jpg</Texture>
@@ -18,7 +21,11 @@
         <Scale>1,1,1</Scale>
       </Transform>
       <Components>
-        <Model>plane.obj</Model>
+        <Model name="plane.obj">
+          <Material>
+            
+          </Material>
+        </Model>
       </Components>
     </GameObject>
   </SceneGraph>

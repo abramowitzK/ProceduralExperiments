@@ -88,7 +88,7 @@ namespace CBlocks {
 			{0.0, 0.0, 0.0, 1.0},
 			FrontFace::Ccw,
 			CullFace::Back,
-			PolygonMode::Line
+			PolygonMode::Fill
 	};
 	static const RenderState DefaultTTFState = {
 			CullState::On,

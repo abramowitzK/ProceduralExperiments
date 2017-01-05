@@ -26,6 +26,7 @@ namespace CBlocks {
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			auto o = s->create_object();
 			o->parent = &s->root;
+			s->root.mChildren.push_back(o);
 			auto tf = e->FirstChildElement("Transform");
 			o->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
 			o->transform.set_rotation(parse_vector3(tf->FirstChildElement("Rot")->GetText()));
@@ -79,5 +80,6 @@ namespace CBlocks {
 			data.indices.push_back(face.mIndices[2]);
 		}
 		mMeshes.insert({ name, new Mesh(data)});
+		mMeshes[name]->mType = ComponentType::Mesh;
 	}
 }

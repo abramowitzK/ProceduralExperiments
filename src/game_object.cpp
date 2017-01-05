@@ -24,5 +24,6 @@ namespace CBlocks {
 	}
 	void GameObject::add_component(Component comp) {
 		mComponents.push_back(comp);
+		mComponents[mComponents.size() - 1].owner = this;
 	}
 }

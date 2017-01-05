@@ -7,9 +7,9 @@
 namespace CBlocks {
 	struct Material {
 		Material(){
-			shader = std::make_shared<Shader>("texturedLit.vert", "texturedLit.frag");
+			shader = new Shader("texturedLit.vert", "texturedLit.frag");
 		}
-		std::shared_ptr<Shader> shader;
+		Shader* shader;
 	};
 	struct PBRMaterial : Material {
 

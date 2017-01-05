@@ -2,7 +2,9 @@
 * Created by Kyle on 12/11/2016.
 * Copyright (c) 2016 Kyle All rights reserved.
 */
-#include "rendering.hpp"
+#include <rendering.hpp>
+#include <mesh.hpp>
+#include <game_object.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -137,14 +139,15 @@ namespace CBlocks {
 		current_render_state = mesh->required_state;
 		apply_render_state(current_render_state, &oldState);
 		mCamera->render();
-		auto vp = mCamera->projection*mCamera->view*glm::mat4(1.0f);
-		mesh->material.shader->bind();
-		auto err = glGetError();
-		glUniformMatrix4fv(glGetUniformLocation(mesh->material.shader->get_program(), "mvp"), 1, GL_FALSE, glm::value_ptr(vp));
+		auto vp = mCamera->projection*mCamera->view*(mesh->owner->transform.GetTransform());
+		mesh->material->shader->bind();
+		
+		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "mvp"), 1, GL_FALSE, glm::value_ptr(vp));
 
 		mesh->render();
 		current_render_state = oldState;
 		apply_render_state(current_render_state);
+		auto err = glGetError();
 	}
 	void Renderer::RenderTTF(const std::string & text, float x, float y, float scale, glm::vec4 color) {
 		RenderState oldState = current_render_state;

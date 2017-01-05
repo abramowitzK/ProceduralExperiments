@@ -23,7 +23,7 @@ namespace CBlocks {
 		//TODO make this so it stores a pointer so we don't duplicate render state structs
 		RenderState required_state = DefaultRenderState;
 		//TODO see above
-		Material material;
+		Material* material;
 	private:
 		void init(MeshData& data);
 		GLuint mVbo;

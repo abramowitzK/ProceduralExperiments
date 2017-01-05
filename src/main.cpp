@@ -5,6 +5,7 @@
 #include "platform.hpp"
 #include "events.hpp"
 #include "rendering.hpp"
+#include <ResourceManager.h>
 
 using namespace CBlocks;
 #undef main
@@ -15,6 +16,7 @@ int CALLBACK WinMain(
 	 int       nCmdShow
 )
 {
+
 	Platform platform;
 	EventManager input;
 	int width = 1280;
@@ -29,6 +31,9 @@ int CALLBACK WinMain(
 	input.subscribe_to_resize_event([&renderer](int a, int b){renderer.handle_resize(a,b);});
 	input.subscribe_to_argless_event(Intents::Escape, [&platform](){platform.capture_mouse(false);});
 	//input.subscribe_to_mouse_motion_event([](int x, int y){printf("%d %d\n", x, y);});
+
+	ResourceManager manager;
+	manager.LoadScene("test.xml");
 	double current_time = platform.get_time();
 	double accumulator = 0;
 	double t = 0;

@@ -63,13 +63,7 @@
     <ClCompile Include="src\terrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\mesh.hpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="include\transform.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game_object.cpp">
@@ -146,6 +140,15 @@
     <ClInclude Include="include\component.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\transform.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mesh.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\material.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\unlit_textured.vert" />
@@ -158,5 +161,8 @@
     <None Include="shaders\basic.frag" />
     <None Include=".gitignore" />
     <None Include=".gitattributes" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Data\Scenes\test.xml" />
   </ItemGroup>
 </Project>

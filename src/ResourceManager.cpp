@@ -5,7 +5,7 @@ namespace CBlocks {
 
 	ResourceManager::~ResourceManager() {}
 
-	void ResourceManager::LoadScene(const std::string & name) {
+	Scene* ResourceManager::LoadScene(const std::string & name) {
 		using namespace tinyxml2;
 		XMLDocument doc;
 		auto path = ScenePath + name;
@@ -20,12 +20,43 @@ namespace CBlocks {
 		for (auto e = modelList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			LoadModel(e->GetText());
 		}
+		Scene* s = new Scene();
+		return s;
+
 	}
 
-	void ResourceManager::LoadTexture(std::string name) {
+	void ResourceManager::LoadTexture(const std::string& name){
 		Texture t = create_2d_texture(TexturePath + name);
 		mTextures.insert({ name, t });
 	}
 
-	void ResourceManager::LoadModel(const char * path) {}
+	void ResourceManager::LoadModel(const std::string& name) {
+		Assimp::Importer importer;
+		auto scene = importer.ReadFile(ModelPath + name, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+		if (!scene) {
+			//Todo error log
+		}
+		//TODO handle case of multiple meshes
+		auto model = scene->mMeshes[0];
+		MeshData data;
+		data.indices.resize(model->mNumFaces * 3);
+		data.vertices.resize(model->mNumVertices);
+		for (unsigned i = 0; i < model->mNumVertices; i++) {
+			const auto& vert = model->mVertices[i];
+			const auto& normal = model->mNormals[i];
+			const auto& uv = model->mTextureCoords[0][i];
+			data.vertices[i] = { 
+				{vert.x, vert.y, vert.z},
+				{normal.x, normal.y, normal.z},
+				{uv.x, uv.y}
+			};
+		}
+		for (unsigned i = 0; i < model->mNumFaces; i++) {
+			const auto& face = model->mFaces[i];
+			data.indices[i] = face.mIndices[0];
+			data.indices[i + 1] = face.mIndices[1];
+			data.indices[i + 2] = face.mIndices[2];
+		}
+		mMeshes.insert({ name, Mesh(data)});
+	}
 }

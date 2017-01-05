@@ -11,4 +11,15 @@ namespace CBlocks {
 			delete child;
 		}
 	}
+	void GameObject::update(double dt) {}
+	void GameObject::render(Renderer * renderer) {
+		for (const auto& comp : mComponents) {
+			if (comp.mType == ComponentType::Mesh) {
+				renderer->render_mesh((Mesh*)&comp);
+			}
+		}
+		for (const auto& go : mChildren) {
+			go->render(renderer);
+		}
+	}
 }

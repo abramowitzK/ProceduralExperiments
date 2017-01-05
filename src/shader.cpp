@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 
 namespace CBlocks {
-	std::string Shader::SHADER_DIR = ".\\shaders\\";
+	std::string Shader::SHADER_DIR = "..\\..\\shaders\\";
 
 	Shader::Shader() {
 		mProgram = glCreateProgram();

@@ -1,4 +1,7 @@
-#pragma once
+#ifndef CBLOCKS_TRANSFORM_HPP
+#define CBLOCKS_TRANSFORM_HPP
+
+
 #include <glm\mat4x4.hpp>
 #include <glm\vec4.hpp>
 #include <glm\vec3.hpp>
@@ -99,4 +102,6 @@ namespace CBlocks {
 		Vector3 m_scale;
 	};
 }
+
+#endif // !CBLOCKS_TRANSFORM_HPP
 

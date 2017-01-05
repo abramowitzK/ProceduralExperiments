@@ -1,4 +1,4 @@
-#include "mesh.hpp"
+#include <mesh.hpp>
 namespace CBlocks {
 	Mesh::Mesh(MeshData data) {
 		mMesh = data;
@@ -7,7 +7,7 @@ namespace CBlocks {
 
 	void Mesh::render() {
 		glBindVertexArray(mVao);
-		glDrawElements(GL_TRIANGLES, mMesh.numIndices, GL_INT, 0);
+		glDrawElements(GL_TRIANGLES, mMesh.indices.size(), GL_INT, 0);
 	}
 
 	void Mesh::init() {
@@ -18,14 +18,14 @@ namespace CBlocks {
 		glGenBuffers(1, &mIbo);
 		glBindBuffer(GL_ARRAY_BUFFER, mVbo);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3,GL_FLOAT, GL_FALSE, 0, (void*)(mMesh.numVerts*sizeof(Vector3)));
+		glVertexAttribPointer(1, 3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)12);
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void*)(mMesh.numVerts * sizeof(Vector3) * 2));
-		glBufferData(GL_ARRAY_BUFFER, mMesh.numVerts*8*sizeof(float), mMesh.vertices, GL_STATIC_DRAW);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)24);
+		glBufferData(GL_ARRAY_BUFFER, mMesh.vertices.size()*sizeof(Vertex), mMesh.vertices.data(), GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIbo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mMesh.numIndices * sizeof(int), mMesh.indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mMesh.indices.size() * sizeof(int), mMesh.indices.data(), GL_STATIC_DRAW);
 	}
 
 }

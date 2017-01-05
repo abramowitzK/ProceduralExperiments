@@ -19,6 +19,7 @@
 #include <map>
 #include <memory>
 #include <ft2build.h>
+#include <mesh.hpp>
 #include FT_FREETYPE_H
 
 namespace CBlocks {
@@ -37,6 +38,7 @@ namespace CBlocks {
 		void handle_resize(int width, int height);
 		void create_camera(EventManager& manager);
 		void render_chunk();
+		void render_mesh(Mesh* mesh);
 		void RenderTTF(const std::string& text, float x, float y, float scale, glm::vec4 color);
 		RenderState current_render_state = DefaultRenderState;
 	private:

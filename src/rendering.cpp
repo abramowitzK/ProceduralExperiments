@@ -132,6 +132,15 @@ namespace CBlocks {
 		auto err = glGetError();
 		apply_render_state(current_render_state);
 	}
+	void Renderer::render_mesh(Mesh* mesh) {
+		RenderState oldState = current_render_state;
+		current_render_state = mesh->required_state;
+		apply_render_state(current_render_state, &oldState);
+		mesh->material->shader->bind();
+		mesh->render();
+		current_render_state = oldState;
+		apply_render_state(current_render_state);
+	}
 	void Renderer::RenderTTF(const std::string & text, float x, float y, float scale, glm::vec4 color) {
 		RenderState oldState = current_render_state;
 		mDefaultTtfShader->bind();

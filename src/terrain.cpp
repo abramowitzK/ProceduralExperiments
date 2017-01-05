@@ -19,13 +19,13 @@ namespace CBlocks {
 
 	MeshData Terrain::generate_mesh() {
 		MeshData data;
-		data.numVerts = mHeight*mWidth*(mSampling-1);
-		data.vertices = new Vector3[data.numVerts];
-		for (int i = 0; i < mWidth*mSampling; i++) {
-			for (int j = 0; j < mHeight; j++) {
-				data.vertices[i + j] = { i,0,j };
-			}
-		}
+		//data.numVerts = mHeight*mWidth*(mSampling-1);
+		//data.vertices = new Vector3[data.numVerts];
+		//for (int i = 0; i < mWidth*mSampling; i++) {
+		//	for (int j = 0; j < mHeight; j++) {
+		//		data.vertices[i + j] = { i,0,j };
+		//	}
+		//}
 		return data;
 	}
 

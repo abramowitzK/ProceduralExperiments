@@ -8,20 +8,23 @@
 #include <assimp\postprocess.h>
 #include <assimp\scene.h>
 #include <mesh.hpp>
+#include <scene.hpp>
 namespace CBlocks {
 	using namespace std;
 	class ResourceManager {
 	public:
 		ResourceManager();
 		~ResourceManager();
-		void LoadScene(const std::string& name);
-		Texture* GetTexture(string name) {
+		Scene* LoadScene(const std::string& name);
+		inline Texture* GetTexture(const std::string& name) {
 			return &mTextures[name];
 		}
-
+		inline Mesh* get_mesh(const std::string& name) {
+			return &mMeshes[name];
+		}
 	private:
-		void LoadTexture(string name);
-		void LoadModel(const char* name);
+		void LoadTexture(const std::string& name);
+		void LoadModel(const std::string& name);
 		const std::string ResourcePath = "..\\..\\Data\\";
 		const std::string TexturePath = ResourcePath + "Textures\\";
 		const std::string ModelPath = ResourcePath + "Models\\";
@@ -29,7 +32,6 @@ namespace CBlocks {
 		const std::string AudioPath = ResourcePath + "Sounds\\";
 		const std::string ScenePath = ResourcePath + "Scenes\\";
 
-		std::vector<MeshData> mMeshData;
 		unordered_map<string, Mesh> mMeshes;
 		unordered_map<string, Texture> mTextures;
 	};

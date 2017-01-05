@@ -27,15 +27,20 @@ namespace CBlocks {
 	private:
 		void LoadTexture(const std::string& name);
 		void LoadModel(const std::string& name);
+		void load_shader(const std::string& name);
 		const std::string ResourcePath = "..\\..\\Data\\";
 		const std::string TexturePath = ResourcePath + "Textures\\";
 		const std::string ModelPath = ResourcePath + "Models\\";
 		const std::string FontPath = ResourcePath + "Fonts\\";
 		const std::string AudioPath = ResourcePath + "Sounds\\";
 		const std::string ScenePath = ResourcePath + "Scenes\\";
+		const std::string ShaderPath = ResourcePath + "Shaders\\";
 
 		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;
+		unordered_map<string, Shader> mShaders;
+		unordered_map<string, Material> mMaterials;
+
 	};
 
 }

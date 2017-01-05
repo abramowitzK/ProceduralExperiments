@@ -12,8 +12,8 @@ namespace CBlocks {
 			assert(false);
 		}
 		//Load default forward passthrough shaders for now. Should add ambient to them
-		load_vertex_shader("basic.vert");
-		load_fragment_shader("basic.frag");
+		load_vertex_shader(SHADER_DIR + "basic.vert");
+		load_fragment_shader(SHADER_DIR + "basic.frag");
 	}
 
 	Shader::Shader(const char *vShaderFileName, const char *fShaderFileName) {
@@ -21,8 +21,12 @@ namespace CBlocks {
 		if(0 == mProgram) {
 			assert(false);
 		}
-		load_vertex_shader(vShaderFileName);
-		load_fragment_shader(fShaderFileName);
+		load_vertex_shader(SHADER_DIR + vShaderFileName);
+		load_fragment_shader(SHADER_DIR + fShaderFileName);
+	}
+
+	Shader::Shader(const char * vShaderFileName, const char * fShaderFileName, const std::string & shaderPath) {
+		
 	}
 
 	Shader::~Shader() {
@@ -34,7 +38,7 @@ namespace CBlocks {
 	}
 
 	void Shader::load_vertex_shader(std::string shaderFileName) {
-		shaderFileName = SHADER_DIR + shaderFileName;
+		shaderFileName = shaderFileName;
 		std::ifstream fs(shaderFileName);
 		std::stringstream buffer;
 		buffer << fs.rdbuf();
@@ -42,7 +46,7 @@ namespace CBlocks {
 	}
 
 	void Shader::load_fragment_shader(std::string shaderFileName) {
-		shaderFileName = SHADER_DIR + shaderFileName;
+		shaderFileName =shaderFileName;
 		std::ifstream fs(shaderFileName);
 		std::stringstream buffer;
 		buffer << fs.rdbuf();

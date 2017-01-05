@@ -13,7 +13,7 @@ namespace CBlocks {
 		Shader();
 
 		Shader(const char *vShaderFileName, const char *fShaderFileName);
-
+		Shader(const char *vShaderFileName, const char *fShaderFileName, const std::string& shaderPath);
 		~Shader();
 
 		void load_vertex_shader(std::string shaderFileName);

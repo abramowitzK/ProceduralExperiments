@@ -42,7 +42,7 @@ namespace CBlocks {
 
 	Component* ResourceManager::parse_component(XMLElement & comp) {
 		if (strcmp("Model", comp.Value()) == 0) {
-			return mMeshes[comp.GetText()];
+			return mMeshes[comp.Attribute("name")];
 		}
 		return nullptr;
 	}
@@ -81,5 +81,8 @@ namespace CBlocks {
 		}
 		mMeshes.insert({ name, new Mesh(data)});
 		mMeshes[name]->mType = ComponentType::Mesh;
+	}
+	void ResourceManager::load_shader(const std::string & name) {
+	
 	}
 }

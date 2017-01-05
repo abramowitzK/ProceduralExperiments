@@ -7,7 +7,7 @@
       <Texture>crosshairs.png</Texture>
     </Textures>
     <Models>
-      <Model>teapot.obj</Model>
+      <Model>plane.obj</Model>
     </Models>
   </ResourceList>
 </Scene>

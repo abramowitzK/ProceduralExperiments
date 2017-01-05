@@ -20,7 +20,7 @@ namespace CBlocks {
 			return &mTextures[name];
 		}
 		inline Mesh* get_mesh(const std::string& name) {
-			return &mMeshes[name];
+			return mMeshes[name];
 		}
 	private:
 		void LoadTexture(const std::string& name);
@@ -32,7 +32,7 @@ namespace CBlocks {
 		const std::string AudioPath = ResourcePath + "Sounds\\";
 		const std::string ScenePath = ResourcePath + "Scenes\\";
 
-		unordered_map<string, Mesh> mMeshes;
+		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;
 	};
 

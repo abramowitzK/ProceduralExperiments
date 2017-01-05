@@ -7,7 +7,7 @@ namespace CBlocks {
 	struct Scene {
 		Scene();
 		~Scene();
-		void render(const Renderer& renderer);
+		void render(Renderer* renderer);
 		void update(double dt);
 	private:
 		GameObject* mRoot;

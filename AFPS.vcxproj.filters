@@ -161,6 +161,8 @@
     <None Include="shaders\basic.frag" />
     <None Include=".gitignore" />
     <None Include=".gitattributes" />
+    <None Include="shaders\texturedLit.frag" />
+    <None Include="shaders\texturedLit.vert" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\Scenes\test.xml" />

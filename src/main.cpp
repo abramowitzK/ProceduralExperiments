@@ -1,7 +1,7 @@
 //
 // Created by Kyle on 12/8/2016.
 //
-
+#define CONSOLE
 #include "platform.hpp"
 #include "events.hpp"
 #include "rendering.hpp"
@@ -9,12 +9,18 @@
 
 using namespace CBlocks;
 #undef main
+#ifdef CONSOLE
+#pragma comment(linker, "/subsystem:console")
+int main(char** argv, int argc)
+#else
+#pragma comment(linker, "/subsystem:windows")
 int CALLBACK WinMain(
 	 HINSTANCE hInstance,
 	 HINSTANCE hPrevInstance,
 	 LPSTR     lpCmdLine,
 	 int       nCmdShow
 )
+#endif
 {
 
 	Platform platform;
@@ -34,6 +40,7 @@ int CALLBACK WinMain(
 
 	ResourceManager manager;
 	manager.LoadScene("test.xml");
+	auto tp = manager.get_mesh("plane.obj");
 	double current_time = platform.get_time();
 	double accumulator = 0;
 	double t = 0;
@@ -52,6 +59,7 @@ int CALLBACK WinMain(
 		}
 		renderer.update(frame_time);
 		renderer.clear_screen(true, true);
+		renderer.render_mesh(tp);
 		renderer.render();
 		platform.swap_buffers();
 		input.update_previous();

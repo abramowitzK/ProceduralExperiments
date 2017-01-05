@@ -76,7 +76,7 @@ namespace CBlocks {
 		PolygonMode PolyMode;
 	};
 	static const RenderState DefaultRenderState = {
-			CullState::On,
+			CullState::Off,
 			BlendState::Off,
 			DepthState::On,
 

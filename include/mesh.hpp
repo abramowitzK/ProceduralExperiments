@@ -14,22 +14,22 @@ namespace CBlocks {
 	};
 	struct MeshData {
 		std::vector<Vertex> vertices;
-		std::vector<int> indices;
+		std::vector<unsigned> indices;
 	};
 	struct Mesh : public Component{
 		Mesh() {}
-		Mesh(MeshData data);
+		Mesh(MeshData& data);
 		void render();
 		//TODO make this so it stores a pointer so we don't duplicate render state structs
 		RenderState required_state = DefaultRenderState;
 		//TODO see above
-		shared_ptr<Material> material;
+		Material material;
 	private:
-		void init();
+		void init(MeshData& data);
 		GLuint mVbo;
 		GLuint mIbo;
 		GLuint mVao;
-		MeshData mMesh;
+		int mNumIndices;
 
 
 	};

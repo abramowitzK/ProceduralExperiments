@@ -1,16 +1,16 @@
 #include <mesh.hpp>
 namespace CBlocks {
-	Mesh::Mesh(MeshData data) {
-		mMesh = data;
-		init();
+	Mesh::Mesh(MeshData& data) {
+		mNumIndices = data.indices.size();
+		init(data);
 	}
 
 	void Mesh::render() {
 		glBindVertexArray(mVao);
-		glDrawElements(GL_TRIANGLES, mMesh.indices.size(), GL_INT, 0);
+		glDrawElements(GL_TRIANGLES, (GLsizei)mNumIndices, GL_UNSIGNED_INT, 0);
 	}
 
-	void Mesh::init() {
+	void Mesh::init(MeshData& data) {
 		//TODO change to interleaved attributes
 		glGenVertexArrays(1, &mVao);
 		glBindVertexArray(mVao);
@@ -23,9 +23,9 @@ namespace CBlocks {
 		glVertexAttribPointer(1, 3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)12);
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)24);
-		glBufferData(GL_ARRAY_BUFFER, mMesh.vertices.size()*sizeof(Vertex), mMesh.vertices.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, data.vertices.size()*sizeof(Vertex), data.vertices.data(), GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIbo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mMesh.indices.size() * sizeof(int), mMesh.indices.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.indices.size() * sizeof(int), data.indices.data(), GL_STATIC_DRAW);
 	}
 
 }

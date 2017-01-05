@@ -1,4 +1,4 @@
-#version 450
+#version 330
 in vec4 pos;
 uniform mat4 mvp;
 

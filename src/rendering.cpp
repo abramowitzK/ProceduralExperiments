@@ -96,7 +96,7 @@ namespace CBlocks {
 		//sb->draw(sprite);
 		//sb->end();
 		//sb->render_batches(this);
-		render_chunk();
+		//render_chunk();
 		RenderTTF("Hello, World!", 50, 50, 2.0f, { 1,0,0,1 });
 	}
 
@@ -136,7 +136,12 @@ namespace CBlocks {
 		RenderState oldState = current_render_state;
 		current_render_state = mesh->required_state;
 		apply_render_state(current_render_state, &oldState);
-		mesh->material->shader->bind();
+		mCamera->render();
+		auto vp = mCamera->projection*mCamera->view*glm::mat4(1.0f);
+		mesh->material.shader->bind();
+		auto err = glGetError();
+		glUniformMatrix4fv(glGetUniformLocation(mesh->material.shader->get_program(), "mvp"), 1, GL_FALSE, glm::value_ptr(vp));
+
 		mesh->render();
 		current_render_state = oldState;
 		apply_render_state(current_render_state);

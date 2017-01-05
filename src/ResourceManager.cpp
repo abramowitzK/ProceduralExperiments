@@ -39,7 +39,7 @@ namespace CBlocks {
 		//TODO handle case of multiple meshes
 		auto model = scene->mMeshes[0];
 		MeshData data;
-		data.indices.resize(model->mNumFaces * 3);
+		data.indices.reserve(model->mNumFaces * 3);
 		data.vertices.resize(model->mNumVertices);
 		for (unsigned i = 0; i < model->mNumVertices; i++) {
 			const auto& vert = model->mVertices[i];
@@ -53,10 +53,10 @@ namespace CBlocks {
 		}
 		for (unsigned i = 0; i < model->mNumFaces; i++) {
 			const auto& face = model->mFaces[i];
-			data.indices[i] = face.mIndices[0];
-			data.indices[i + 1] = face.mIndices[1];
-			data.indices[i + 2] = face.mIndices[2];
+			data.indices.push_back(face.mIndices[0]);
+			data.indices.push_back(face.mIndices[1]);
+			data.indices.push_back(face.mIndices[2]);
 		}
-		mMeshes.insert({ name, Mesh(data)});
+		mMeshes.insert({ name, new Mesh(data)});
 	}
 }

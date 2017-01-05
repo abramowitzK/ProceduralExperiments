@@ -12,7 +12,7 @@ namespace CBlocks {
 		}
 	}
 	void GameObject::update(double dt) {}
-	void GameObject::render(Renderer * renderer) {
+	void GameObject::render(Renderer* renderer) {
 		for (const auto& comp : mComponents) {
 			if (comp.mType == ComponentType::Mesh) {
 				renderer->render_mesh((Mesh*)&comp);

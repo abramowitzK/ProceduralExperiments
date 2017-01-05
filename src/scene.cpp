@@ -4,8 +4,10 @@ namespace CBlocks {
 	Scene::Scene() {}
 	Scene::~Scene() {}
 
-	void Scene::render(const Renderer& renderer) {
-		
+	void Scene::render(Renderer* renderer) {
+		for (const auto& o : mRoot->mChildren) {
+			o->render(renderer);
+		}
 	}
 
 	void Scene::update(double dt) {

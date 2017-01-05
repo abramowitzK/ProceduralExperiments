@@ -6,7 +6,8 @@
 #include "events.hpp"
 #include "rendering.hpp"
 #include <ResourceManager.h>
-
+#include <CEGUI\CEGUI.h>
+#include <CEGUI\RendererModules\OpenGL\GL3Renderer.h>
 using namespace CBlocks;
 #undef main
 #ifdef CONSOLE
@@ -37,7 +38,7 @@ int CALLBACK WinMain(
 	input.subscribe_to_resize_event([&renderer](int a, int b){renderer.handle_resize(a,b);});
 	input.subscribe_to_argless_event(Intents::Escape, [&platform](){platform.capture_mouse(false);});
 	//input.subscribe_to_mouse_motion_event([](int x, int y){printf("%d %d\n", x, y);});
-
+	CEGUI::OpenGL3Renderer& myRenderer = CEGUI::OpenGL3Renderer::bootstrapSystem();
 	ResourceManager manager;
 	manager.LoadScene("test.xml");
 	auto tp = manager.get_mesh("plane.obj");

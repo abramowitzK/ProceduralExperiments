@@ -7,7 +7,7 @@ namespace CBlocks {
 
 	Scene* ResourceManager::LoadScene(const std::string & name) {
 		using namespace tinyxml2;
-		XMLDocument doc;
+		tinyxml2::XMLDocument doc;
 		auto path = ScenePath + name;
 		doc.LoadFile(path.c_str());
 		auto sceneNode = doc.FirstChildElement();

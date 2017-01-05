@@ -2,6 +2,7 @@
 #define CBLOCKS_RENDER_STATE_H
 #include <GL\glew.h>
 #include "vector_math.hpp"
+
 namespace CBlocks {
 	enum class BlendState : bool {
 		On = true,

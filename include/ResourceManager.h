@@ -29,7 +29,6 @@ namespace CBlocks {
 		inline Material* get_material(const std::string& name) {
 			return mMaterials[name];
 		}
-		Script* create_script(const std::string& name);
 		Component* parse_component (XMLElement& comp);
 		static ResourceManager* instance() {
 			if (!s_instance)

@@ -162,12 +162,9 @@
     <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\mesh.cpp" />
-    <ClCompile Include="src\terrain.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\scene.cpp" />
-    <ClCompile Include="src\block.cpp" />
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\chunk.cpp" />
     <ClCompile Include="src\events.cpp" />
     <ClCompile Include="src\FastNoise.cpp" />
     <ClCompile Include="src\key_state.cpp" />
@@ -180,9 +177,7 @@
     <ClCompile Include="src\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\block.h" />
     <ClInclude Include="include\camera.hpp" />
-    <ClInclude Include="include\chunk.h" />
     <ClInclude Include="include\component.hpp" />
     <ClInclude Include="include\engine.hpp" />
     <ClInclude Include="include\events.hpp" />
@@ -205,7 +200,6 @@
     <ClInclude Include="include\sprite_batch.hpp" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="include\structures.hpp" />
-    <ClInclude Include="include\terrain.hpp" />
     <ClInclude Include="include\texture.hpp" />
     <ClInclude Include="include\transform.hpp" />
     <ClInclude Include="include\vector_math.hpp" />

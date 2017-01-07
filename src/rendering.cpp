@@ -23,7 +23,6 @@ namespace CBlocks {
 
 		mWidth = width;
 		mHeight = height;
-		mChunk = new Chunk();
 		if (FT_Init_FreeType(&mFt)) {
 			fprintf(stderr, "Could not init freetype library\n");
 			exit(1);
@@ -94,15 +93,6 @@ namespace CBlocks {
 	}
 
 	void Renderer::render() {
-		//glm::mat4 projection = glm::ortho(0.0f, (float)mWidth, 0.0f, (float)mHeight);
-		//sb->default_shader->bind();
-		//auto loc = glGetUniformLocation(sb->default_shader->get_program(), "projection");
-		//glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(projection));
-		//sb->begin();
-		//sb->draw(sprite);
-		//sb->end();
-		//sb->render_batches(this);
-		//render_chunk();
 		RenderTTF("Hello, World!", 50, 50, 2.0f, { 1,0,0,1 });
 	}
 
@@ -116,7 +106,6 @@ namespace CBlocks {
 		} else {
 			glClear(GL_COLOR_BUFFER_BIT);
 		}
-
 	}
 
 	void Renderer::handle_resize(int width, int height) {
@@ -128,16 +117,7 @@ namespace CBlocks {
 	void Renderer::create_camera(EventManager& manager){
 		mCamera = make_shared<Camera>(manager, mWidth, mHeight);
 	}
-	void Renderer::render_chunk(){
-		apply_render_state(DefaultRenderState);
-		mCamera->render();
-		auto vp = mCamera->projection*mCamera->view*glm::mat4(1.0f);
-		mDefaultShader->bind();
-		glUniformMatrix4fv(glGetUniformLocation(mDefaultShader->get_program(),"mvp"),1, GL_FALSE, glm::value_ptr(vp));
-		mChunk->Render();
-		auto err = glGetError();
-		apply_render_state(current_render_state);
-	}
+
 	void Renderer::render_mesh(MeshRenderer* mesh) {
 		RenderState oldState = current_render_state;
 		current_render_state = mesh->required_state;
@@ -145,14 +125,12 @@ namespace CBlocks {
 		mCamera->render();
 		auto vp = mCamera->projection*mCamera->view*(mesh->owner->transform.GetTransform());
 		mesh->material->shader->bind();
-		
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "mvp"), 1, GL_FALSE, glm::value_ptr(vp));
-
 		mesh->mesh->render();
 		current_render_state = oldState;
 		apply_render_state(current_render_state);
-		auto err = glGetError();
 	}
+
 	void Renderer::RenderTTF(const std::string & text, float x, float y, float scale, glm::vec4 color) {
 		RenderState oldState = current_render_state;
 		mDefaultTtfShader->bind();

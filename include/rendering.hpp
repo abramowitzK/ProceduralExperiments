@@ -15,7 +15,6 @@
 #include "sprite_batch.hpp"
 #include "events.hpp"
 #include "camera.hpp"
-#include "chunk.h"
 #include <mesh_renderer.hpp>
 #include <map>
 #include <memory>
@@ -39,7 +38,6 @@ namespace CBlocks {
 		void clear_screen(bool depth, bool color);
 		void handle_resize(int width, int height);
 		void create_camera(EventManager& manager);
-		void render_chunk();
 		void render_mesh(MeshRenderer* mesh);
 		void RenderTTF(const std::string& text, float x, float y, float scale, glm::vec4 color);
 		RenderState current_render_state = DefaultRenderState;
@@ -53,7 +51,6 @@ namespace CBlocks {
 		shared_ptr<Camera> mCamera;
 		int mWidth;
 		int mHeight;
-		Chunk* mChunk;
 		std::map<GLchar, Character> mChars;
 		FT_Library mFt;
 		FT_Face mDefaultFont;

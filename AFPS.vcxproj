@@ -158,6 +158,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\platform.cpp" />
     <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\game_object.cpp" />

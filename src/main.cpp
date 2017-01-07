@@ -63,7 +63,7 @@ int CALLBACK WinMain(
 	}*/
 
 	Engine e(1024,768,"AFPS");
-	e.start();
+	e.start("test.xml");
 	return 0;
 }
 

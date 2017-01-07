@@ -9,17 +9,22 @@ namespace CBlocks {
 	struct Platform;
 	struct Engine {
 		Engine(int width, int height, const std::string& title);
-		void start();
+		void start(const std::string& initialScene);
 	private:
-		void init();
+		void update(double dt);
+		void render();
+		void init(const std::string& initialScene);
 		void run();
+
 		bool mRunning;
-		Platform* mPlatform;
-		Renderer* mRenderer;
 		int mWidth, mHeight;
 		std::string mTitle;
+
+		Platform* mPlatform;
+		Renderer* mRenderer;
 		ResourceManager* mManager;
 		EventManager* mEventManager;
+		Game mGame;
 	};
 }
 #endif // !CBLOCKS_ENGINE_HPP

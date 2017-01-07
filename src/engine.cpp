@@ -7,13 +7,21 @@ namespace CBlocks {
 		mEventManager = new EventManager();
 		
 	}
-	void Engine::start() {
-		init();
+	void Engine::start(const std::string& initialScene) {
+		init(initialScene);
 		mRunning = true;
 		run();
 	}
 
-	void Engine::init() {
+	void Engine::update(double dt) {
+		mRenderer->update(dt);
+		update_game(&mGame, dt);
+	}
+	void Engine::render() {
+		render_game(&mGame, mRenderer);
+	}
+
+	void Engine::init(const std::string& initialScene) {
 		mPlatform->create_window(mTitle.c_str(), mWidth, mHeight);
 		mRenderer = new Renderer(mWidth, mHeight);
 		mManager->load_defaults();
@@ -24,6 +32,8 @@ namespace CBlocks {
 		mEventManager->subscribe_to_resize_event([=](int a, int b) {mPlatform->handle_resize(a, b); });
 		mEventManager->subscribe_to_resize_event([=](int a, int b) {mPlatform->handle_resize(a, b); });
 		mEventManager->subscribe_to_argless_event(Intents::Escape, [=]() {mPlatform->capture_mouse(false); });
+
+		mGame.load(initialScene);
 	}
 
 	void Engine::run() {
@@ -43,9 +53,9 @@ namespace CBlocks {
 				t += dt;
 				accumulator -= dt;
 			}
-			mRenderer->update(frame_time);
+			update(frame_time);
 			mRenderer->clear_screen(true, true);
-			//scene->render(&renderer);
+			render();
 			mRenderer->render();
 			mPlatform->swap_buffers();
 			mEventManager->update_previous();

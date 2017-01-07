@@ -12,13 +12,13 @@ namespace CBlocks {
 		std::vector<GameObject*> mChildren;
 		void update(double dt);
 		void render(Renderer* renderer);
-		void add_component(Component comp);
+		void add_component(Component* comp);
 		GameObject* parent;
 		Transform transform;
 	private:
 		GameObject();
 		GameObject(GameObject* parent);
-		std::vector<Component> mComponents;
+		std::vector<Component*> mComponents;
 	};
 
 }

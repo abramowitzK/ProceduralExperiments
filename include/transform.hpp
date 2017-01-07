@@ -86,11 +86,12 @@ namespace CBlocks {
 		@param z The rotation in degrees in the z direction
 		*/
 		inline void set_rotation(const float x, const float y, const float z) {
-			mRotation = Quaternion(Vector3(x, y, z));
+			
+			mRotation = Quaternion(Vector3(glm::radians(x), glm::radians(y), glm::radians(z)));
 		}
 		/**
 		Sets the rotation using Euler angles. This uses a Quaternion internally. User facing euler angles are expected however.
-		@param rot The rotation in degrees in the xyz directions
+		@param rot The rotation in degrees in the xyz directions in radians
 		*/
 		inline void set_rotation(Vector3 rot) {
 			mRotation = Quaternion(rot);

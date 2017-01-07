@@ -33,6 +33,7 @@ namespace CBlocks {
 	struct Renderer {
 	public:
 		Renderer(int width, int height);
+		void init_default_resources();
 		void update(double dt) { mCamera->update(dt); }
 		void render();
 		void clear_screen(bool depth, bool color);

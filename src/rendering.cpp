@@ -20,9 +20,7 @@ namespace CBlocks {
 		}
 		apply_render_state(DefaultRenderState);
 		SDL_GL_SetSwapInterval(0);
-		sb = new SpriteBatch();
-		sb->init();
-		sprite = {&tex , {0,0}, {50,50}, RED, 0 };
+
 		mWidth = width;
 		mHeight = height;
 		mChunk = new Chunk();
@@ -81,7 +79,16 @@ namespace CBlocks {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
+		
+
+	}
+
+	void Renderer::init_default_resources() {
 		auto manager = ResourceManager::instance();
+		sb = new SpriteBatch();
+		sb->init();
+		sb->default_shader = manager->get_shader("spriteBatch");
+		sprite = {&tex , {0,0}, {50,50}, RED, 0 };
 		mDefaultShader = manager->get_shader("basic");
 		mDefaultTtfShader = manager->get_shader("ttf");
 	}

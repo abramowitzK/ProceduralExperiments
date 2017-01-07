@@ -29,18 +29,20 @@ int CALLBACK WinMain(
 	int width = 1280;
 	int height = 768;
 	platform.create_window("Hello SDL", width, height);
+	auto manager = ResourceManager::instance();
+
 	Renderer renderer(width, height);
 	renderer.create_camera(input);
+	auto scene = manager->LoadScene("test.xml");
+	renderer.init_default_resources();
 	bool running = true;
 	std::function<void()> shutdown = [&running](){ running = false;};
 	input.subscribe_to_argless_event(Intents::Shutdown, shutdown);
 	input.subscribe_to_resize_event([&platform](int a, int b){platform.handle_resize(a,b);});
 	input.subscribe_to_resize_event([&renderer](int a, int b){renderer.handle_resize(a,b);});
 	input.subscribe_to_argless_event(Intents::Escape, [&platform](){platform.capture_mouse(false);});
-	//input.subscribe_to_mouse_motion_event([](int x, int y){printf("%d %d\n", x, y);});
 	CEGUI::OpenGL3Renderer& myRenderer = CEGUI::OpenGL3Renderer::bootstrapSystem();
-	auto manager = ResourceManager::instance();
-	auto scene = manager->LoadScene("test.xml");
+
 	double current_time = platform.get_time();
 	double accumulator = 0;
 	double t = 0;

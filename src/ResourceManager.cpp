@@ -14,12 +14,21 @@ namespace CBlocks {
 		auto sceneNode = doc.FirstChildElement();
 		auto resourceList = sceneNode->FirstChildElement("ResourceList");
 		auto modelList = resourceList->FirstChildElement("Models");
+		auto matList = resourceList->FirstChildElement("Materials");
 		auto texList = resourceList->FirstChildElement("Textures");
+		auto shaderList = resourceList->FirstChildElement("Shaders");
 		for (auto e = texList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
-			LoadTexture(e->GetText());
+			load_texture(e->GetText());
 		}
 		for (auto e = modelList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
-			LoadModel(e->GetText());
+			load_model(e->GetText());
+		}
+		for (auto e = shaderList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
+			load_shader(std::string(e->Attribute("name")));
+		}
+		for (auto e = matList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
+			auto s = e->FirstChildElement("Shader");
+			load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))]);
 		}
 
 		Scene* s = new Scene();
@@ -34,26 +43,28 @@ namespace CBlocks {
 			o->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
 			auto componentList = e->FirstChildElement("Components");
 			for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
-				o->add_component(MeshRenderer(parse_component(*c), nullptr));
+				o->add_component(parse_component(*c));
 			}
 		}
 		return s;
 
 	}
 
-	Mesh* ResourceManager::parse_component(XMLElement & comp) {
+	Component* ResourceManager::parse_component(XMLElement & comp) {
 		if (strcmp("Model", comp.Value()) == 0) {
-			return mMeshes[comp.Attribute("name")];
+			auto m = comp.FirstChildElement("Material");
+			auto mat = mMaterials[std::string(m->Attribute("name"))];
+			return new MeshRenderer(mMeshes[comp.Attribute("name")], mat);
 		}
 		return nullptr;
 	}
 
-	void ResourceManager::LoadTexture(const std::string& name){
+	void ResourceManager::load_texture(const std::string& name){
 		Texture t = create_2d_texture(TexturePath + name);
 		mTextures.insert({ name, t });
 	}
 
-	void ResourceManager::LoadModel(const std::string& name) {
+	void ResourceManager::load_model(const std::string& name) {
 		Assimp::Importer importer;
 		auto scene = importer.ReadFile(ModelPath + name, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
 		if (!scene) {
@@ -85,5 +96,9 @@ namespace CBlocks {
 	void ResourceManager::load_shader(const std::string & name) {
 		auto s = new Shader(name + ".vert", name + ".frag", ShaderPath);
 		mShaders.insert({ name, s });
+	}
+	void ResourceManager::load_material(const std::string & name, Shader* shader) {
+		auto m = new Material(shader);
+		mMaterials.insert({ name, m });
 	}
 }

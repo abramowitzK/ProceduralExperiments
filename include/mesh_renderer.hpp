@@ -4,7 +4,8 @@
 #include <mesh.hpp>
 namespace CBlocks {
 	struct MeshRenderer : public Component{
-		MeshRenderer(Mesh* m, Material* mat) : mesh(m), material(mat){
+		MeshRenderer(Mesh* m, Material* mat) : material(mat){
+			mesh = m;
 			mType = ComponentType::Mesh;
 		}
 		Mesh* mesh;

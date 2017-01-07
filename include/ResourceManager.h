@@ -28,7 +28,7 @@ namespace CBlocks {
 		inline Material* get_material(const std::string& name) {
 			return mMaterials[name];
 		}
-		Mesh* parse_component (XMLElement& comp);
+		Component* parse_component (XMLElement& comp);
 		static ResourceManager* instance() {
 			if (!s_instance)
 				s_instance = new ResourceManager();
@@ -37,9 +37,10 @@ namespace CBlocks {
 	private:
 		static ResourceManager* s_instance;
 		ResourceManager();
-		void LoadTexture(const std::string& name);
-		void LoadModel(const std::string& name);
+		void load_texture(const std::string& name);
+		void load_model(const std::string& name);
 		void load_shader(const std::string& name);
+		void load_material(const std::string& name, Shader* shader);
 		const std::string ResourcePath = "..\\..\\Data\\";
 		const std::string TexturePath = ResourcePath + "Textures\\";
 		const std::string ModelPath = ResourcePath + "Models\\";

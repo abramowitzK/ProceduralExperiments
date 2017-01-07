@@ -7,23 +7,20 @@ namespace CBlocks {
 	}
 
 	GameObject::~GameObject() {
-		for (const auto child : mChildren) {
-			delete child;
-		}
 	}
 	void GameObject::update(double dt) {}
 	void GameObject::render(Renderer* renderer) {
-		for (const auto& comp : mComponents) {
-			if (comp.mType == ComponentType::Mesh) {
-				renderer->render_mesh((MeshRenderer*)(&comp));
+		for (const auto comp : mComponents) {
+			if (comp->mType == ComponentType::Mesh) {
+				renderer->render_mesh((MeshRenderer*)comp);
 			}
 		}
 		for (const auto& go : mChildren) {
 			go->render(renderer);
 		}
 	}
-	void GameObject::add_component(Component comp) {
+	void GameObject::add_component(Component* comp) {
+		comp->owner = this;
 		mComponents.push_back(comp);
-		mComponents[mComponents.size() - 1].owner = this;
 	}
 }

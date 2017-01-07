@@ -26,7 +26,12 @@ namespace CBlocks {
 	}
 
 	Shader::Shader(const std::string& vShaderFileName, const std::string& fShaderFileName, const std::string & shaderPath) {
-		
+		mProgram = glCreateProgram();
+		if (0 == mProgram) {
+			assert(false);
+		}
+		load_vertex_shader(shaderPath + vShaderFileName);
+		load_fragment_shader(shaderPath + fShaderFileName);
 	}
 
 	Shader::~Shader() {

@@ -7,9 +7,6 @@
       </Material>
     </Materials>
     <Shaders>
-      <Shader name="basic" vert="basic.vert" frag="basic.frag"/>
-      <Shader name="spriteBatch" vert="spriteBatch.vert" frag="spriteBatch.frag"/>
-      <Shader name="ttf" vert="ttf.vert" frag="ttf.frag"/>
       <Shader name="texturedLit" vert="texturedLit.vert" frag="texturedLit.frag"/>
       <Shader name="unlit_textured" vert="unlit_textured.vert" frag="unlit_textured.frag"/>
     </Shaders>

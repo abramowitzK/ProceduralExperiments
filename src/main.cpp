@@ -2,12 +2,7 @@
 // Created by Kyle on 12/8/2016.
 //
 #define CONSOLE
-#include "platform.hpp"
-#include "events.hpp"
-#include "rendering.hpp"
-#include <ResourceManager.h>
-#include <CEGUI\CEGUI.h>
-#include <CEGUI\RendererModules\OpenGL\GL3Renderer.h>
+#include <engine.hpp>
 using namespace CBlocks;
 #undef main
 #ifdef CONSOLE
@@ -24,7 +19,7 @@ int CALLBACK WinMain(
 #endif
 {
 
-	Platform platform;
+	/*Platform platform;
 	EventManager input;
 	int width = 1280;
 	int height = 768;
@@ -65,7 +60,10 @@ int CALLBACK WinMain(
 		renderer.render();
 		platform.swap_buffers();
 		input.update_previous();
-	}
+	}*/
+
+	Engine e(1024,768,"AFPS");
+	e.start();
 	return 0;
 }
 

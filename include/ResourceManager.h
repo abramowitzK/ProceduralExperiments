@@ -15,6 +15,7 @@ namespace CBlocks {
 	class ResourceManager {
 	public:
 		~ResourceManager();
+		void load_defaults();
 		Scene* LoadScene(const std::string& name);
 		inline Texture* GetTexture(const std::string& name) {
 			return &mTextures[name];

@@ -6,6 +6,13 @@ namespace CBlocks {
 
 	ResourceManager::~ResourceManager() {}
 
+	void ResourceManager::load_defaults() {
+		load_shader("basic");
+		load_shader("ttf");
+		load_shader("spriteBatch");
+		load_material("default", mShaders["basic"]);
+	}
+
 	Scene* ResourceManager::LoadScene(const std::string & name) {
 		using namespace tinyxml2;
 		tinyxml2::XMLDocument doc;

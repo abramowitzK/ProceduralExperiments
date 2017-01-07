@@ -17,7 +17,7 @@ namespace CBlocks {
 	}
 
 	GameObject* Scene::create_object() {
-		mObjects.push_back(GameObject());
-		return &mObjects[mObjects.size() - 1];
+		mObjects.push_back( new GameObject());
+		return mObjects.back();
 	}
 }

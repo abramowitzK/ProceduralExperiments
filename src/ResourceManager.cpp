@@ -34,8 +34,8 @@ namespace CBlocks {
 		Scene* s = new Scene();
 		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
-			auto o = s->create_object();
-			o->parent = &s->root;
+			GameObject* o = s->create_object();
+			o->parent = &(s->root);
 			s->root.mChildren.push_back(o);
 			auto tf = e->FirstChildElement("Transform");
 			o->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));

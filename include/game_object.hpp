@@ -4,7 +4,7 @@
 #include <component.hpp>
 #include <transform.hpp>
 #include <rendering.hpp>
-
+#include <script.hpp>
 namespace CBlocks {
 	struct GameObject {
 		friend struct Scene;
@@ -15,6 +15,7 @@ namespace CBlocks {
 		void add_component(Component* comp);
 		GameObject* parent;
 		Transform transform;
+		Script* script;
 	private:
 		GameObject();
 		GameObject(GameObject* parent);

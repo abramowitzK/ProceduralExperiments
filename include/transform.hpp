@@ -94,7 +94,7 @@ namespace CBlocks {
 		@param rot The rotation in degrees in the xyz directions in radians
 		*/
 		inline void set_rotation(Vector3 rot) {
-			mRotation = Quaternion(rot);
+			set_rotation(rot.x, rot.y, rot.z);
 		}
 
 		inline void translate(const float x, const float y, const float z) {

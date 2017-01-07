@@ -178,6 +178,7 @@
     <ClCompile Include="src\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\monkey.hpp" />
     <ClInclude Include="include\block.h" />
     <ClInclude Include="include\camera.hpp" />
     <ClInclude Include="include\chunk.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="include\render_state.hpp" />
     <ClInclude Include="include\ResourceManager.h" />
     <ClInclude Include="include\scene.hpp" />
+    <ClInclude Include="include\script.hpp" />
     <ClInclude Include="include\shader.hpp" />
     <ClInclude Include="include\sprite.hpp" />
     <ClInclude Include="include\sprite_batch.hpp" />

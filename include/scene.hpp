@@ -13,7 +13,7 @@ namespace CBlocks {
 		GameObject root;
 	private:
 	
-		std::vector<GameObject> mObjects;
+		std::vector<GameObject*> mObjects;
 	};
 }
 #endif // !CBLOCKS_SCENE_HPP

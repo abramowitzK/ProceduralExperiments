@@ -21,7 +21,7 @@ namespace CBlocks {
 		rotation = {0,0,0,1};
 		projection = glm::perspective(70.0f, (float)w/(float)h, 0.1f, 1000.0f);
 		acceleration = 1.0f;
-		speed = 10.0f;
+		speed = 50.0f;
 		velocity = { 0.f,0.f,0.f,1.0f};
 	}
 	void Camera::update(double dt) {

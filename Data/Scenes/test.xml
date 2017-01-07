@@ -20,6 +20,7 @@
     </Textures>
     <Models>
       <Model>plane.obj</Model>
+      <Model>monkey.obj</Model>
     </Models>
   </ResourceList>
   <SceneGraph>
@@ -31,6 +32,31 @@
       </Transform>
       <Components>
         <Model name="plane.obj">
+          <Material name="default"/>
+        </Model>
+      </Components>
+    </GameObject>
+    <GameObject>
+      <Transform>
+        <Pos>10,0,10</Pos>
+        <Rot>90,0,0</Rot>
+        <Scale>0.5,1,1</Scale>
+      </Transform>
+      <Components>
+        <Model name="plane.obj">
+          <Material name="default"/>
+        </Model>
+      </Components>
+    </GameObject>
+    <GameObject>
+      <Transform>
+        <Pos>0,0,0</Pos>
+        <Rot>0,0,0</Rot>
+        <Scale>5,5,5</Scale>
+      </Transform>
+      <Components>
+        <Script name="monkey"/>
+        <Model name="monkey.obj">
           <Material name="default"/>
         </Model>
       </Components>

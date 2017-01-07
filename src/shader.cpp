@@ -16,7 +16,7 @@ namespace CBlocks {
 		load_fragment_shader(SHADER_DIR + "basic.frag");
 	}
 
-	Shader::Shader(const char *vShaderFileName, const char *fShaderFileName) {
+	Shader::Shader(const std::string& vShaderFileName, const std::string& fShaderFileName) {
 		mProgram = glCreateProgram();
 		if(0 == mProgram) {
 			assert(false);
@@ -25,7 +25,7 @@ namespace CBlocks {
 		load_fragment_shader(SHADER_DIR + fShaderFileName);
 	}
 
-	Shader::Shader(const char * vShaderFileName, const char * fShaderFileName, const std::string & shaderPath) {
+	Shader::Shader(const std::string& vShaderFileName, const std::string& fShaderFileName, const std::string & shaderPath) {
 		
 	}
 
@@ -80,7 +80,7 @@ namespace CBlocks {
 			glGetShaderInfoLog(shader, 1024, NULL, InfoLog);
 			fprintf(stderr, "Error compiling shader type %d: '%s'\n", shader, InfoLog);
 
-			exit(1);
+			assert(false);
 		}
 		glAttachShader(mProgram, shader);
 		mShaders.push_back(shader);
@@ -95,13 +95,13 @@ namespace CBlocks {
 			GLchar InfoLog[1024];
 			glGetProgramInfoLog(mProgram, sizeof(InfoLog), NULL, InfoLog);
 			fprintf(stderr, "Error linking shader!: %s\n", InfoLog);
-			exit(1);
+			assert(false);
 		}
 		glValidateProgram(mProgram);
 		glGetProgramiv(mProgram, GL_VALIDATE_STATUS, &success);
 		if(!success) {
 			fprintf(stderr, "Error linking shader!\n");
-			exit(1);
+			assert(false);
 		}
 	}
 }

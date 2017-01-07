@@ -6,8 +6,7 @@
 #include <memory>
 namespace CBlocks {
 	struct Material {
-		Material(){
-			shader = new Shader("texturedLit.vert", "texturedLit.frag");
+		Material(Shader* shader) : shader(shader){
 		}
 		Shader* shader;
 	};

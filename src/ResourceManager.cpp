@@ -1,5 +1,6 @@
 #include "ResourceManager.h"
 namespace CBlocks {
+	ResourceManager* ResourceManager::s_instance;
 	ResourceManager::ResourceManager() {}
 
 
@@ -33,14 +34,14 @@ namespace CBlocks {
 			o->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
 			auto componentList = e->FirstChildElement("Components");
 			for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
-				o->add_component(*(parse_component(*c)));
+				o->add_component(MeshRenderer(parse_component(*c), nullptr));
 			}
 		}
 		return s;
 
 	}
 
-	Component* ResourceManager::parse_component(XMLElement & comp) {
+	Mesh* ResourceManager::parse_component(XMLElement & comp) {
 		if (strcmp("Model", comp.Value()) == 0) {
 			return mMeshes[comp.Attribute("name")];
 		}
@@ -80,9 +81,9 @@ namespace CBlocks {
 			data.indices.push_back(face.mIndices[2]);
 		}
 		mMeshes.insert({ name, new Mesh(data)});
-		mMeshes[name]->mType = ComponentType::Mesh;
 	}
 	void ResourceManager::load_shader(const std::string & name) {
-	
+		auto s = new Shader(name + ".vert", name + ".frag", ShaderPath);
+		mShaders.insert({ name, s });
 	}
 }

@@ -16,6 +16,7 @@
 #include "events.hpp"
 #include "camera.hpp"
 #include "chunk.h"
+#include <mesh_renderer.hpp>
 #include <map>
 #include <memory>
 #include <ft2build.h>
@@ -38,13 +39,13 @@ namespace CBlocks {
 		void handle_resize(int width, int height);
 		void create_camera(EventManager& manager);
 		void render_chunk();
-		void render_mesh(Mesh* mesh);
+		void render_mesh(MeshRenderer* mesh);
 		void RenderTTF(const std::string& text, float x, float y, float scale, glm::vec4 color);
 		RenderState current_render_state = DefaultRenderState;
 	private:
 		RenderState mDefault = DefaultRenderState;
-		shared_ptr<Shader> mDefaultShader;
-		shared_ptr<Shader> mDefaultTtfShader;
+		Shader* mDefaultShader;
+		Shader* mDefaultTtfShader;
 		Texture tex;
 		SpriteBatch* sb;
 		Sprite sprite;

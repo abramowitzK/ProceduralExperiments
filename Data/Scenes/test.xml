@@ -2,7 +2,9 @@
 <Scene>
   <ResourceList>
     <Materials>
-      
+      <Material name="default">
+        <Shader name="basic"/>
+      </Material>
     </Materials>
     <Shaders>
       <Shader name="basic" vert="basic.vert" frag="basic.frag"/>
@@ -29,9 +31,7 @@
       </Transform>
       <Components>
         <Model name="plane.obj">
-          <Material>
-            
-          </Material>
+          <Material name="default"/>
         </Model>
       </Components>
     </GameObject>

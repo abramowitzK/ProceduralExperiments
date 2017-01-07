@@ -4,9 +4,11 @@
 */
 #include <rendering.hpp>
 #include <mesh.hpp>
+#include <mesh_renderer.hpp>
 #include <game_object.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <ResourceManager.h>
 
 
 namespace CBlocks {
@@ -18,9 +20,6 @@ namespace CBlocks {
 		}
 		apply_render_state(DefaultRenderState);
 		SDL_GL_SetSwapInterval(0);
-		mDefaultShader = make_shared<Shader>();
-		std::string path = "C:\\Users\\Kyle\\Downloads\\grass.png";
-		tex = create_2d_texture(path);
 		sb = new SpriteBatch();
 		sb->init();
 		sprite = {&tex , {0,0}, {50,50}, RED, 0 };
@@ -71,7 +70,6 @@ namespace CBlocks {
 			};
 			mChars.insert(std::pair<GLchar, Character>(c, character));
 		}
-		auto err = glGetError();
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 		FT_Done_Face(mDefaultFont);
 		FT_Done_FreeType(mFt);
@@ -83,10 +81,9 @@ namespace CBlocks {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
-
-		mDefaultTtfShader = make_shared<Shader>("ttf.vert", "ttf.frag");
-		
-
+		auto manager = ResourceManager::instance();
+		mDefaultShader = manager->get_shader("basic");
+		mDefaultTtfShader = manager->get_shader("ttf");
 	}
 
 	void Renderer::render() {
@@ -134,7 +131,7 @@ namespace CBlocks {
 		auto err = glGetError();
 		apply_render_state(current_render_state);
 	}
-	void Renderer::render_mesh(Mesh* mesh) {
+	void Renderer::render_mesh(MeshRenderer* mesh) {
 		RenderState oldState = current_render_state;
 		current_render_state = mesh->required_state;
 		apply_render_state(current_render_state, &oldState);
@@ -144,7 +141,7 @@ namespace CBlocks {
 		
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "mvp"), 1, GL_FALSE, glm::value_ptr(vp));
 
-		mesh->render();
+		mesh->mesh->render();
 		current_render_state = oldState;
 		apply_render_state(current_render_state);
 		auto err = glGetError();

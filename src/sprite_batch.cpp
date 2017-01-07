@@ -1,10 +1,12 @@
 #include "sprite_batch.hpp"
 #include "rendering.hpp"
 #include <algorithm>
+#include <ResourceManager.h>
+
 namespace CBlocks {
 
 	SpriteBatch::SpriteBatch() {
-		default_shader = new Shader("spriteBatch.vert", "spriteBatch.frag");
+		default_shader = ResourceManager::instance()->get_shader("spriteBatch");
 	}
 
 	SpriteBatch::~SpriteBatch() {

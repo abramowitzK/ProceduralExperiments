@@ -188,6 +188,7 @@
     <ClInclude Include="include\key_state.hpp" />
     <ClInclude Include="include\material.hpp" />
     <ClInclude Include="include\mesh.hpp" />
+    <ClInclude Include="include\mesh_renderer.hpp" />
     <ClInclude Include="include\mouse_state.hpp" />
     <ClInclude Include="include\platform.hpp" />
     <ClInclude Include="include\rendering.hpp" />
@@ -208,16 +209,16 @@
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
-    <None Include="shaders\basic.frag" />
-    <None Include="shaders\basic.vert" />
-    <None Include="shaders\spriteBatch.frag" />
-    <None Include="shaders\spriteBatch.vert" />
-    <None Include="shaders\texturedLit.frag" />
-    <None Include="shaders\texturedLit.vert" />
-    <None Include="shaders\ttf.frag" />
-    <None Include="shaders\ttf.vert" />
-    <None Include="shaders\unlit_textured.frag" />
-    <None Include="shaders\unlit_textured.vert" />
+    <None Include="Data\shaders\basic.frag" />
+    <None Include="Data\shaders\basic.vert" />
+    <None Include="Data\shaders\spriteBatch.frag" />
+    <None Include="Data\shaders\spriteBatch.vert" />
+    <None Include="Data\shaders\texturedLit.frag" />
+    <None Include="Data\shaders\texturedLit.vert" />
+    <None Include="Data\shaders\ttf.frag" />
+    <None Include="Data\shaders\ttf.vert" />
+    <None Include="Data\shaders\unlit_textured.frag" />
+    <None Include="Data\shaders\unlit_textured.vert" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\Scenes\test.xml" />

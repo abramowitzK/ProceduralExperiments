@@ -39,8 +39,8 @@ int CALLBACK WinMain(
 	input.subscribe_to_argless_event(Intents::Escape, [&platform](){platform.capture_mouse(false);});
 	//input.subscribe_to_mouse_motion_event([](int x, int y){printf("%d %d\n", x, y);});
 	CEGUI::OpenGL3Renderer& myRenderer = CEGUI::OpenGL3Renderer::bootstrapSystem();
-	ResourceManager manager;
-	auto scene = manager.LoadScene("test.xml");
+	auto manager = ResourceManager::instance();
+	auto scene = manager->LoadScene("test.xml");
 	double current_time = platform.get_time();
 	double accumulator = 0;
 	double t = 0;

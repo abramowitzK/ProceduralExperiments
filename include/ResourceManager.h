@@ -14,7 +14,6 @@ namespace CBlocks {
 	using namespace std;
 	class ResourceManager {
 	public:
-		ResourceManager();
 		~ResourceManager();
 		Scene* LoadScene(const std::string& name);
 		inline Texture* GetTexture(const std::string& name) {
@@ -23,8 +22,21 @@ namespace CBlocks {
 		inline Mesh* get_mesh(const std::string& name) {
 			return mMeshes[name];
 		}
-		Component* parse_component(XMLElement& comp);
+		inline Shader* get_shader(const std::string& name) {
+			return mShaders[name];
+		}
+		inline Material* get_material(const std::string& name) {
+			return mMaterials[name];
+		}
+		Mesh* parse_component (XMLElement& comp);
+		static ResourceManager* instance() {
+			if (!s_instance)
+				s_instance = new ResourceManager();
+			return s_instance;
+		}
 	private:
+		static ResourceManager* s_instance;
+		ResourceManager();
 		void LoadTexture(const std::string& name);
 		void LoadModel(const std::string& name);
 		void load_shader(const std::string& name);
@@ -38,8 +50,8 @@ namespace CBlocks {
 
 		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;
-		unordered_map<string, Shader> mShaders;
-		unordered_map<string, Material> mMaterials;
+		unordered_map<string, Shader*> mShaders;
+		unordered_map<string, Material*> mMaterials;
 
 	};
 

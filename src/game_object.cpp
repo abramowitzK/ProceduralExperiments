@@ -15,7 +15,7 @@ namespace CBlocks {
 	void GameObject::render(Renderer* renderer) {
 		for (const auto& comp : mComponents) {
 			if (comp.mType == ComponentType::Mesh) {
-				renderer->render_mesh((Mesh*)&comp);
+				renderer->render_mesh((MeshRenderer*)(&comp));
 			}
 		}
 		for (const auto& go : mChildren) {

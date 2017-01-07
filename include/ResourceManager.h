@@ -28,6 +28,7 @@ namespace CBlocks {
 		inline Material* get_material(const std::string& name) {
 			return mMaterials[name];
 		}
+		Script* create_script(const std::string& name);
 		Component* parse_component (XMLElement& comp);
 		static ResourceManager* instance() {
 			if (!s_instance)
@@ -53,6 +54,7 @@ namespace CBlocks {
 		unordered_map<string, Texture> mTextures;
 		unordered_map<string, Shader*> mShaders;
 		unordered_map<string, Material*> mMaterials;
+		unordered_map<string, Script*> mScripts;
 
 	};
 

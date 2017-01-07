@@ -55,7 +55,6 @@
         <Scale>5,5,5</Scale>
       </Transform>
       <Components>
-        <Script name="monkey"/>
         <Model name="monkey.obj">
           <Material name="default"/>
         </Model>

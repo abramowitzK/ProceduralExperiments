@@ -50,6 +50,12 @@ namespace CBlocks {
 
 	}
 
+	Script* ResourceManager::create_script(const std::string & name) {
+		auto s = new Script();
+		mScripts.insert({ name, s });
+		return s;
+	}
+
 	Component* ResourceManager::parse_component(XMLElement & comp) {
 		if (strcmp("Model", comp.Value()) == 0) {
 			auto m = comp.FirstChildElement("Material");

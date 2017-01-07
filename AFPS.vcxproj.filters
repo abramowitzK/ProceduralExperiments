@@ -155,7 +155,10 @@
     <ClInclude Include="include\script.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game\monkey.hpp">
+    <ClInclude Include="include\game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

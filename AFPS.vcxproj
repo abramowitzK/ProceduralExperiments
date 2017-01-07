@@ -178,13 +178,14 @@
     <ClCompile Include="src\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\monkey.hpp" />
     <ClInclude Include="include\block.h" />
     <ClInclude Include="include\camera.hpp" />
     <ClInclude Include="include\chunk.h" />
     <ClInclude Include="include\component.hpp" />
+    <ClInclude Include="include\engine.hpp" />
     <ClInclude Include="include\events.hpp" />
     <ClInclude Include="include\FastNoise.h" />
+    <ClInclude Include="include\game.hpp" />
     <ClInclude Include="include\game_object.hpp" />
     <ClInclude Include="include\key_state.hpp" />
     <ClInclude Include="include\material.hpp" />

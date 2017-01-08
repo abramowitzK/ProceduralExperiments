@@ -5,6 +5,7 @@ namespace CBlocks {
 	struct GameObject;
 	enum class ComponentType {
 		Mesh,
+		Script,
 		Physics,
 	};
 	struct Component {

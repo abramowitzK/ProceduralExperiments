@@ -5,12 +5,11 @@ namespace CBlocks {
 		mPlatform = new Platform();
 		mManager = ResourceManager::instance();
 		mEventManager = new EventManager();
-		mScriptManager = new ScriptManager();
+		mScriptManager = ScriptManager::instance();
 		
 	}
 	void Engine::start(const std::string& initialScene) {
 		init(initialScene);
-		mScriptManager->init();
 		mRunning = true;
 		run();
 	}
@@ -35,6 +34,7 @@ namespace CBlocks {
 		mEventManager->subscribe_to_resize_event([=](int a, int b) {mPlatform->handle_resize(a, b); });
 		mEventManager->subscribe_to_argless_event(Intents::Escape, [=]() {mPlatform->capture_mouse(false); });
 
+		mScriptManager->init();
 		mGame.load(initialScene);
 	}
 

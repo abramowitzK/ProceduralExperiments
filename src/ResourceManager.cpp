@@ -1,6 +1,10 @@
 #include "ResourceManager.h"
+#include <fstream>
+#include <streambuf>
+#include <component.hpp>
 namespace CBlocks {
 	ResourceManager* ResourceManager::s_instance;
+	void ResourceManager::reload_scripts() {}
 	ResourceManager::ResourceManager() {}
 
 
@@ -24,6 +28,7 @@ namespace CBlocks {
 		auto matList = resourceList->FirstChildElement("Materials");
 		auto texList = resourceList->FirstChildElement("Textures");
 		auto shaderList = resourceList->FirstChildElement("Shaders");
+		auto scriptList = resourceList->FirstChildElement("Scripts");
 		for (auto e = texList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			load_texture(e->GetText());
 		}
@@ -37,7 +42,9 @@ namespace CBlocks {
 			auto s = e->FirstChildElement("Shader");
 			load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))]);
 		}
-
+		for (auto e = scriptList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
+			load_script(std::string(e->Attribute("name")));
+		}
 		Scene* s = new Scene();
 		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
@@ -50,11 +57,12 @@ namespace CBlocks {
 			o->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
 			auto componentList = e->FirstChildElement("Components");
 			for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
-				o->add_component(parse_component(*c));
+				auto comp = parse_component(*c);
+				comp->owner = o;
+				o->add_component(comp);
 			}
 		}
 		return s;
-
 	}
 
 	Component* ResourceManager::parse_component(XMLElement & comp) {
@@ -62,6 +70,10 @@ namespace CBlocks {
 			auto m = comp.FirstChildElement("Material");
 			auto mat = mMaterials[std::string(m->Attribute("name"))];
 			return new MeshRenderer(mMeshes[comp.Attribute("name")], mat);
+		}
+		if (strcmp("Script", comp.Value()) == 0) {
+			auto name = comp.Attribute("name");
+			return new Script(name,mScripts[name]);
 		}
 		return nullptr;
 	}
@@ -107,5 +119,17 @@ namespace CBlocks {
 	void ResourceManager::load_material(const std::string & name, Shader* shader) {
 		auto m = new Material(shader);
 		mMaterials.insert({ name, m });
+	}
+	void ResourceManager::load_script(const std::string & name) {
+		std::ifstream t(ScriptPath + name + ".lua");
+		std::string str;
+
+		t.seekg(0, std::ios::end);
+		str.reserve(t.tellg());
+		t.seekg(0, std::ios::beg);
+
+		str.assign((std::istreambuf_iterator<char>(t)),
+			std::istreambuf_iterator<char>());
+		mScripts.insert({ name, std::move(str) });
 	}
 }

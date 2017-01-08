@@ -74,13 +74,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)add_on; $(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;angelscript64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Lua.lib;sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;angelscript64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Debug;$(AWE_DIR)build\lib</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -97,13 +98,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)add_on; $(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;angelscript64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Lua.lib;sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;angelscript64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Debug;$(AWE_DIR)build\lib</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -122,15 +124,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)add_on; $(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0.lib;CEGUIOpenGLRenderer-0.lib;angelscript64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Lua.lib;sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0.lib;CEGUIOpenGLRenderer-0.lib;angelscript64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Release;$(AWE_DIR)build\lib</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -145,15 +148,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)add_on; $(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0.lib;CEGUIOpenGLRenderer-0.lib;angelscript64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Lua.lib;sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0.lib;CEGUIOpenGLRenderer-0.lib;angelscript64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Release;$(AWE_DIR)build\lib</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -162,6 +166,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\script.cpp" />
     <ClCompile Include="src\script_manager.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\platform.cpp" />
@@ -211,10 +216,12 @@
     <ClInclude Include="include\transform.hpp" />
     <ClInclude Include="include\vector_math.hpp" />
     <ClInclude Include="include\tinyxml2.h" />
+    <ClInclude Include="include\sol.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="Data\Scripts\testing.lua" />
     <None Include="Data\shaders\basic.frag" />
     <None Include="Data\shaders\basic.vert" />
     <None Include="Data\shaders\spriteBatch.frag" />

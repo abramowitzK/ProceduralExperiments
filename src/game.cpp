@@ -11,5 +11,6 @@ namespace CBlocks {
 	void Game::load(const std::string & initialScene) {
 		auto manager = ResourceManager::instance();
 		current_scene = manager->LoadScene(initialScene);
+		current_scene->init();
 	}
 }

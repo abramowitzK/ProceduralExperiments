@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene>
   <ResourceList>
+    <Scripts>
+      <Script name="testing"/>
+    </Scripts>
     <Materials>
       <Material name="default">
         <Shader name="basic"/>
@@ -52,6 +55,7 @@
         <Scale>5,5,5</Scale>
       </Transform>
       <Components>
+        <Script name="testing"/>
         <Model name="monkey.obj">
           <Material name="default"/>
         </Model>

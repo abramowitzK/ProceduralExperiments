@@ -10,19 +10,37 @@
 #include <glm\glm.hpp>
 #include <glm\gtx\transform.hpp>
 #include <vector_math.hpp>
+#include <script_manager.hpp>
 namespace CBlocks {
+
+
 	/**
 	Purpose: Represents the transformation of a game object. Every game object is required to have
 	a transform so therefore I will not make it a subclass of Component;
 	*/
-	class Transform final {
+	class Transform {
 	public:
+		static void expose_to_script() {
+			auto m = ScriptManager::instance();
+			auto l = m->get_lua_state();
+			//Need to disambiguate the overloads so we take the address of the right function
+			//l->new_simple_usertype<Transform>("Transform", 
+			//	"set_translation", static_cast<void (Transform::*)(const float x, const float y, const float z)>(&Transform::set_translation), 
+			//	"set_scale", &Transform::set_scale
+			//	);
+			//TODO make each class make it's own transform type and then register them all in one place instead of doing the registering in each file.
+			sol::usertype<Transform> transformType{
+				"scale", &Transform::scale,
+				"rotate_y", &Transform::rotate_y
+			};
+			l->set_usertype("Transform", transformType);
+
+		}
 		/**
 		Constructs a Transform Object
 		*/
 		Transform() : mParent(nullptr), mTranslation(Vector3()), mRotation(Quaternion()), mScale(Vector3()) {}
 		~Transform() {}
-
 		/**
 		Get the transform in matrix form
 		@returns A 4x4 homogenous matrix of floats in column Major order representing the transformation in world coordinates
@@ -79,6 +97,9 @@ namespace CBlocks {
 		inline void set_scale(Vector3 scale) {
 			mScale = scale;
 		}
+		inline void scale(const float xyz) {
+			mScale += xyz;
+		}
 		/**
 		Sets the rotation using Euler angles. This uses a Quaternion internally. User facing euler angles are expected however.
 		@param x The rotation in degrees in the x direction
@@ -95,6 +116,9 @@ namespace CBlocks {
 		*/
 		inline void set_rotation(Vector3 rot) {
 			set_rotation(rot.x, rot.y, rot.z);
+		}
+		inline void rotate_y(float degrees) {
+			mRotation = glm::rotate(mRotation, glm::radians(degrees), Vector3(0, 1, 0));
 		}
 
 		inline void translate(const float x, const float y, const float z) {

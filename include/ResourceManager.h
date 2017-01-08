@@ -38,26 +38,31 @@ namespace CBlocks {
 		inline Material* get_material(const std::string& name) {
 			return mMaterials[name];
 		}
+		inline const std::string& get_script(const std::string& name) {
+			return mScripts[name];
+		}
 		Component* parse_component (XMLElement& comp);
 		static ResourceManager* instance() {
 			if (!s_instance)
 				s_instance = new ResourceManager();
 			return s_instance;
 		}
+		void reload_scripts();
 	private:
+
 		static ResourceManager* s_instance;
 		ResourceManager();
 		void load_texture(const std::string& name);
 		void load_model(const std::string& name);
 		void load_shader(const std::string& name);
 		void load_material(const std::string& name, Shader* shader);
-
+		void load_script(const std::string& name);
 
 		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;
 		unordered_map<string, Shader*> mShaders;
 		unordered_map<string, Material*> mMaterials;
-		unordered_map<string, Script*> mScripts;
+		unordered_map<string, std::string> mScripts;
 
 	};
 

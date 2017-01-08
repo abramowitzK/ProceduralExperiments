@@ -1,13 +1,22 @@
 #include "script_manager.hpp"
 #include <cassert>
+#include <transform.hpp>
+#include <game_object.hpp>
+#include <sol.hpp>
 namespace CBlocks {
-	void print(std::string& msg) {
-		printf("%s", msg.c_str());
+	ScriptManager* ScriptManager::s_instance = nullptr;
+	ScriptManager::ScriptManager() {
+		mLua = new sol::state();
+		mLua->open_libraries();
 	}
 	void ScriptManager::update(double dt) {
-	
+		
 	}
 	void ScriptManager::init() {
-
+		Transform::expose_to_script();
+		mLua->new_usertype<GameObject>("GameObject",
+			"transform",
+			sol::property(&GameObject::transform, &GameObject::transform)
+			);
 	}
 }

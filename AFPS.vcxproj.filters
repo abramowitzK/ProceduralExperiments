@@ -72,6 +72,9 @@
     <ClCompile Include="src\script_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\script.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\events.hpp">
@@ -158,6 +161,9 @@
     <ClInclude Include="include\script_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\sol.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -172,6 +178,7 @@
     <None Include="Data\shaders\ttf.vert" />
     <None Include="Data\shaders\unlit_textured.frag" />
     <None Include="Data\shaders\unlit_textured.vert" />
+    <None Include="Data\Scripts\testing.lua" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\Scenes\test.xml" />

@@ -18,6 +18,8 @@ namespace CBlocks {
 
 	GameObject* Scene::create_object() {
 		mObjects.push_back( new GameObject());
-		return mObjects.back();
+		auto o = mObjects.back();
+		o->mId = mID++;
+		return o;
 	}
 }

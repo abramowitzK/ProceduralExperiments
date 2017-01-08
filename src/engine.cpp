@@ -5,10 +5,12 @@ namespace CBlocks {
 		mPlatform = new Platform();
 		mManager = ResourceManager::instance();
 		mEventManager = new EventManager();
+		mScriptManager = new ScriptManager();
 		
 	}
 	void Engine::start(const std::string& initialScene) {
 		init(initialScene);
+		mScriptManager->init();
 		mRunning = true;
 		run();
 	}

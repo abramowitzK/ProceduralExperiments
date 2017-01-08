@@ -5,6 +5,7 @@
 #include <ResourceManager.h>
 #include <game.hpp>
 #include <events.hpp>
+#include <script_manager.hpp>
 namespace CBlocks {
 	struct Platform;
 	struct Engine {
@@ -24,6 +25,7 @@ namespace CBlocks {
 		Renderer* mRenderer;
 		ResourceManager* mManager;
 		EventManager* mEventManager;
+		ScriptManager* mScriptManager;
 		Game mGame;
 	};
 }

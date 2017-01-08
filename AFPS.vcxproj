@@ -74,9 +74,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include; $(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)add_on; $(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;angelscript64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -96,9 +97,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include; $(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)add_on; $(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;angelscript64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -120,9 +122,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(AWE_DIR)include; $(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)add_on; $(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -142,9 +145,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(AWE_DIR)include; $(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)add_on; $(SolutionDir)include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -158,6 +162,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\script_manager.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\platform.cpp" />
     <ClCompile Include="src\engine.cpp" />
@@ -196,6 +201,7 @@
     <ClInclude Include="include\ResourceManager.h" />
     <ClInclude Include="include\scene.hpp" />
     <ClInclude Include="include\script.hpp" />
+    <ClInclude Include="include\script_manager.hpp" />
     <ClInclude Include="include\shader.hpp" />
     <ClInclude Include="include\sprite.hpp" />
     <ClInclude Include="include\sprite_batch.hpp" />

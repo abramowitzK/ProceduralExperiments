@@ -85,7 +85,7 @@ namespace CBlocks {
 			BlendFunc::Zero,
 			DepthFunc::Less,
 
-			{0.0, 0.0, 0.0, 1.0},
+			{1.0, 1.0, 1.0, 1.0},
 			FrontFace::Ccw,
 			CullFace::Back,
 			PolygonMode::Fill

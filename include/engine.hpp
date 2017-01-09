@@ -6,6 +6,7 @@
 #include <game.hpp>
 #include <events.hpp>
 #include <script_manager.hpp>
+#include <physics.hpp>
 namespace CBlocks {
 	struct Platform;
 	struct Engine {
@@ -26,6 +27,7 @@ namespace CBlocks {
 		ResourceManager* mManager;
 		EventManager* mEventManager;
 		ScriptManager* mScriptManager;
+		Physics* mPhysics;
 		Game mGame;
 	};
 }

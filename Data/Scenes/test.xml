@@ -22,14 +22,15 @@
     <Models>
       <Model>plane.obj</Model>
       <Model>monkey.obj</Model>
+      <Model>teapot.obj</Model>
     </Models>
   </ResourceList>
   <SceneGraph>
     <GameObject name="plane">
       <Transform>
         <Pos>0,0,0</Pos>
-        <Rot>90,0,0</Rot>
-        <Scale>1,1,1</Scale>
+        <Rot>270,0,0</Rot>
+        <Scale>10,10,1</Scale>
       </Transform>
       <Components>
         <Model name="plane.obj">
@@ -39,14 +40,7 @@
     </GameObject>
     <GameObject>
       <Transform>
-        <Pos>10,0,10</Pos>
-        <Rot>90,0,0</Rot>
-        <Scale>0.5,1,1</Scale>
-      </Transform>
-    </GameObject>
-    <GameObject>
-      <Transform>
-        <Pos>0,0,0</Pos>
+        <Pos>0,5,0</Pos>
         <Rot>0,0,0</Rot>
         <Scale>5,5,5</Scale>
       </Transform>

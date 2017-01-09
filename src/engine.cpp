@@ -6,6 +6,7 @@ namespace CBlocks {
 		mManager = ResourceManager::instance();
 		mEventManager = new EventManager();
 		mScriptManager = ScriptManager::instance();
+		mPhysics = new Physics();
 		
 	}
 	void Engine::start(const std::string& initialScene) {
@@ -54,6 +55,7 @@ namespace CBlocks {
 			while (accumulator >= dt) {
 				t += dt;
 				accumulator -= dt;
+				mPhysics->fixed_update(dt);
 			}
 			update(frame_time);
 			mRenderer->clear_screen(true, true);

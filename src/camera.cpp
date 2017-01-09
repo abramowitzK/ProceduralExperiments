@@ -13,15 +13,15 @@
 namespace CBlocks {
 	Camera::Camera(EventManager& manager, int w, int h) {
 		manager.subscribe_to_resize_event([=](int width, int height){
-			glm::perspective(70.0f, (float)width/(float)height, 0.1f, 1000.0f);
+			projection = glm::perspective(70.0f, (float)width/(float)height, 0.1f, 10000.0f);
 		});
 		position = {0,0,0,1};
 		up = {0,0,0,1};
 		forward = {0,0,1,1};
 		rotation = {0,0,0,1};
-		projection = glm::perspective(70.0f, (float)w/(float)h, 0.1f, 1000.0f);
+		projection = glm::perspective(70.0f, (float)w/(float)h, 0.1f, 10000.0f);
 		acceleration = 1.0f;
-		speed = 50.0f;
+		speed = 200.0f;
 		velocity = { 0.f,0.f,0.f,1.0f};
 	}
 	void Camera::update(double dt) {

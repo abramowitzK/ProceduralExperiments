@@ -2,6 +2,7 @@
 #include <fstream>
 #include <streambuf>
 #include <component.hpp>
+#include <physics.hpp>
 namespace CBlocks {
 	ResourceManager* ResourceManager::s_instance;
 	void ResourceManager::reload_scripts() {}
@@ -61,6 +62,12 @@ namespace CBlocks {
 				auto comp = parse_component(*c);
 				comp->owner = o;
 				o->add_component(comp);
+				if (strcmp(e->Attribute("name"), "plane") == 0) {
+					auto rb = Physics::instance()->plane;
+					auto rbc = new RigidBody(rb);
+					rbc->owner = o;
+					o->add_component(rbc);
+				}
 			}
 		}
 		return s;

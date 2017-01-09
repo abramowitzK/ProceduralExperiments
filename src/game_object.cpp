@@ -1,5 +1,5 @@
 #include "game_object.hpp"
-
+#include <rigid_body.hpp>
 namespace CBlocks {
 	GameObject::GameObject() : parent(nullptr) {}
 
@@ -12,6 +12,9 @@ namespace CBlocks {
 		for (const auto comp : mComponents) {
 			if (comp->mType == ComponentType::Script) {
 				((Script*)comp)->update(dt);
+			}
+			if (comp->mType == ComponentType::Physics) {
+				((RigidBody*)comp)->update(dt);
 			}
 		}
 		for (const auto& go : mChildren) {

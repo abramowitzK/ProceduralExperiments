@@ -39,7 +39,7 @@ namespace CBlocks {
 		/**
 		Constructs a Transform Object
 		*/
-		Transform() : mParent(nullptr), mTranslation(Vector3()), mRotation(Quaternion()), mScale(Vector3()) {}
+		Transform() : mParent(nullptr), mTranslation(Vector3()), mRotation(Quaternion()), mScale(Vector3(1.0, 1.0,1.0)) {}
 		~Transform() {}
 		/**
 		Get the transform in matrix form
@@ -109,6 +109,9 @@ namespace CBlocks {
 		inline void set_rotation(const float x, const float y, const float z) {
 			
 			mRotation = Quaternion(Vector3(glm::radians(x), glm::radians(y), glm::radians(z)));
+		}
+		inline void set_rotation(const Quaternion q) {
+			mRotation = q;
 		}
 		/**
 		Sets the rotation using Euler angles. This uses a Quaternion internally. User facing euler angles are expected however.

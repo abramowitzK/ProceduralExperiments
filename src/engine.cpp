@@ -6,7 +6,7 @@ namespace CBlocks {
 		mManager = ResourceManager::instance();
 		mEventManager = new EventManager();
 		mScriptManager = ScriptManager::instance();
-		mPhysics = new Physics();
+		mPhysics = Physics::instance();
 		
 	}
 	void Engine::start(const std::string& initialScene) {
@@ -43,7 +43,7 @@ namespace CBlocks {
 		double current_time = mPlatform->get_time();
 		double accumulator = 0;
 		double t = 0;
-		double dt = 0.01;
+		double dt = 0.01667;
 		while (mRunning) {
 			double new_time = mPlatform->get_time();
 			double frame_time = new_time - current_time;

@@ -6,8 +6,8 @@
 namespace CBlocks {
 
 	struct RigidBody : public Component {
-		RigidBody();
-		void fixed_update(double dt);
+		RigidBody(btRigidBody* rigidBody);
+		void update(double dt);
 		btRigidBody* mRigidBody;
 	};
 }

@@ -9,9 +9,18 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <ResourceManager.h>
-
+#include <script_manager.hpp>
 
 namespace CBlocks {
+	void Renderer::expose_to_script() {
+		auto m = ScriptManager::instance();
+		auto l = m->get_lua_state();
+		sol::usertype<Renderer> rendererType{
+			"render_text", &Renderer::RenderTTF,
+		};
+		l->set_usertype("Renderer", rendererType);
+	
+	}
 	Renderer::Renderer(int width, int height) {
 		GLenum res = glewInit();
 		if(res != GLEW_OK) {
@@ -115,6 +124,7 @@ namespace CBlocks {
 	}
 
 	void Renderer::create_camera(EventManager& manager){
+		manager.subscribe_to_resize_event([=](int a, int b) {this->handle_resize(a, b); });
 		mCamera = make_shared<Camera>(manager, mWidth, mHeight);
 	}
 
@@ -124,8 +134,15 @@ namespace CBlocks {
 		apply_render_state(current_render_state, &oldState);
 		mCamera->render();
 		auto vp = mCamera->projection*mCamera->view*(mesh->owner->transform.GetTransform());
+		auto m = mesh->owner->transform.GetTransform();
+		auto v = mCamera->view;
+		auto p = mCamera->projection;
 		mesh->material->shader->bind();
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "mvp"), 1, GL_FALSE, glm::value_ptr(vp));
+		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "m"), 1, GL_FALSE, glm::value_ptr(m));
+		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "v"), 1, GL_FALSE, glm::value_ptr(v));
+		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "p"), 1, GL_FALSE, glm::value_ptr(p));
+
 		mesh->mesh->render();
 		current_render_state = oldState;
 		apply_render_state(current_render_state);

@@ -7,8 +7,9 @@
 #define CBLOCKS_CAMERA_HPP
 #include "events.hpp"
 #include "vector_math.hpp"
+#include <component.hpp>
 namespace CBlocks {
-	struct Camera {
+	struct Camera : public Component {
 		Camera(EventManager& manager, int w, int h);
 		void update(double dt);
 		void render();

@@ -179,6 +179,8 @@
     <None Include="Data\shaders\unlit_textured.frag" />
     <None Include="Data\shaders\unlit_textured.vert" />
     <None Include="Data\Scripts\testing.lua" />
+    <None Include="Data\Shaders\texturedGouraud.frag" />
+    <None Include="Data\Shaders\texturedGouraud.vert" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\Scenes\test.xml" />

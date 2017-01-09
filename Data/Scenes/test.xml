@@ -6,10 +6,11 @@
     </Scripts>
     <Materials>
       <Material name="default">
-        <Shader name="basic"/>
+        <Shader name="texturedGouraud"/>
       </Material>
     </Materials>
     <Shaders>
+      <Shader name="texturedGouraud" vert="texturedGouraud.vert" frag="texturedGouraud.frag"/>
       <Shader name="texturedLit" vert="texturedLit.vert" frag="texturedLit.frag"/>
       <Shader name="unlit_textured" vert="unlit_textured.vert" frag="unlit_textured.frag"/>
     </Shaders>
@@ -42,11 +43,6 @@
         <Rot>90,0,0</Rot>
         <Scale>0.5,1,1</Scale>
       </Transform>
-      <Components>
-        <Model name="plane.obj">
-          <Material name="default"/>
-        </Model>
-      </Components>
     </GameObject>
     <GameObject>
       <Transform>
@@ -55,7 +51,6 @@
         <Scale>5,5,5</Scale>
       </Transform>
       <Components>
-        <Script name="testing"/>
         <Model name="monkey.obj">
           <Material name="default"/>
         </Model>

@@ -14,7 +14,8 @@ namespace CBlocks {
 		load_shader("basic");
 		load_shader("ttf");
 		load_shader("spriteBatch");
-		load_material("default", mShaders["basic"]);
+		load_shader("texturedGouraud");
+		load_material("default", mShaders["texturedGouraud"]);
 	}
 
 	Scene* ResourceManager::LoadScene(const std::string & name) {

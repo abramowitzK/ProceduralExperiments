@@ -31,6 +31,7 @@ namespace CBlocks {
 	};
 	struct Renderer {
 	public:
+		static void expose_to_script();
 		Renderer(int width, int height);
 		void init_default_resources();
 		void update(double dt) { mCamera->update(dt); }

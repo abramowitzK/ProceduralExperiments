@@ -50,7 +50,7 @@ namespace CBlocks {
 			Matrix4 scale = glm::scale(mScale);
 			Matrix4 translation = glm::translate(mTranslation);
 			Matrix4 identity = Matrix4(1.0);
-			return scale * rot * translation * identity;
+			return translation * rot * scale * identity;
 		}
 		/**
 		Sets the translation in world coordinates

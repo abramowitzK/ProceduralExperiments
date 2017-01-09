@@ -9,8 +9,9 @@ namespace CBlocks {
 		self = (*(m->get_lua_state()))[std::string(tableName)];
 	}
 	void Script::init() {
+		//All scripts are components that need access to their owning game object
 		self["owner"] = std::ref(owner);
-		//self["owner"]["transform"] = std::ref(owner->transform);
+
 	}
 	void Script::update(double dt) {
 		self["update"](self, dt);

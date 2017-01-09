@@ -7,6 +7,7 @@ namespace CBlocks {
 	struct Scene {
 		Scene();
 		~Scene();
+		static void expose_to_script();
 		void init() { root.init(); }
 		void render(Renderer* renderer);
 		void update(double dt);

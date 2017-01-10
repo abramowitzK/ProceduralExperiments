@@ -1,11 +1,12 @@
 //
 // Created by Kyle on 12/8/2016.
 //
-#define CONSOLE
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 #include <engine.hpp>
 using namespace CBlocks;
 #undef main
-#ifdef CONSOLE
+#ifdef _DEBUG
 #pragma comment(linker, "/subsystem:console")
 int main(char** argv, int argc)
 #else

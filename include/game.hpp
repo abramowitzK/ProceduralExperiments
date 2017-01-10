@@ -8,6 +8,7 @@ namespace CBlocks {
 		InGame
 	};
 	struct Game {
+		static void expose_to_script();
 		Scene* current_scene;
 		GameState current_state;
 		void load(const std::string& initialScene);

@@ -3,6 +3,16 @@ namespace CBlocks {
 	Mesh::Mesh(MeshData& data) {
 		mNumIndices = (int)data.indices.size();
 		init(data);
+		mData = std::move(data);
+	}
+
+	Mesh & Mesh::operator=(Mesh && other) {
+		mNumIndices = other.mNumIndices;
+		mVao = other.mVao;
+		mVbo = other.mVbo;
+		mIbo = other.mIbo;
+		mData = std::move(other.mData);
+		return *this;
 	}
 
 	void Mesh::render() {

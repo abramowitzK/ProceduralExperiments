@@ -60,7 +60,6 @@ namespace CBlocks {
 			update(frame_time);
 			mRenderer->clear_screen(true, true);
 			render();
-			mRenderer->render();
 			mPlatform->swap_buffers();
 			mEventManager->update_previous();
 		}

@@ -60,6 +60,8 @@ namespace CBlocks {
 			auto componentList = e->FirstChildElement("Components");
 			for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
 				auto comp = parse_component(*c);
+				if (comp == nullptr)
+					continue;
 				comp->owner = o;
 				o->add_component(comp);
 				if (strcmp(e->Attribute("name"), "plane") == 0) {
@@ -81,7 +83,8 @@ namespace CBlocks {
 		}
 		if (strcmp("Script", comp.Value()) == 0) {
 			auto name = comp.Attribute("name");
-			return new Script(name,mScripts[name]);
+			auto s = new Script(name,mScripts[name]);
+			return s;
 		}
 		return nullptr;
 	}

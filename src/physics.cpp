@@ -2,6 +2,13 @@
 #include <BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h>
 namespace CBlocks {
 	Physics* Physics::sInstance;
+	btRigidBody * Physics::create_capsule_rigid_body(float radius, float height) {
+		auto rbc = btCapsuleShape(radius, height);
+		auto motionState = btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), { 0,0,0 }));
+		auto info = btRigidBody::btRigidBodyConstructionInfo(100.0f, &motionState, &rbc);
+		auto rb = new btRigidBody(info);
+		return rb;
+	}
 	Physics::Physics() {
 		mBroadPhase = new btDbvtBroadphase();
 		mCollisionConfiguration = new btDefaultCollisionConfiguration();
@@ -9,8 +16,8 @@ namespace CBlocks {
 		btGImpactCollisionAlgorithm::registerAlgorithm(mDispatcher);
 		mSolver = new btSequentialImpulseConstraintSolver();
 		mWorld = new btDiscreteDynamicsWorld(mDispatcher, mBroadPhase, mSolver, mCollisionConfiguration);
-		mWorld->setGravity({ 0.0f,-9.8f, 1.0f });
-		btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), { 0,-1,0 }));
+		mWorld->setGravity({ 0.0f,-9.8f, 0.0f });
+		btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), { 0,0,0 }));
 		btCollisionShape* groundShape = new btSphereShape(10.0);
 		btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, {0,0,0});
 		btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);

@@ -21,6 +21,7 @@ namespace CBlocks {
 				sInstance = new Physics();
 			return sInstance;
 		}
+		btRigidBody* create_capsule_rigid_body(float radius, float height);
 	private:
 		Physics();
 		static Physics* sInstance;

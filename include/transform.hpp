@@ -34,6 +34,20 @@ namespace CBlocks {
 				"rotate_y", &Transform::rotate_y
 			};
 			l->set_usertype("Transform", transformType);
+			sol::usertype<Vector3> vector3Type{
+				"x", sol::property(&Vector3::x, &Vector3::x),
+				"y", sol::property(&Vector3::y, &Vector3::y),
+				"z", sol::property(&Vector3::z, &Vector3::z),
+			};
+			sol::usertype<Quaternion> quatType{
+				"x", sol::property(&Quaternion::x, &Quaternion::x),
+				"y", sol::property(&Quaternion::y, &Quaternion::y),
+				"z", sol::property(&Quaternion::z, &Quaternion::z),
+				"w", sol::property(&Quaternion::w, &Quaternion::w),
+				"length", &Quaternion::length
+			};
+			l->set_usertype("Vector3", vector3Type);
+
 
 		}
 		/**
@@ -49,8 +63,7 @@ namespace CBlocks {
 			Matrix4 rot = glm::mat4_cast(mRotation);
 			Matrix4 scale = glm::scale(mScale);
 			Matrix4 translation = glm::translate(mTranslation);
-			Matrix4 identity = Matrix4(1.0);
-			return translation * rot * scale * identity;
+			return translation * rot * scale;
 		}
 		/**
 		Sets the translation in world coordinates
@@ -120,23 +133,19 @@ namespace CBlocks {
 		inline void set_rotation(Vector3 rot) {
 			set_rotation(rot.x, rot.y, rot.z);
 		}
-		inline void rotate_y(float degrees) {
-			mRotation = glm::rotate(mRotation, glm::radians(degrees), Vector3(0, 1, 0));
+		inline void rotate_x(float degrees) {
+			mRotation = glm::angleAxis(glm::radians(degrees), glm::vec3(1.0f, 0.0f, 0.0f))*mRotation;
 		}
-
+		inline void rotate_y(float degrees) {
+			mRotation = glm::angleAxis(glm::radians(degrees), glm::vec3(0.0f, 1.0f, 0.0f))*mRotation;
+		}
+		inline void rotate_z(float degrees) {
+			mRotation = glm::angleAxis(glm::radians(degrees), glm::vec3(0.0f, 0.0f, 1.0f))*mRotation;
+		}
 		inline void translate(const float x, const float y, const float z) {
 			mTranslation += Vector3(x, y, z);
 		}
-		inline Vector3 get_position() const {
-			return mTranslation;
-		}
-		inline Vector3 get_scale() const {
-			return mScale;
-		}
-		inline Quaternion get_rotation() const {
-			return mRotation;
-		}
-	private:
+
 		Transform* mParent;
 		Vector3 mTranslation;
 		Quaternion mRotation;

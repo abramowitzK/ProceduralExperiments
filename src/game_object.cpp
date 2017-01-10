@@ -26,6 +26,9 @@ namespace CBlocks {
 			if (comp->mType == ComponentType::Mesh) {
 				renderer->render_mesh((MeshRenderer*)comp);
 			}
+			if (comp->mType == ComponentType::Script) {
+				static_cast<Script*>(comp)->render(renderer);
+			}
 		}
 		for (const auto& go : mChildren) {
 			go->render(renderer);

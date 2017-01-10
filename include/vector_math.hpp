@@ -15,6 +15,7 @@ namespace CBlocks {
 	typedef glm::vec4 Vector4;
 	typedef glm::mat4x4 Matrix4;
 	typedef glm::quat Quaternion;
+	
 	//TODO move to string library
 	static void split(const std::string &s, char delim, std::vector<std::string> &elems) {
 		std::stringstream ss;

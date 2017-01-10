@@ -72,8 +72,15 @@ namespace CBlocks {
 		Matrix4 rot = glm::mat4_cast(mRotation);
 		Matrix4 scale = glm::scale(mScale);
 		Matrix4 translation = glm::translate(mTranslation);
-		return translation * rot * scale;
+		if (mParent)
+			return get_parent_transforms(mParent) * translation * rot * scale;
+		else
+			return translation * rot * scale;
 	}
+
+	 Matrix4 Transform::get_parent_transforms(Transform* parent) const {
+		 return parent->get_transform();
+	 }
 
 	/**
 	Sets the translation in world coordinates

@@ -59,15 +59,26 @@
       <Transform>
         <Pos>20,20,0</Pos>
         <Rot>0,0,0</Rot>
-        <Scale>5,5,5</Scale>
+        <Scale>1,1,1</Scale>
       </Transform>
       <Components>
         <Script name="testing"/>
         <Model name="monkey.obj">
           <Material name="default"/>
         </Model>
-
       </Components>
+      <GameObject name="child">
+        <Transform>
+          <Pos>10,0,0</Pos>
+          <Rot>0,0,0</Rot>
+          <Scale>2,2,2</Scale>
+        </Transform>
+        <Components>
+          <Model name="capsule.obj">
+            <Material name="default"/>
+          </Model>
+        </Components>
+      </GameObject>
     </GameObject>
   </SceneGraph>
 </Scene>

@@ -33,6 +33,7 @@ namespace CBlocks {
 		@returns A 4x4 homogenous matrix of floats in column Major order representing the transformation in world coordinates
 		*/
 		 Matrix4 get_transform() const;
+		 Matrix4 get_parent_transforms(Transform* parent) const;
 		/**
 		Sets the translation in world coordinates
 		@param x The x value of the transformation

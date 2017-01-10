@@ -41,7 +41,7 @@ namespace CBlocks {
 		inline const std::string& get_script(const std::string& name) {
 			return mScripts[name];
 		}
-		Component* parse_component (XMLElement& comp);
+		
 		static ResourceManager* instance() {
 			if (!sInstance)
 				sInstance = new ResourceManager();
@@ -57,7 +57,8 @@ namespace CBlocks {
 		void load_shader(const std::string& name);
 		void load_material(const std::string& name, Shader* shader);
 		void load_script(const std::string& name);
-
+		Component* parse_component(XMLElement& comp);
+		GameObject* parse_game_object(GameObject* parent, XMLElement* o, Scene* s);
 		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;
 		unordered_map<string, Shader*> mShaders;

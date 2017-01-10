@@ -49,28 +49,31 @@ namespace CBlocks {
 		}
 		Scene* s = new Scene();
 		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
+		//for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
+		//	GameObject* o = s->create_object();
+		//	o->parent = &(s->root);
+		//	s->root.mChildren.push_back(o);
+		//	auto tf = e->FirstChildElement("Transform");
+		//	o->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
+		//	o->transform.set_rotation(parse_vector3(tf->FirstChildElement("Rot")->GetText()));
+		//	o->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
+		//	auto componentList = e->FirstChildElement("Components");
+		//	for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
+		//		auto comp = parse_component(*c);
+		//		if (comp == nullptr)
+		//			continue;
+		//		comp->mOwner = o;
+		//		o->add_component(comp);
+		//		if (strcmp(e->Attribute("name"), "plane") == 0) {
+		//			auto rb = Physics::instance()->plane;
+		//			auto rbc = new RigidBody(rb);
+		//			rbc->mOwner = o;
+		//			o->add_component(rbc);
+		//		}
+		//	}
+		//}
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
-			GameObject* o = s->create_object();
-			o->parent = &(s->root);
-			s->root.mChildren.push_back(o);
-			auto tf = e->FirstChildElement("Transform");
-			o->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
-			o->transform.set_rotation(parse_vector3(tf->FirstChildElement("Rot")->GetText()));
-			o->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
-			auto componentList = e->FirstChildElement("Components");
-			for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
-				auto comp = parse_component(*c);
-				if (comp == nullptr)
-					continue;
-				comp->mOwner = o;
-				o->add_component(comp);
-				if (strcmp(e->Attribute("name"), "plane") == 0) {
-					auto rb = Physics::instance()->plane;
-					auto rbc = new RigidBody(rb);
-					rbc->mOwner = o;
-					o->add_component(rbc);
-				}
-			}
+			parse_game_object(&s->root, e, s);
 		}
 		return s;
 	}
@@ -87,6 +90,35 @@ namespace CBlocks {
 			return s;
 		}
 		return nullptr;
+	}
+
+	GameObject * ResourceManager::parse_game_object(GameObject * parent, XMLElement* o, Scene* s) {
+		GameObject* object = s->create_object();
+		object->parent = parent;
+		parent->mChildren.push_back(object);
+		for (auto e = o->FirstChildElement("GameObject"); e != nullptr; e = e->NextSiblingElement()) {
+			parse_game_object(object, e, s);
+		}
+		auto tf = o->FirstChildElement("Transform");
+		object->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
+		object->transform.set_rotation(parse_vector3(tf->FirstChildElement("Rot")->GetText()));
+		object->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
+		auto componentList = o->FirstChildElement("Components");
+		for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
+			auto comp = parse_component(*c);
+			if (comp == nullptr)
+				continue;
+			comp->mOwner = object;
+			object->add_component(comp);
+			//HACK GET RID OF THIS
+			if (strcmp(o->Attribute("name"), "plane") == 0) {
+				auto rb = Physics::instance()->plane;
+				auto rbc = new RigidBody(rb);
+				rbc->mOwner = object;
+				object->add_component(rbc);
+			}
+		}
+		return object;
 	}
 
 	void ResourceManager::load_texture(const std::string& name){

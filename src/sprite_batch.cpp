@@ -1,7 +1,7 @@
-#include "sprite_batch.hpp"
-#include "rendering.hpp"
+#include <sprite_batch.hpp>
+#include <rendering.hpp>
 #include <algorithm>
-#include <ResourceManager.h>
+#include <resource_manager.hpp>
 
 namespace CBlocks {
 

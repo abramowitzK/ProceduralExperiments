@@ -166,6 +166,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\transform.cpp" />
     <ClCompile Include="src\rigid_body.cpp" />
     <ClCompile Include="src\physics.cpp" />
     <ClCompile Include="src\script.cpp" />
@@ -175,7 +176,7 @@
     <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\mesh.cpp" />
-    <ClCompile Include="src\ResourceManager.cpp" />
+    <ClCompile Include="src\resource_manager.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\events.cpp" />
@@ -206,7 +207,7 @@
     <ClInclude Include="include\platform.hpp" />
     <ClInclude Include="include\rendering.hpp" />
     <ClInclude Include="include\render_state.hpp" />
-    <ClInclude Include="include\ResourceManager.h" />
+    <ClInclude Include="include\resource_manager.hpp" />
     <ClInclude Include="include\rigid_body.hpp" />
     <ClInclude Include="include\scene.hpp" />
     <ClInclude Include="include\script.hpp" />

@@ -10,7 +10,7 @@ namespace CBlocks {
 	}
 	void Script::init() {
 		//All scripts are components that need access to their owning game object
-		self["owner"] = std::ref(owner);
+		self["owner"] = std::ref(mOwner);
 
 	}
 	void Script::update(double dt) {

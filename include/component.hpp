@@ -10,7 +10,7 @@ namespace CBlocks {
 	};
 	struct Component {
 		ComponentType mType;
-		GameObject* owner;
+		GameObject* mOwner;
 	};
 }
 

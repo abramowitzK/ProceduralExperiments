@@ -13,15 +13,15 @@ namespace CBlocks {
 		void update(double dt);
 		void init();
 		static ScriptManager* instance() {
-			if (!s_instance) {
-				s_instance = new ScriptManager();
+			if (!sInstance) {
+				sInstance = new ScriptManager();
 			}
-			return s_instance;
+			return sInstance;
 		}
 		sol::state* get_lua_state() { return mLua; }
 	private:
 		ScriptManager();
-		static ScriptManager* s_instance;
+		static ScriptManager* sInstance;
 		sol::state* mLua;
 		std::vector<Script*> mScripts;
 	};

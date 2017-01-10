@@ -8,17 +8,11 @@
 #include <game_object.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <ResourceManager.h>
+#include <resource_manager.hpp>
 #include <script_manager.hpp>
 
 namespace CBlocks {
 	void Renderer::expose_to_script() {
-		auto m = ScriptManager::instance();
-		auto l = m->get_lua_state();
-		sol::usertype<Renderer> rendererType{
-			"render_text", &Renderer::RenderTTF,
-		};
-		l->set_usertype("Renderer", rendererType);
 	
 	}
 	Renderer::Renderer(int width, int height) {
@@ -36,6 +30,7 @@ namespace CBlocks {
 			fprintf(stderr, "Could not init freetype library\n");
 			exit(1);
 		}
+		//Todo move to resource manager/replace/find better way to render text.
 		if (FT_New_Face(mFt, "C:\\Windows\\fonts\\arial.ttf", 0, &mDefaultFont)) {
 			fprintf(stderr, "Could not open font\n");
 			exit(1);
@@ -102,7 +97,7 @@ namespace CBlocks {
 	}
 
 	void Renderer::render() {
-		RenderTTF("Hello, World!", 50, 50, 2.0f, { 1,0,0,1 });
+		render_ttf("Hello, World!", 50, 50, 2.0f, { 1,0,0,1 });
 	}
 
 	void Renderer::clear_screen(bool depth, bool color) {
@@ -133,8 +128,8 @@ namespace CBlocks {
 		current_render_state = mesh->required_state;
 		apply_render_state(current_render_state, &oldState);
 		mCamera->render();
-		auto vp = mCamera->projection*mCamera->view*(mesh->owner->transform.GetTransform());
-		auto m = mesh->owner->transform.GetTransform();
+		auto vp = mCamera->projection*mCamera->view*(mesh->mOwner->transform.get_transform());
+		auto m = mesh->mOwner->transform.get_transform();
 		auto v = mCamera->view;
 		auto p = mCamera->projection;
 		mesh->material->shader->bind();
@@ -148,7 +143,7 @@ namespace CBlocks {
 		apply_render_state(current_render_state);
 	}
 
-	void Renderer::RenderTTF(const std::string & text, float x, float y, float scale, glm::vec4 color) {
+	void Renderer::render_ttf(const std::string & text, float x, float y, float scale, glm::vec4 color) {
 		RenderState oldState = current_render_state;
 		mDefaultTtfShader->bind();
 		current_render_state = DefaultTTFState;

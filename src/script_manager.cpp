@@ -4,7 +4,7 @@
 #include <game_object.hpp>
 #include <sol.hpp>
 namespace CBlocks {
-	ScriptManager* ScriptManager::s_instance = nullptr;
+	ScriptManager* ScriptManager::sInstance = nullptr;
 	ScriptManager::ScriptManager() {
 		mLua = new sol::state();
 		mLua->open_libraries();

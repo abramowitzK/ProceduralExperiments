@@ -25,8 +25,8 @@ namespace CBlocks {
 		
 		~ResourceManager();
 		void load_defaults();
-		Scene* LoadScene(const std::string& name);
-		inline Texture* GetTexture(const std::string& name) {
+		Scene* load_scene(const std::string& name);
+		inline Texture* get_texture(const std::string& name) {
 			return &mTextures[name];
 		}
 		inline Mesh* get_mesh(const std::string& name) {
@@ -43,14 +43,14 @@ namespace CBlocks {
 		}
 		Component* parse_component (XMLElement& comp);
 		static ResourceManager* instance() {
-			if (!s_instance)
-				s_instance = new ResourceManager();
-			return s_instance;
+			if (!sInstance)
+				sInstance = new ResourceManager();
+			return sInstance;
 		}
 		void reload_scripts();
 	private:
 
-		static ResourceManager* s_instance;
+		static ResourceManager* sInstance;
 		ResourceManager();
 		void load_texture(const std::string& name);
 		void load_model(const std::string& name);

@@ -9,8 +9,8 @@ namespace CBlocks {
 		auto& tf = mRigidBody->getWorldTransform();
 		auto& rot = tf.getRotation();
 		Quaternion q(rot.x(), rot.y(), rot.z(), rot.w());
-		owner->transform.set_rotation(q);
+		mOwner->transform.set_rotation(q);
 		auto& trans = tf.getOrigin();
-		owner->transform.set_translation(trans.x(), trans.y(), trans.z());
+		mOwner->transform.set_translation(trans.x(), trans.y(), trans.z());
 	}
 }

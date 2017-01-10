@@ -10,6 +10,7 @@ namespace CBlocks {
 	EventManager::EventManager() {
 		mIntents.resize(UINT8_MAX);
 		mSubscribers.resize(UINT8_MAX);
+		mDirty = false;
 	};
 
 	void EventManager::poll_input() {
@@ -18,23 +19,26 @@ namespace CBlocks {
 				case SDL_KEYDOWN:
 					if (mEvent.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
 						mIntents[to_underlying(Intents::Escape)] = true;
+						mDirty = true;
 						break;
 					}
-					sKeyboardState.KeyDown(mEvent.key.keysym.scancode);
+					sKeyboardState.key_down(mEvent.key.keysym.scancode);
 					break;
 				case SDL_KEYUP:
-					sKeyboardState.KeyUp(mEvent.key.keysym.scancode);
+					sKeyboardState.key_up(mEvent.key.keysym.scancode);
 					break;
 				case SDL_QUIT:
 					mIntents[to_underlying(Intents::Shutdown)] = true;
+					mDirty = true;
 					break;
 				case SDL_MOUSEMOTION:
-					sMouseState.SetRelative(mEvent.motion.xrel, mEvent.motion.yrel);
+					sMouseState.set_relative(mEvent.motion.xrel, mEvent.motion.yrel);
 					break;
 				case SDL_WINDOWEVENT:
 					switch(mEvent.window.event) {
 						case SDL_WINDOWEVENT_RESIZED:
 							mIntents[to_underlying(Intents::Resize)] = true;
+							mDirty = true;
 							mResizeX = mEvent.window.data1;
 							mResizeY = mEvent.window.data2;
 							break;
@@ -50,29 +54,34 @@ namespace CBlocks {
 	}
 
 	bool EventManager::get_key_down(Keys key) {
-		return sKeyboardState.IsKeyPressed(key);
+		return sKeyboardState.is_key_pressed(key);
 	}
 
 	float EventManager::get_mouse_relative_x() {
-		return (float)sMouseState.GetMouseX();
+		return (float)sMouseState.get_mouse_x();
 	}
 
 	float EventManager::get_mouse_relative_y() {
-		return (float)sMouseState.GetMouseY();
+		return (float)sMouseState.get_mouse_y();
 	}
 
 	void EventManager::update_previous() {
-		sMouseState.UpdatePrev();
-		sKeyboardState.UpdatePrev();
+		sMouseState.update_prev();
+		sKeyboardState.update_prev();
 	}
 
 	void EventManager::notify_subscribers() {
-		for(unsigned i = 0; i < mIntents.size(); i++) {
-			if(mIntents[i]) {
-				for(const auto &func: mSubscribers[i]) {
-					func();
+		//Huge performance savings here. Only notify subscribers if we have to. Just need to remember 
+		//to always set the dirty bit when we want an intent to be processed right away
+		if (mDirty) {
+			mDirty = false;
+			for (unsigned i = 0; i < mIntents.size(); i++) {
+				if (mIntents[i]) {
+					for (const auto &func : mSubscribers[i]) {
+						func();
+					}
+					mIntents[i] = false;
 				}
-				mIntents[i] = false;
 			}
 		}
 	}

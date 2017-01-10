@@ -1,10 +1,10 @@
-#include "ResourceManager.h"
+#include <resource_manager.hpp>
 #include <fstream>
 #include <streambuf>
 #include <component.hpp>
 #include <physics.hpp>
 namespace CBlocks {
-	ResourceManager* ResourceManager::s_instance;
+	ResourceManager* ResourceManager::sInstance;
 	void ResourceManager::reload_scripts() {}
 	ResourceManager::ResourceManager() {}
 
@@ -19,7 +19,7 @@ namespace CBlocks {
 		load_material("default", mShaders["texturedGouraud"]);
 	}
 
-	Scene* ResourceManager::LoadScene(const std::string & name) {
+	Scene* ResourceManager::load_scene(const std::string & name) {
 		using namespace tinyxml2;
 		tinyxml2::XMLDocument doc;
 		auto path = ScenePath + name;
@@ -62,12 +62,12 @@ namespace CBlocks {
 				auto comp = parse_component(*c);
 				if (comp == nullptr)
 					continue;
-				comp->owner = o;
+				comp->mOwner = o;
 				o->add_component(comp);
 				if (strcmp(e->Attribute("name"), "plane") == 0) {
 					auto rb = Physics::instance()->plane;
 					auto rbc = new RigidBody(rb);
-					rbc->owner = o;
+					rbc->mOwner = o;
 					o->add_component(rbc);
 				}
 			}

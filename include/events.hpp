@@ -48,6 +48,7 @@ namespace CBlocks {
 		int mMouseRelY;
 		static KeyState sKeyboardState;
 		static MouseState sMouseState;
+		bool mDirty;
 
 	};
 }

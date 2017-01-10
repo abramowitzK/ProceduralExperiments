@@ -11,26 +11,22 @@ namespace CBlocks {
 	public:
 		MouseState();
 		~MouseState();
-		void SetPosition(const int x, const int y);
-		int GetMouseX() const;
-		int GetMouseY() const;
-		void UpdatePrev();
-		inline void SetRelative(int x, int y);
+		void set_position(const int x, const int y);
+		int get_mouse_x() const;
+		int get_mouse_y() const;
+		void update_prev();
+		void set_relative(int x, int y);
 	private:
 		const static size_t NUM_MOUSE_BUTTONS = 4;
-		char m_mouseButtonState[NUM_MOUSE_BUTTONS];
-		int m_x;
-		int m_y;
-		int m_xRel;
-		int m_yRel;
-		char m_prevMouseButtonState[NUM_MOUSE_BUTTONS];
-		int m_prevX;
-		int m_prevY;
-		int* m_prevXRel;
-		int* m_prevYRel;
+		char mMouseButtonState[NUM_MOUSE_BUTTONS];
+		int mX;
+		int mY;
+		int mXRel;
+		int mYRel;
+		char mPrevMouseButtonState[NUM_MOUSE_BUTTONS];
+		int mPrevX;
+		int mPrevY;
+		int* mPrevXRel;
+		int* mPrevYRel;
 	};
-	void MouseState::SetRelative(int x, int y) {
-		m_xRel += x;
-		m_yRel += y;
-	}
 }

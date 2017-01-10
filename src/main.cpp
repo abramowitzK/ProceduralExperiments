@@ -29,7 +29,7 @@ int CALLBACK WinMain(
 
 	Renderer renderer(width, height);
 	renderer.create_camera(input);
-	auto scene = manager->LoadScene("test.xml");
+	auto scene = manager->load_scene("test.xml");
 	renderer.init_default_resources();
 	bool running = true;
 	std::function<void()> shutdown = [&running](){ running = false;};

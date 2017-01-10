@@ -2,7 +2,7 @@
 #define CBLOCKS_ENGINE_HPP
 #include <string>
 #include <rendering.hpp>
-#include <ResourceManager.h>
+#include <resource_manager.hpp>
 #include <game.hpp>
 #include <events.hpp>
 #include <script_manager.hpp>

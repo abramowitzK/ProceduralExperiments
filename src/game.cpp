@@ -1,5 +1,5 @@
 #include <game.hpp>
-#include <ResourceManager.h>
+#include <resource_manager.hpp>
 #include <script_manager.hpp>
 namespace CBlocks {
 	void update_game(Game * game, double dt) {
@@ -15,7 +15,7 @@ namespace CBlocks {
 	}
 	void Game::load(const std::string & initialScene) {
 		auto manager = ResourceManager::instance();
-		current_scene = manager->LoadScene(initialScene);
+		current_scene = manager->load_scene(initialScene);
 		current_scene->init();
 	}
 }

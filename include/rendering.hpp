@@ -40,7 +40,7 @@ namespace CBlocks {
 		void handle_resize(int width, int height);
 		void create_camera(EventManager& manager);
 		void render_mesh(MeshRenderer* mesh);
-		void RenderTTF(const std::string& text, float x, float y, float scale, glm::vec4 color);
+		void render_ttf(const std::string& text, float x, float y, float scale, glm::vec4 color);
 		RenderState current_render_state = DefaultRenderState;
 	private:
 		RenderState mDefault = DefaultRenderState;

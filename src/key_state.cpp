@@ -10,57 +10,57 @@ namespace CBlocks {
 		//amount of stack space. We'll do the allocation in one malloc call
 		//because we're fancy. I'm using more of an idiomatic C style and 
 		//am trying to avoid STL as much as possible
-		m_arrayMem = (bool*)malloc(sizeof(bool)*SIZE * 2);
-		if (NULL == m_arrayMem) {
+		mArrayMem = (bool*)malloc(sizeof(bool)*SIZE * 2);
+		if (NULL == mArrayMem) {
 			//Crash and burn. This is not good. Malloc failed for some reason
 			assert(false);
 		}
 		//Dangerous!! But I think we got this right...Should test to make sure
-		m_current = m_arrayMem;
-		m_previous = m_arrayMem + SIZE;
+		mCurrent = mArrayMem;
+		mPrevious = mArrayMem + SIZE;
 		//Not sure if necessary but we'll include it anyway for safety as this should never be 
 		//called in a tight loop and we're not worried about wasting clock cycles. 
-		memset(m_arrayMem, 0, SIZE * 2 * sizeof(bool));
+		memset(mArrayMem, 0, SIZE * 2 * sizeof(bool));
 	}
 
 	KeyState::~KeyState() {
-		if (m_arrayMem)
-			free(m_arrayMem);
+		if (mArrayMem)
+			free(mArrayMem);
 		//This shouldn't impact performance and safety is nice
-		m_current = nullptr;
-		m_previous = nullptr;
-		m_arrayMem = nullptr;
+		mCurrent = nullptr;
+		mPrevious = nullptr;
+		mArrayMem = nullptr;
 	}
 
-	void KeyState::KeyDown(int code) {
+	void KeyState::key_down(int code) {
 #ifdef _DEBUG
 		assert(code < SIZE);
 #endif
 		if (code < SIZE) {
-			m_current[code] = 1;
+			mCurrent[code] = 1;
 		}
 	}
 
-	void KeyState::KeyUp(int code) {
+	void KeyState::key_up(int code) {
 #ifdef _DEBUG
 		assert(code < SIZE);
 #endif
 		if (code < SIZE) {
-			m_current[code] = 0;
+			mCurrent[code] = 0;
 		}
 	}
 
-	bool KeyState::IsKeyPressed(int code) const {
+	bool KeyState::is_key_pressed(int code) const {
 #ifdef _DEBUG
 		assert(code < SIZE);
 #endif
 		if (code < SIZE) {
-			return m_current[code];
+			return mCurrent[code];
 		}
 		return false;
 	}
 
-	void KeyState::UpdatePrev() {
-		memcpy(m_previous, m_current, SIZE);
+	void KeyState::update_prev() {
+		memcpy(mPrevious, mCurrent, SIZE);
 	}
 }

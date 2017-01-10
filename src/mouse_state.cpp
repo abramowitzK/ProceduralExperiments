@@ -1,32 +1,36 @@
 #include <mouse_state.hpp>
 namespace CBlocks {
-	MouseState::MouseState() : m_x(0), m_y(0), m_xRel(0), m_yRel(0) {
-		memset(m_mouseButtonState, 0, NUM_MOUSE_BUTTONS);
+	MouseState::MouseState() : mX(0), mY(0), mXRel(0), mYRel(0) {
+		memset(mMouseButtonState, 0, NUM_MOUSE_BUTTONS);
 	}
 
 	MouseState::~MouseState() {
-		delete[] m_prevXRel;
-		delete[] m_prevYRel;
+		delete[] mPrevXRel;
+		delete[] mPrevYRel;
 	}
 
-	void MouseState::SetPosition(const int x, const int y) {
-		m_x = x;
-		m_y = y;
+	void MouseState::set_position(const int x, const int y) {
+		mX = x;
+		mY = y;
 	}
 
-	int MouseState::GetMouseX() const {
-		return m_xRel;
+	int MouseState::get_mouse_x() const {
+		return mXRel;
 	}
 
-	int MouseState::GetMouseY() const {
-		return m_yRel;
+	int MouseState::get_mouse_y() const {
+		return mYRel;
 	}
 
-	void MouseState::UpdatePrev() {
-		m_prevX = m_x;
-		m_prevY = m_y;
-		m_xRel = 0;
-		m_yRel = 0;
-		memcpy(m_prevMouseButtonState, m_mouseButtonState, NUM_MOUSE_BUTTONS * sizeof(char));
+	void MouseState::update_prev() {
+		mPrevX = mX;
+		mPrevY = mY;
+		mXRel = 0;
+		mYRel = 0;
+		memcpy(mPrevMouseButtonState, mMouseButtonState, NUM_MOUSE_BUTTONS * sizeof(char));
+	}
+	void MouseState::set_relative(int x, int y) {
+		mXRel += x;
+		mYRel += y;
 	}
 }

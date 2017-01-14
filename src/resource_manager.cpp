@@ -55,7 +55,7 @@ namespace CBlocks {
 		return s;
 	}
 
-	Component* ResourceManager::parse_component(XMLElement & comp) {
+	Component* ResourceManager::parse_component(XMLElement & comp, GameObject* parent) {
 		if (strcmp("Model", comp.Value()) == 0) {
 			auto m = comp.FirstChildElement("Material");
 			auto mat = mMaterials[std::string(m->Attribute("name"))];
@@ -65,6 +65,15 @@ namespace CBlocks {
 			auto name = comp.Attribute("name");
 			auto s = new Script(name,mScripts[name]);
 			return s;
+		}
+		if (strcmp("RigidBody", comp.Value()) == 0) {
+			btRigidBody* rb = nullptr;
+			if (strcmp(comp.Attribute("shape"), "convex_hull") == 0) {
+				rb = Physics::instance()->create_convex_hull_rigid_body(true, mMeshes[comp.Attribute("mesh")], &parent->transform);
+			} else if (strcmp(comp.Attribute("shape"), "capsule") == 0) {
+				rb = Physics::instance()->create_convex_hull_rigid_body(false, mMeshes[comp.Attribute("mesh")], &parent->transform);
+			}
+			return new RigidBody(rb);
 		}
 		return nullptr;
 	}
@@ -83,18 +92,11 @@ namespace CBlocks {
 		object->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
 		auto componentList = o->FirstChildElement("Components");
 		for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
-			auto comp = parse_component(*c);
+			auto comp = parse_component(*c, object);
 			if (comp == nullptr)
 				continue;
 			comp->mOwner = object;
 			object->add_component(comp);
-			//HACK GET RID OF THIS
-			if (strcmp(o->Attribute("name"), "plane") == 0) {
-				auto rb = Physics::instance()->plane;
-				auto rbc = new RigidBody(rb);
-				rbc->mOwner = object;
-				object->add_component(rbc);
-			}
 		}
 		return object;
 	}
@@ -118,12 +120,19 @@ namespace CBlocks {
 		for (unsigned i = 0; i < model->mNumVertices; i++) {
 			const auto& vert = model->mVertices[i];
 			const auto& normal = model->mNormals[i];
-			const auto& uv = model->mTextureCoords[0][i];
-			data.vertices[i] = { 
-				{vert.x, vert.y, vert.z},
-				{normal.x, normal.y, normal.z},
-				{uv.x, uv.y}
-			};
+			if (model->HasTextureCoords(0)) {
+				const auto& uv = model->mTextureCoords[0][i];
+				data.vertices[i] = {
+					{vert.x, vert.y, vert.z},
+					{normal.x, normal.y, normal.z},
+					{uv.x, uv.y}
+				};
+			} else {
+				data.vertices[i] = {
+					{ vert.x, vert.y, vert.z },
+					{ normal.x, normal.y, normal.z }
+				};
+			}
 		}
 		for (unsigned i = 0; i < model->mNumFaces; i++) {
 			const auto& face = model->mFaces[i];

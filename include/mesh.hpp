@@ -22,6 +22,8 @@ namespace CBlocks {
 			indices = std::move(other.indices);
 			return *this;
 		}
+		int get_num_vertices() { return vertices.size(); }
+		int get_num_indices() { return indices.size(); }
 	};
 	struct Mesh {
 		Mesh() {}
@@ -32,6 +34,8 @@ namespace CBlocks {
 		Mesh& operator=(Mesh other) = delete;
 		Mesh& operator=(Mesh&& other);
 		void render();
+		MeshData* get_data() { return  &mData; }
+		
 	private:
 		void init(MeshData& data);
 		GLuint mVbo;

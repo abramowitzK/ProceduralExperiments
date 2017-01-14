@@ -43,7 +43,7 @@ namespace CBlocks {
 		double current_time = mPlatform->get_time();
 		double accumulator = 0;
 		double t = 0;
-		double dt = 0.01667;
+		double dt = 0.005;
 		while (mRunning) {
 			double new_time = mPlatform->get_time();
 			double frame_time = new_time - current_time;

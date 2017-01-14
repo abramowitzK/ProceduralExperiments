@@ -57,7 +57,7 @@ namespace CBlocks {
 		void load_shader(const std::string& name);
 		void load_material(const std::string& name, Shader* shader);
 		void load_script(const std::string& name);
-		Component* parse_component(XMLElement& comp);
+		Component* parse_component(XMLElement& comp, GameObject* parent);
 		GameObject* parse_game_object(GameObject* parent, XMLElement* o, Scene* s);
 		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;

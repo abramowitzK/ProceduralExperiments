@@ -6,7 +6,8 @@ namespace CBlocks {
 	}
 
 	void RigidBody::update(double dt) {
-		auto& tf = mRigidBody->getWorldTransform();
+		btTransform tf;
+		mRigidBody->getMotionState()->getWorldTransform(tf);
 		auto& rot = tf.getRotation();
 		Quaternion q(rot.x(), rot.y(), rot.z(), rot.w());
 		mOwner->transform.set_rotation(q);

@@ -8,8 +8,12 @@
       <Material name="default">
         <Shader name="texturedGouraud"/>
       </Material>
+      <Material name="basic">
+        <Shader name="basic"/>
+      </Material>
     </Materials>
     <Shaders>
+      <Shader name="basic" vert="basic.vert" frag="basic.frag"/>
       <Shader name="texturedGouraud" vert="texturedGouraud.vert" frag="texturedGouraud.frag"/>
       <Shader name="texturedLit" vert="texturedLit.vert" frag="texturedLit.frag"/>
       <Shader name="unlit_textured" vert="unlit_textured.vert" frag="unlit_textured.frag"/>
@@ -25,34 +29,33 @@
       <Model>teapot.obj</Model>
       <Model>cube.obj</Model>
       <Model>capsule.obj</Model>
+      <Model>sphere.obj</Model>
     </Models>
   </ResourceList>
   <SceneGraph>
     <GameObject name="playerasdfasdfadfasdfasdf">
       <Transform>
-        <Pos>0,0,0</Pos>
-        <Rot>120,0,0</Rot>
-        <Scale>5,5,5</Scale>
+        <Pos>0,100,0</Pos>
+        <Rot>0,0,0</Rot>
+        <Scale>50,50,50</Scale>
       </Transform>
       <Components>
-        <Model name="capsule.obj">
+        <Model name="sphere.obj">
           <Material name="default"/>
         </Model>
-        <RigidBody shape="capsule" static="false"/>
-        <Script name="testing"/>
+        <RigidBody shape="capsule" mesh="sphere.obj" static="false"/>
       </Components>
     </GameObject>
     <GameObject name="plane">
       <Transform>
-        <Pos>0,-10,0</Pos>
-        <Rot>0,0,0</Rot>
-        <Scale>200,1,200</Scale>
+        <Pos>0,1,0</Pos>
+        <Rot>90,0,0</Rot>
+        <Scale>200,200,200</Scale>
       </Transform>
       <Components>
-        <Model name="cube.obj">
-          <Material name="default"/>
+        <Model name="plane.obj">
+          <Material name="basic"/>
         </Model>
-        <RigidBody shape="box" static="true"/>
       </Components>
     </GameObject>
     <GameObject name="monkey">

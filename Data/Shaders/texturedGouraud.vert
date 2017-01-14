@@ -19,7 +19,7 @@ void main(){
 	float d = length(LightPos - transformedVertex);
 	vec3 lightVector = normalize(LightPos - transformedVertex);
 	float diffuse = max(dot(transformedNormal, lightVector), 0.0);
-	float attenuation = 900*(1.0/(1.0 + (0.2*pow(d,2))));
+	float attenuation = 2000*(1.0/(1.0 + (0.2*pow(d,2))));
 	diffuse = diffuse*attenuation;
 	vec3 reflectDir = reflect(-lightVector, transformedNormal);
 	vec3 viewDir = normalize(-transformedVertex);

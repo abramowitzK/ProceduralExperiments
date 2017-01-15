@@ -1,9 +1,24 @@
 #include "game_object.hpp"
 #include <rigid_body.hpp>
+#include <script_manager.hpp>
 namespace CBlocks {
 	GameObject::GameObject() : parent(nullptr) {}
 
 	GameObject::GameObject(GameObject * parent) : parent(parent){
+	}
+
+	void GameObject::expose_to_script() {
+		auto m = ScriptManager::instance();
+		auto l = m->get_lua_state();
+		sol::usertype<GameObject> type{
+			"add_component", &GameObject::add_component,
+			"parent", sol::property(&GameObject::parent, &GameObject::parent),
+			"transform", sol::property(&GameObject::transform, &GameObject::transform),
+			"id", sol::property(&GameObject::mId, &GameObject::mId),
+			"components", sol::property(&GameObject::mComponents, &GameObject::mComponents),
+			"children", sol::property(&GameObject::mChildren, &GameObject::mChildren)
+		};
+		l->set_usertype("GameObject", type);
 	}
 
 	GameObject::~GameObject() {

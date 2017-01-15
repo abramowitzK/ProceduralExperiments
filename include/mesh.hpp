@@ -22,8 +22,8 @@ namespace CBlocks {
 			indices = std::move(other.indices);
 			return *this;
 		}
-		int get_num_vertices() { return vertices.size(); }
-		int get_num_indices() { return indices.size(); }
+		int get_num_vertices() { return (int)vertices.size(); }
+		int get_num_indices() { return (int)indices.size(); }
 	};
 	struct Mesh {
 		Mesh() {}

@@ -5,13 +5,15 @@
 #include <lua.hpp>
 #include <vector>
 #include <script.hpp>
+
 namespace CBlocks {
+	struct Scene;
 	struct ScriptManager {
 		
 		~ScriptManager() {
 		}
 		void update(double dt);
-		void init();
+		void init(Scene* currentScene);
 		static ScriptManager* instance() {
 			if (!sInstance) {
 				sInstance = new ScriptManager();

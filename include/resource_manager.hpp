@@ -22,7 +22,7 @@ namespace CBlocks {
 	const std::string ScriptPath = ResourcePath + "Scripts\\";
 	class ResourceManager {
 	public:
-		
+		static void expose_to_script();
 		~ResourceManager();
 		void load_defaults();
 		Scene* load_scene(const std::string& name);

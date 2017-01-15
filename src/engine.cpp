@@ -34,9 +34,8 @@ namespace CBlocks {
 		mEventManager->subscribe_to_resize_event([=](int a, int b) {mPlatform->handle_resize(a, b); });
 		mEventManager->subscribe_to_resize_event([=](int a, int b) {mPlatform->handle_resize(a, b); });
 		mEventManager->subscribe_to_argless_event(Intents::Escape, [=]() {mPlatform->capture_mouse(false); });
-
-		mScriptManager->init();
 		mGame.load(initialScene);
+		mScriptManager->init(mGame.current_scene);
 	}
 
 	void Engine::run() {

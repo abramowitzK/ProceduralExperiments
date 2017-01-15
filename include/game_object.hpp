@@ -8,6 +8,7 @@
 namespace CBlocks {
 	struct GameObject {
 		friend struct Scene;
+		static void expose_to_script();
 		~GameObject();
 		std::vector<GameObject*> mChildren;
 		void update(double dt);

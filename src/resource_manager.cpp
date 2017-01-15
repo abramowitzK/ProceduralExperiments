@@ -3,11 +3,22 @@
 #include <streambuf>
 #include <component.hpp>
 #include <physics.hpp>
+#include <script_manager.hpp>
 namespace CBlocks {
 	ResourceManager* ResourceManager::sInstance;
 	void ResourceManager::reload_scripts() {}
 	ResourceManager::ResourceManager() {}
 
+
+	void ResourceManager::expose_to_script() {
+		auto m = ScriptManager::instance();
+		auto l = m->get_lua_state();
+		sol::usertype<Scene> type{
+			"create_object", &Scene::create_object,
+		};
+		l->set_usertype("Scene", type);
+	
+	}
 
 	ResourceManager::~ResourceManager() {}
 

@@ -65,7 +65,7 @@ namespace CBlocks {
 		auto data = mesh->get_data();
 		auto vertices = &data->vertices;
 		auto verts = new btScalar[data->get_num_vertices()*3];
-		for (unsigned i = 0; i < data->get_num_vertices(); i++) {
+		for (int i = 0; i < data->get_num_vertices(); i++) {
 			verts[i * 3] = (*vertices)[i].pos.x;
 			verts[i * 3 + 1] = (*vertices)[i].pos.y;
 			verts[i * 3 + 2] = (*vertices)[i].pos.z;
@@ -82,7 +82,7 @@ namespace CBlocks {
 		auto data = mesh->get_data();
 		auto vertices = &data->vertices;
 		auto verts = new btScalar[data->get_num_vertices()*3];
-		for (unsigned i = 0; i < data->get_num_vertices(); i++) {
+		for (int i = 0; i < data->get_num_vertices(); i++) {
 			verts[i * 3] = (*vertices)[i].pos.x;
 			verts[i * 3 + 1] = (*vertices)[i].pos.y;
 			verts[i * 3 + 2] = (*vertices)[i].pos.z;

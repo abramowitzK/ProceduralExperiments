@@ -1,5 +1,5 @@
 #include <platform.hpp>
-namespace CBlocks {
+namespace Aurora {
 	Platform::Platform() {
 		SDL_Init(SDL_INIT_EVERYTHING);
 		mFreq = static_cast<double>(SDL_GetPerformanceFrequency());
@@ -17,6 +17,7 @@ namespace CBlocks {
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+		SDL_GL_SetSwapInterval(1);
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 		mWindowHandle = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 		mContext = SDL_GL_CreateContext(mWindowHandle);

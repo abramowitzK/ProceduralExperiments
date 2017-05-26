@@ -4,20 +4,23 @@
 #include <component.hpp>
 #include <physics.hpp>
 #include <script_manager.hpp>
-namespace CBlocks {
+#include <scene.hpp>
+namespace Aurora {
 	ResourceManager* ResourceManager::sInstance;
 	void ResourceManager::reload_scripts() {}
 	ResourceManager::ResourceManager() {}
 
 
-	void ResourceManager::expose_to_script() {
-		auto m = ScriptManager::instance();
+	void ResourceManager::expose_to_script(ScriptManager* m) {
 		auto l = m->get_lua_state();
-		sol::usertype<Scene> type{
-			"create_object", &Scene::create_object,
+		sol::usertype<ResourceManager> type {
+		"load_texture", &ResourceManager::load_texture,
+		"load_model", &ResourceManager::load_texture,
+		"load_shader", &ResourceManager::load_texture,
+		"load_material", &ResourceManager::load_texture,
+		"load_script", &ResourceManager::load_texture
 		};
-		l->set_usertype("Scene", type);
-	
+		l->set_usertype("ResourceManager", type);
 	}
 
 	ResourceManager::~ResourceManager() {}
@@ -27,7 +30,8 @@ namespace CBlocks {
 		load_shader("ttf");
 		load_shader("spriteBatch");
 		load_shader("texturedGouraud");
-		load_material("default", mShaders["texturedGouraud"]);
+		load_texture("default.png");
+		load_material("default", mShaders["texturedGouraud"], mTextures["default.png"]);
 	}
 
 	Scene* ResourceManager::load_scene(const std::string & name) {
@@ -53,7 +57,9 @@ namespace CBlocks {
 		}
 		for (auto e = matList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			auto s = e->FirstChildElement("Shader");
-			load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))]);
+			auto t = e->FirstChildElement("Texture");
+			auto texName = std::string(t->Attribute("name"));
+			load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))], mTextures[texName]);
 		}
 		for (auto e = scriptList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			load_script(std::string(e->Attribute("name")));
@@ -74,8 +80,9 @@ namespace CBlocks {
 		}
 		if (strcmp("Script", comp.Value()) == 0) {
 			auto name = comp.Attribute("name");
-			auto s = new Script(name,mScripts[name]);
-			return s;
+			//TODO FIX
+			//auto s = new Script(name,mScripts[name]);
+			//return s;
 		}
 		if (strcmp("RigidBody", comp.Value()) == 0) {
 			btRigidBody* rb = nullptr;
@@ -119,7 +126,7 @@ namespace CBlocks {
 
 	void ResourceManager::load_model(const std::string& name) {
 		Assimp::Importer importer;
-		auto scene = importer.ReadFile(ModelPath + name, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+		auto scene = importer.ReadFile(ModelPath + name, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_GenUVCoords);
 		if (!scene) {
 			//Todo error log
 		}
@@ -157,8 +164,8 @@ namespace CBlocks {
 		auto s = new Shader(name + ".vert", name + ".frag", ShaderPath);
 		mShaders.insert({ name, s });
 	}
-	void ResourceManager::load_material(const std::string & name, Shader* shader) {
-		auto m = new Material(shader);
+	void ResourceManager::load_material(const std::string & name, Shader* shader, Texture tex) {
+		auto m = new Material(shader, tex);
 		mMaterials.insert({ name, m });
 	}
 	void ResourceManager::load_script(const std::string & name) {

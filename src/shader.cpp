@@ -2,7 +2,7 @@
 #include <cassert>
 #include <GL/glew.h>
 
-namespace CBlocks {
+namespace Aurora {
 	std::string Shader::SHADER_DIR = "..\\..\\shaders\\";
 
 	Shader::Shader() {

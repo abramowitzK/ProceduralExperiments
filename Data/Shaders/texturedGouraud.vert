@@ -4,6 +4,8 @@ in vec3 normal;
 in vec2 uv;
 
 out vec4 out_color;
+out float diffuse_out;
+out vec2 uv_out;
 
 uniform mat4 m;
 uniform mat4 v;
@@ -19,11 +21,12 @@ void main(){
 	float d = length(LightPos - transformedVertex);
 	vec3 lightVector = normalize(LightPos - transformedVertex);
 	float diffuse = max(dot(transformedNormal, lightVector), 0.0);
-	float attenuation = 2000*(1.0/(1.0 + (0.2*pow(d,2))));
+	float attenuation = (4000.0/(1.0 + (pow(d,2))));
 	diffuse = diffuse*attenuation;
 	vec3 reflectDir = reflect(-lightVector, transformedNormal);
 	vec3 viewDir = normalize(-transformedVertex);
-	out_color = vec4(0.1,0.1,0.1,1.0) + color*diffuse;
-
+	out_color = color*diffuse;
+	diffuse_out = diffuse;
+	uv_out = uv;
 	gl_Position = mvp*vec4(pos,1.0);
 }

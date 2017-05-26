@@ -5,8 +5,7 @@
 #include <sol.hpp>
 #include <game.hpp>
 #include <scene.hpp>
-namespace CBlocks {
-	ScriptManager* ScriptManager::sInstance = nullptr;
+namespace Aurora {
 	ScriptManager::ScriptManager() {
 		mLua = new sol::state();
 		mLua->open_libraries();
@@ -15,11 +14,11 @@ namespace CBlocks {
 		
 	}
 	void ScriptManager::init(Scene* currentScene) {
-		Transform::expose_to_script();
-		Game::expose_to_script();
-		Scene::expose_to_script();
-		Component::expose_to_script();
-		GameObject::expose_to_script();
+		Transform::expose_to_script(this);
+		Game::expose_to_script(this);
+		Scene::expose_to_script(this);
+		Component::expose_to_script(this);
+		GameObject::expose_to_script(this);
 		(*mLua)["scene"] = std::ref(currentScene);
 	}
 }

@@ -1,9 +1,8 @@
-#ifndef CBLOCKS_RENDER_STATE_H
-#define CBLOCKS_RENDER_STATE_H
+#pragma once
 #include <GL\glew.h>
 #include "vector_math.hpp"
 
-namespace CBlocks {
+namespace Aurora {
 	enum class BlendState : bool {
 		On = true,
 		Off = false
@@ -141,4 +140,3 @@ namespace CBlocks {
 		}
 	}
 }
-#endif

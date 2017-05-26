@@ -1,11 +1,10 @@
 #include "scene.hpp"
-namespace CBlocks {
+namespace Aurora {
 
 	Scene::Scene() {}
 	Scene::~Scene() {}
 
-	void Scene::expose_to_script() {
-		auto m = ScriptManager::instance();
+	void Scene::expose_to_script(ScriptManager* m) {
 		auto l = m->get_lua_state();
 		sol::usertype<Scene> type{
 			"create_object", &Scene::create_object,

@@ -3,7 +3,7 @@
 #include <BulletCollision\CollisionShapes\btShapeHull.h>
 #include <glm\gtc\type_ptr.hpp>
 
-namespace CBlocks {
+namespace Aurora {
 	Physics* Physics::sInstance;
 	btRigidBody * Physics::create_capsule_rigid_body(float radius, float height) {
 		auto rbc = new  btCapsuleShape(radius, height);

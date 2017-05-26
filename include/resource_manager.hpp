@@ -8,9 +8,8 @@
 #include <assimp\postprocess.h>
 #include <assimp\scene.h>
 #include <mesh.hpp>
-#include <scene.hpp>
 using namespace tinyxml2;
-namespace CBlocks {
+namespace Aurora {
 	using namespace std;
 	const std::string ResourcePath = "..\\..\\Data\\";
 	const std::string TexturePath = ResourcePath + "Textures\\";
@@ -20,9 +19,10 @@ namespace CBlocks {
 	const std::string ScenePath = ResourcePath + "Scenes\\";
 	const std::string ShaderPath = ResourcePath + "Shaders\\";
 	const std::string ScriptPath = ResourcePath + "Scripts\\";
+	struct Scene;
 	class ResourceManager {
 	public:
-		static void expose_to_script();
+		static void expose_to_script(ScriptManager* m);
 		~ResourceManager();
 		void load_defaults();
 		Scene* load_scene(const std::string& name);
@@ -48,15 +48,14 @@ namespace CBlocks {
 			return sInstance;
 		}
 		void reload_scripts();
-	private:
-
-		static ResourceManager* sInstance;
 		ResourceManager();
 		void load_texture(const std::string& name);
 		void load_model(const std::string& name);
 		void load_shader(const std::string& name);
-		void load_material(const std::string& name, Shader* shader);
+		void load_material(const std::string& name, Shader* shader, Texture tex);
 		void load_script(const std::string& name);
+	private:
+		static ResourceManager* sInstance;
 		Component* parse_component(XMLElement& comp, GameObject* parent);
 		GameObject* parse_game_object(GameObject* parent, XMLElement* o, Scene* s);
 		unordered_map<string, Mesh*> mMeshes;

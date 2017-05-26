@@ -1,7 +1,6 @@
 #include <transform.hpp>
-namespace CBlocks {
-	 void Transform::expose_to_script() {
-		auto m = ScriptManager::instance();
+namespace Aurora {
+	 void Transform::expose_to_script(ScriptManager* m) {
 		auto l = m->get_lua_state();
 		//Need to disambiguate the overloads so we take the address of the right function
 		//l->new_simple_usertype<Transform>("Transform", 

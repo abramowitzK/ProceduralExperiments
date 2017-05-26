@@ -3,14 +3,16 @@
 #include <algorithm>
 #include <resource_manager.hpp>
 
-namespace CBlocks {
+namespace Aurora {
 
 	SpriteBatch::SpriteBatch() {
 		default_shader = ResourceManager::instance()->get_shader("spriteBatch");
 	}
 
 	SpriteBatch::~SpriteBatch() {
-
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
 	}
 
 	void SpriteBatch::init() {
@@ -23,9 +25,9 @@ namespace CBlocks {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void *) offsetof(Vertex2D, position));
-		glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex2D), (void *) offsetof(Vertex2D, color));
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void *) offsetof(Vertex2D, uvs));
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*) offsetof(Vertex2D, position));
+		glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex2D), (void*) offsetof(Vertex2D, color));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*) offsetof(Vertex2D, uvs));
 		glBindVertexArray(0);
 		mIsInitialized = true;
 	}

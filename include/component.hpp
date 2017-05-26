@@ -1,6 +1,6 @@
-#ifndef CBLOCKS_COMPONENT_HPP
-#define CBLOCKS_COMPONENT_HPP
-namespace CBlocks {
+#pragma once
+namespace Aurora {
+	struct ScriptManager;
 	struct GameObject;
 	enum class ComponentType {
 		Mesh,
@@ -8,10 +8,9 @@ namespace CBlocks {
 		Physics,
 	};
 	struct Component {
-		static void expose_to_script();
+		static void expose_to_script(ScriptManager* m);
 		ComponentType mType;
 		GameObject* mOwner;
 	};
 }
 
-#endif // !

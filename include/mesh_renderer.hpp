@@ -1,8 +1,7 @@
-#ifndef CBLOCKS_MESH_RENDERER_HPP
-#define CBLOCKS_MESH_RENDERER_HPP
+#pragma once
 #include <component.hpp>
 #include <mesh.hpp>
-namespace CBlocks {
+namespace Aurora {
 	struct MeshRenderer : public Component{
 		MeshRenderer(Mesh* m, Material* mat) : material(mat){
 			mesh = m;
@@ -13,4 +12,3 @@ namespace CBlocks {
 		Material* material;
 	};
 }
-#endif // !CBLOCKS_MESH_RENDERER_HPP

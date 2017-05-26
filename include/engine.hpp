@@ -1,5 +1,4 @@
-#ifndef CBLOCKS_ENGINE_HPP
-#define CBLOCKS_ENGINE_HPP
+#pragma once
 #include <string>
 #include <rendering.hpp>
 #include <resource_manager.hpp>
@@ -7,7 +6,7 @@
 #include <events.hpp>
 #include <script_manager.hpp>
 #include <physics.hpp>
-namespace CBlocks {
+namespace Aurora {
 	struct Platform;
 	struct Engine {
 		Engine(int width, int height, const std::string& title);
@@ -31,4 +30,3 @@ namespace CBlocks {
 		Game mGame;
 	};
 }
-#endif // !CBLOCKS_ENGINE_HPP

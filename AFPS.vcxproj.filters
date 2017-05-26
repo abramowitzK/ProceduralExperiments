@@ -84,9 +84,6 @@
     <ClCompile Include="src\transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\aabb.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -185,9 +182,6 @@
     <ClInclude Include="include\resource_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aabb.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -205,8 +199,14 @@
     <None Include="Data\Scripts\testing.lua" />
     <None Include="Data\Shaders\texturedGouraud.frag" />
     <None Include="Data\Shaders\texturedGouraud.vert" />
+    <None Include="Data\Scripts\player.lua" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\Scenes\test.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Desktop\test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

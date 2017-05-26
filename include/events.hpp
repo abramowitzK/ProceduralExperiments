@@ -1,16 +1,10 @@
-/*
-* Created by Kyle on 12/10/2016.
-* Copyright (c) 2016 Kyle All rights reserved.
-*/
-
-#ifndef CBLOCKS_INPUT_HPP
-#define CBLOCKS_INPUT_HPP
+#pragma once
 #include <functional>
 #include <vector>
 #include <SDL2\SDL.h>
 #include <key_state.hpp>
 #include <mouse_state.hpp>
-namespace CBlocks {
+namespace Aurora {
 	enum Keys {
 		a = SDL_SCANCODE_A, b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 	};
@@ -52,4 +46,3 @@ namespace CBlocks {
 
 	};
 }
-#endif //CBLOCKS_INPUT_HPP

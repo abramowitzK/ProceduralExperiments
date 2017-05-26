@@ -1,10 +1,8 @@
 #include <component.hpp>
 #include <script_manager.hpp>
 #include <game_object.hpp>
-namespace CBlocks {
-	void Component::expose_to_script() {
-	
-		auto m = ScriptManager::instance();
+namespace Aurora {
+	void Component::expose_to_script(ScriptManager* m) {
 		auto l = m->get_lua_state();
 		(*l)["ComponentType"] = l->create_table_with(
 			"Mesh", ComponentType::Mesh,

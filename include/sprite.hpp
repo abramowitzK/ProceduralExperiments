@@ -1,9 +1,8 @@
-#ifndef CBLOCKS_SPRITE_H
-#define CBLOCKS_SPRITE_H
+#pragma once
 #include "texture.hpp"
 #include "vector_math.hpp"
 #include "structures.hpp"
-namespace CBlocks {
+namespace Aurora {
 	struct Sprite {
 		Texture *Tex;
 		Vector2 Pos;
@@ -12,4 +11,3 @@ namespace CBlocks {
 		float depth;
 	};
 }
-#endif

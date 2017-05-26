@@ -1,5 +1,4 @@
-#ifndef CBLOCKS_SHADER_H
-#define CBLOCKS_SHADER_H
+#pragma once
 #include <GL\glew.h>
 #include <string>
 #include <vector>
@@ -7,7 +6,7 @@
 #include <fstream>
 #include <istream>
 #include <sstream>
-namespace CBlocks {
+namespace Aurora {
 	struct Shader {
 	public:
 		Shader();
@@ -40,5 +39,3 @@ namespace CBlocks {
 		GLuint mProgram;
 	};
 }
-#endif
-

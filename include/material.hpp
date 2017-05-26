@@ -1,17 +1,14 @@
-#ifndef CBLOCKS_MATERIAL_HPP
-#define CBLOCKS_MATERIAL_HPP
+#pragma once
 #include <shader.hpp>
 #include <render_state.hpp>
 #include <vector_math.hpp>
 #include <memory>
-namespace CBlocks {
+#include <texture.hpp>
+namespace Aurora {
 	struct Material {
-		Material(Shader* shader) : shader(shader){
+		Material(Shader* shader, Texture t) : shader(shader), tex(t){
 		}
 		Shader* shader;
-	};
-	struct PBRMaterial : Material {
-
+		Texture tex;
 	};
 }
-#endif

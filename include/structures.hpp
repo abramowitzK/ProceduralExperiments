@@ -1,6 +1,5 @@
-#ifndef CBLOCKS_STRUCTURES_H
-#define CBLOCKS_STRUCTURES_H
-namespace CBlocks {
+#pragma once
+namespace Aurora {
 	struct Color {
 		unsigned char r, g, b, a;
 	};
@@ -17,4 +16,3 @@ namespace CBlocks {
 		Texture
 	};
 }
-#endif

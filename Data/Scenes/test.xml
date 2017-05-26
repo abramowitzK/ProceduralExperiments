@@ -3,13 +3,16 @@
   <ResourceList>
     <Scripts>
       <Script name="testing"/>
+      <Script name="player"/>
     </Scripts>
     <Materials>
-      <Material name="default">
+      <Material name="grass">
+        <Texture name="grass.png"/>
         <Shader name="texturedGouraud"/>
       </Material>
       <Material name="basic">
-        <Shader name="basic"/>
+        <Texture name="kyle.jpg"/>
+        <Shader name="texturedGouraud"/>
       </Material>
     </Materials>
     <Shaders>
@@ -35,15 +38,16 @@
   <SceneGraph>
     <GameObject name="playerasdfasdfadfasdfasdf">
       <Transform>
-        <Pos>0,100,0</Pos>
+        <Pos>0,1000,0</Pos>
         <Rot>0,0,0</Rot>
         <Scale>50,50,50</Scale>
       </Transform>
       <Components>
-        <Model name="sphere.obj">
-          <Material name="default"/>
+        <Script name="player"/>
+        <Model name="cube.obj">
+          <Material name="basic"/>
         </Model>
-        <RigidBody shape="capsule" mesh="sphere.obj" static="false"/>
+        <RigidBody shape="capsule" mesh="cube.obj" static="false"/>
       </Components>
     </GameObject>
     <GameObject name="plane">
@@ -54,7 +58,7 @@
       </Transform>
       <Components>
         <Model name="plane.obj">
-          <Material name="basic"/>
+          <Material name="default"/>
         </Model>
       </Components>
     </GameObject>
@@ -67,7 +71,7 @@
       <Components>
         <Script name="testing"/>
         <Model name="monkey.obj">
-          <Material name="default"/>
+          <Material name="grass"/>
         </Model>
       </Components>
       <GameObject name="child">
@@ -78,7 +82,7 @@
         </Transform>
         <Components>
           <Model name="capsule.obj">
-            <Material name="default"/>
+            <Material name="grass"/>
           </Model>
         </Components>
       </GameObject>

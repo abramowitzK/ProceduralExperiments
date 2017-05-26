@@ -1,5 +1,5 @@
 #include <mouse_state.hpp>
-namespace CBlocks {
+namespace Aurora {
 	MouseState::MouseState() : mX(0), mY(0), mXRel(0), mYRel(0) {
 		memset(mMouseButtonState, 0, NUM_MOUSE_BUTTONS);
 	}

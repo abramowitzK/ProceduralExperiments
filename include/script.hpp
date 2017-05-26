@@ -1,11 +1,10 @@
-#ifndef CBLOCKS_SCRIPT_HPP
-#define CBLOCKS_SCRIPT_HPP
+#pragma once
 #include <sol.hpp>
 #include <component.hpp>
 #include <rendering.hpp>
-namespace CBlocks {
+namespace Aurora {
 	struct Script : public Component {
-		Script(const std::string& tableName, std::string script);
+		Script(const std::string& tableName, std::string script, ScriptManager* m);
 		~Script() { printf("destructor called\n"); }
 		void update(double dt);
 		void render(Renderer* renderer) {
@@ -21,5 +20,3 @@ namespace CBlocks {
 		void init();
 	};
 }
-
-#endif

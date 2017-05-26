@@ -1,7 +1,4 @@
-#ifndef CBLOCKS_TRANSFORM_HPP
-#define CBLOCKS_TRANSFORM_HPP
-
-
+#pragma once
 #include <glm\mat4x4.hpp>
 #include <glm\vec4.hpp>
 #include <glm\vec3.hpp>
@@ -11,7 +8,7 @@
 #include <glm\gtx\transform.hpp>
 #include <vector_math.hpp>
 #include <script_manager.hpp>
-namespace CBlocks {
+namespace Aurora {
 
 	static Quaternion multiply(Quaternion l, Quaternion r) {
 		return r*l;
@@ -22,7 +19,7 @@ namespace CBlocks {
 	*/
 	class Transform {
 	public:
-		static void expose_to_script();
+		static void expose_to_script(ScriptManager* m);
 		/**
 		Constructs a Transform Object
 		*/
@@ -88,6 +85,3 @@ namespace CBlocks {
 		Vector3 mScale;
 	};
 }
-
-#endif // !CBLOCKS_TRANSFORM_HPP
-

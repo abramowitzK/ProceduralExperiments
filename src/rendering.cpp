@@ -11,8 +11,8 @@
 #include <resource_manager.hpp>
 #include <script_manager.hpp>
 
-namespace CBlocks {
-	void Renderer::expose_to_script() {
+namespace Aurora {
+	void Renderer::expose_to_script(ScriptManager* m) {
 	
 	}
 	Renderer::Renderer(int width, int height) {
@@ -22,7 +22,7 @@ namespace CBlocks {
 			assert(false);
 		}
 		apply_render_state(DefaultRenderState);
-		SDL_GL_SetSwapInterval(0);
+		SDL_GL_SetSwapInterval(1);
 
 		mWidth = width;
 		mHeight = height;
@@ -133,6 +133,7 @@ namespace CBlocks {
 		auto v = mCamera->view;
 		auto p = mCamera->projection;
 		mesh->material->shader->bind();
+		glBindTexture(GL_TEXTURE_2D,mesh->material->tex.Tex);
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "mvp"), 1, GL_FALSE, glm::value_ptr(vp));
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "m"), 1, GL_FALSE, glm::value_ptr(m));
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "v"), 1, GL_FALSE, glm::value_ptr(v));

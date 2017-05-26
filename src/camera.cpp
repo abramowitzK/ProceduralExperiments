@@ -10,7 +10,7 @@
 #include <glm/gtx/transform.hpp>
 
 #include "camera.hpp"
-namespace CBlocks {
+namespace Aurora {
 	Camera::Camera(EventManager& manager, int w, int h) {
 		manager.subscribe_to_resize_event([=](int width, int height){
 			projection = glm::perspective(70.0f, (float)width/(float)height, 0.1f, 10000.0f);

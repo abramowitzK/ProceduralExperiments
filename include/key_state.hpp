@@ -3,7 +3,7 @@
 *Purose: To encapsulate the state of the keyboard (both current and previous)<br>
 *Usage: The Input class utilizes this abstraction
 */
-namespace CBlocks {
+namespace Aurora {
 	class KeyState {
 	public:
 		/**

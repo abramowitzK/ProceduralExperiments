@@ -2,7 +2,7 @@
 #include "texture.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-namespace CBlocks {
+namespace Aurora {
 	Texture create_2d_texture(std::string &filepath) {
 		stbi_set_flip_vertically_on_load(true);
 		Texture t;

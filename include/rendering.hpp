@@ -1,11 +1,4 @@
-/*
-* Created by Kyle on 12/10/2016.
-* Copyright (c) 2016 Kyle All rights reserved.
-*/
-
-#ifndef CBLOCKS_RENDERING_HPP
-#define CBLOCKS_RENDERING_HPP
-
+#pragma once
 #include <GL/glew.h>
 #include <vector>
 #include <cassert>
@@ -22,7 +15,7 @@
 #include <mesh.hpp>
 #include FT_FREETYPE_H
 
-namespace CBlocks {
+namespace Aurora {
 	struct Character {
 		GLuint TextureID;
 		glm::ivec2 Size;
@@ -31,8 +24,9 @@ namespace CBlocks {
 	};
 	struct Renderer {
 	public:
-		static void expose_to_script();
+		static void expose_to_script(ScriptManager* m);
 		Renderer(int width, int height);
+		Renderer() {};
 		void init_default_resources();
 		void update(double dt) { mCamera->update(dt); }
 		void render();
@@ -61,4 +55,3 @@ namespace CBlocks {
 	};
 }
 
-#endif //CBLOCKS_RENDERING_HPP

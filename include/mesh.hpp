@@ -1,12 +1,11 @@
-#ifndef CBLOCKS_MESH_HPP
-#define CBLOCKS_MESH_HPP
+#pragma once
 #include <vector>
 #include <vector_math.hpp>
 #include <GL\glew.h>
 #include <component.hpp>
 #include <render_state.hpp>
 #include <material.hpp>
-namespace CBlocks {
+namespace Aurora {
 	struct Vertex {
 		Vector3 pos;
 		Vector3 normal;
@@ -45,4 +44,3 @@ namespace CBlocks {
 		MeshData mData;
 	};
 }
-#endif

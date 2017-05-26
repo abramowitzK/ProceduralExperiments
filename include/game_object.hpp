@@ -1,14 +1,13 @@
-#ifndef CBLOCKS_GAME_OBJECT_HPP
-#define CBLOCKS_GAME_OBJECT_HPP
+#pragma once
 #include <vector>
 #include <component.hpp>
 #include <transform.hpp>
 #include <rendering.hpp>
 #include <script.hpp>
-namespace CBlocks {
+namespace Aurora {
 	struct GameObject {
 		friend struct Scene;
-		static void expose_to_script();
+		static void expose_to_script(ScriptManager* m);
 		~GameObject();
 		std::vector<GameObject*> mChildren;
 		void update(double dt);
@@ -17,7 +16,6 @@ namespace CBlocks {
 		void init();
 		GameObject* parent;
 		Transform transform;
-		Script* script;
 	private:
 		uint64_t mId;
 		GameObject();
@@ -26,4 +24,3 @@ namespace CBlocks {
 	};
 
 }
-#endif // !CBLOCKS_GAME_OBJECT_HPP

@@ -6,7 +6,7 @@
 ******************************************************************************************
 * Kyle.Abramowitz 07/2016
 */
-namespace CBlocks {
+namespace Aurora {
 	class MouseState {
 	public:
 		MouseState();

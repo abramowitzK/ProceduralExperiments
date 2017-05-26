@@ -1,9 +1,8 @@
-#ifndef CBLOCKS_RIGID_BODY_HPP
-#define CBLOCKS_RIGID_BODY_HPP
+#pragma once
 #include <btBulletDynamicsCommon.h>
 #include <btBulletCollisionCommon.h>
 #include <component.hpp>
-namespace CBlocks {
+namespace Aurora {
 
 	struct RigidBody : public Component {
 		RigidBody(btRigidBody* rigidBody);
@@ -11,5 +10,3 @@ namespace CBlocks {
 		btRigidBody* mRigidBody;
 	};
 }
-
-#endif

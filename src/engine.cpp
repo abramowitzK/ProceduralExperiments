@@ -1,11 +1,11 @@
 #include <engine.hpp>
 #include <platform.hpp>
-namespace CBlocks {
+namespace Aurora {
 	Engine::Engine(int width, int height, const std::string & title) : mWidth(width), mHeight(height), mTitle(title), mRunning(false) {
 		mPlatform = new Platform();
 		mManager = ResourceManager::instance();
 		mEventManager = new EventManager();
-		mScriptManager = ScriptManager::instance();
+		mScriptManager = new ScriptManager();
 		mPhysics = Physics::instance();
 		
 	}
@@ -21,6 +21,7 @@ namespace CBlocks {
 	}
 	void Engine::render() {
 		render_game(&mGame, mRenderer);
+		mRenderer->render();
 	}
 
 	void Engine::init(const std::string& initialScene) {
@@ -31,7 +32,6 @@ namespace CBlocks {
 		mRenderer->create_camera(*mEventManager);
 		std::function<void()> shutdown = [=]() { mRunning = false; };
 		mEventManager->subscribe_to_argless_event(Intents::Shutdown, shutdown);
-		mEventManager->subscribe_to_resize_event([=](int a, int b) {mPlatform->handle_resize(a, b); });
 		mEventManager->subscribe_to_resize_event([=](int a, int b) {mPlatform->handle_resize(a, b); });
 		mEventManager->subscribe_to_argless_event(Intents::Escape, [=]() {mPlatform->capture_mouse(false); });
 		mGame.load(initialScene);

@@ -1,8 +1,7 @@
-#ifndef CBLOCKS_TEXTURE_H
-#define CBLOCKS_TEXTURE_H
+#pragma once
 #include <GL\glew.h>
 #include <string>
-namespace CBlocks {
+namespace Aurora {
 	struct Texture {
 		GLuint Tex;
 		int width;
@@ -12,4 +11,3 @@ namespace CBlocks {
 
 	Texture create_2d_texture(std::string &filepath);
 }
-#endif

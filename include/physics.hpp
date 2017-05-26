@@ -1,12 +1,11 @@
-#ifndef CBLOCKS_PHYSICS_HPP
-#define CBLOCKS_PHYSICS_HPP
+#pragma once
 #include <btBulletCollisionCommon.h>
 #include <btBulletDynamicsCommon.h>
 #include <vector>
 #include <rigid_body.hpp>
 #include <vector_math.hpp>
 #include <transform.hpp>
-namespace CBlocks {
+namespace Aurora {
 	enum class ColliderTypes {
 		Box,
 		Sphere,
@@ -39,4 +38,3 @@ namespace CBlocks {
 		btDiscreteDynamicsWorld* mWorld;
 	};
 }
-#endif

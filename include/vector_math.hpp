@@ -1,5 +1,4 @@
-#ifndef CBLOCKS_VECTOR_MATH_H
-#define CBLOCKS_VECTOR_MATH_H
+#pragma once
 #include <glm\glm.hpp>
 #include <glm\common.hpp>
 #include <glm\vec2.hpp>
@@ -9,7 +8,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-namespace CBlocks {
+namespace Aurora {
 	typedef glm::vec2 Vector2;
 	typedef glm::vec3 Vector3;
 	typedef glm::vec4 Vector4;
@@ -44,4 +43,3 @@ namespace CBlocks {
 	}
 
 }
-#endif

@@ -1,5 +1,4 @@
-#ifndef CBLOCKS_SPRITE_BATCH_H
-#define CBLOCKS_SPRITE_BATCH_H
+#pragma once
 #include <GL\glew.h>
 #include <vector>
 
@@ -8,7 +7,7 @@
 #include "render_state.hpp"
 #include "structures.hpp"
 #include "shader.hpp"
-namespace CBlocks {
+namespace Aurora {
 	struct Renderer;
 	using namespace std;
 	struct Texture;
@@ -106,4 +105,3 @@ namespace CBlocks {
 
 	};
 }
-#endif

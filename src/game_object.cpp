@@ -1,14 +1,13 @@
 #include "game_object.hpp"
 #include <rigid_body.hpp>
 #include <script_manager.hpp>
-namespace CBlocks {
+namespace Aurora {
 	GameObject::GameObject() : parent(nullptr) {}
 
 	GameObject::GameObject(GameObject * parent) : parent(parent){
 	}
 
-	void GameObject::expose_to_script() {
-		auto m = ScriptManager::instance();
+	void GameObject::expose_to_script(ScriptManager* m) {
 		auto l = m->get_lua_state();
 		sol::usertype<GameObject> type{
 			"add_component", &GameObject::add_component,

@@ -1,12 +1,11 @@
-#ifndef CBLOCKS_SCRIPT_MANAGER_HPP
-#define CBLOCKS_SCRIPT_MANAGER_HPP
+#pragma once
 #include <sol.hpp>
 #include <iostream>
 #include <lua.hpp>
 #include <vector>
 #include <script.hpp>
 
-namespace CBlocks {
+namespace Aurora {
 	struct Scene;
 	struct ScriptManager {
 		
@@ -14,18 +13,10 @@ namespace CBlocks {
 		}
 		void update(double dt);
 		void init(Scene* currentScene);
-		static ScriptManager* instance() {
-			if (!sInstance) {
-				sInstance = new ScriptManager();
-			}
-			return sInstance;
-		}
 		sol::state* get_lua_state() { return mLua; }
-	private:
 		ScriptManager();
-		static ScriptManager* sInstance;
+	private:
 		sol::state* mLua;
-		std::vector<Script*> mScripts;
+		std::vector<Script> mScripts;
 	};
 }
-#endif

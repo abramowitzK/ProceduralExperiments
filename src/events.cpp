@@ -4,7 +4,7 @@
 */
 #include "events.hpp"
 
-namespace CBlocks {
+namespace Aurora {
 	KeyState EventManager::sKeyboardState;
 	MouseState EventManager::sMouseState;
 	EventManager::EventManager() {

@@ -1,6 +1,6 @@
 #include "rigid_body.hpp"
 #include <game_object.hpp>
-namespace CBlocks {
+namespace Aurora {
 	RigidBody::RigidBody(btRigidBody* rigidBody) : mRigidBody(rigidBody) {
 		mType = ComponentType::Physics;
 	}

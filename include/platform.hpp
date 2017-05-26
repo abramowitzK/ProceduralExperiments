@@ -1,10 +1,4 @@
-/*
-* Created by Kyle on 12/10/2016.
-* Copyright (c) 2016 Kyle All rights reserved.
-*/
-
-#ifndef CBLOCKS_PLATFORM_HPP
-#define CBLOCKS_PLATFORM_HPP
+#pragma once
 
 #include <SDL2\SDL.h>
 #include <SDL2\SDL_filesystem.h>
@@ -12,7 +6,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <type_traits>
-namespace CBlocks {
+namespace Aurora {
 	/**
 	 * Platform layer state
 	 * TODO: Should handle:
@@ -37,5 +31,3 @@ namespace CBlocks {
 		Uint64 mStart;
 	};
 }
-
-#endif //CBLOCKS_PLATFORM_HPP

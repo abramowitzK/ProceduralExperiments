@@ -1,13 +1,15 @@
-#ifndef CBLOCKS_SCENE_HPP
-#define CBLOCKS_SCENE_HPP
+#pragma once
 #include <rendering.hpp>
 #include <game_object.hpp>
+#include <resource_manager.hpp>
+#include <script_manager.hpp>
 #include <string>
-namespace CBlocks {
+struct ResourceManager;
+namespace Aurora {
 	struct Scene {
 		Scene();
 		~Scene();
-		static void expose_to_script();
+		static void expose_to_script(ScriptManager* m);
 		void init() { root.init(); }
 		void render(Renderer* renderer);
 		void update(double dt);
@@ -16,6 +18,8 @@ namespace CBlocks {
 	private:
 		uint64_t mID;
 		std::vector<GameObject*> mObjects;
+		ResourceManager mManager;
+		Renderer mRenderer;
+		ScriptManager mScriptManager;
 	};
 }
-#endif // !CBLOCKS_SCENE_HPP

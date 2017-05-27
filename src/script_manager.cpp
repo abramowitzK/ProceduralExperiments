@@ -7,13 +7,19 @@
 #include <scene.hpp>
 namespace Aurora {
 	ScriptManager::ScriptManager() {
-		mLua = new sol::state();
-		mLua->open_libraries();
+		mLua = nullptr;
 	}
 	void ScriptManager::update(double dt) {
-		
+		if (!mLuaError) {
+			for (auto& script: mScripts) {
+				script.update(dt);
+			}
+		}
 	}
-	void ScriptManager::init(Scene* currentScene) {
+	void ScriptManager::load(Scene* currentScene) {
+		if(mLua) delete mLua;
+		mLua = new sol::state(sol::c_call<decltype(&ScriptManager::handle_lua_error), &ScriptManager::handle_lua_error>);
+		mLua->open_libraries();
 		Transform::expose_to_script(this);
 		Game::expose_to_script(this);
 		Scene::expose_to_script(this);

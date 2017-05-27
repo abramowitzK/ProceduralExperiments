@@ -11,7 +11,7 @@
         <Shader name="texturedGouraud"/>
       </Material>
       <Material name="basic">
-        <Texture name="kyle.jpg"/>
+        <Texture name="stone01.tga"/>
         <Shader name="texturedGouraud"/>
       </Material>
     </Materials>
@@ -25,6 +25,7 @@
       <Texture>grass.png</Texture>
       <Texture>kyle.jpg</Texture>
       <Texture>crosshairs.png</Texture>
+      <Texture>stone01.tga</Texture>
     </Textures>
     <Models>
       <Model>plane.obj</Model>

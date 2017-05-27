@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 namespace Aurora {
 	struct ScriptManager;
 	struct GameObject;
@@ -11,6 +12,7 @@ namespace Aurora {
 		static void expose_to_script(ScriptManager* m);
 		ComponentType mType;
 		GameObject* mOwner;
+		std::string mTag;
 	};
 }
 

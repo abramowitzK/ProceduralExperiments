@@ -19,6 +19,7 @@ namespace Aurora {
 		mRenderer->update(dt);
 		update_game(&mGame, dt);
 	}
+
 	void Engine::render() {
 		render_game(&mGame, mRenderer);
 		mRenderer->render();
@@ -31,18 +32,18 @@ namespace Aurora {
 		mRenderer->init_default_resources();
 		mRenderer->create_camera(*mEventManager);
 		std::function<void()> shutdown = [=]() { mRunning = false; };
-		mEventManager->subscribe_to_argless_event(Intents::Shutdown, shutdown);
-		mEventManager->subscribe_to_resize_event([=](int a, int b) {mPlatform->handle_resize(a, b); });
-		mEventManager->subscribe_to_argless_event(Intents::Escape, [=]() {mPlatform->capture_mouse(false); });
+		mEventManager->subscribe_to_event(Intents::Shutdown, shutdown);
+		mEventManager->subscribe_to_resize_event(std::move([=](int a, int b) {mPlatform->handle_resize(a, b); }));
+		mEventManager->subscribe_to_event(Intents::Escape, std::move((std::function<void()>)[=]() {mPlatform->capture_mouse(false); }));
 		mGame.load(initialScene);
-		mScriptManager->init(mGame.current_scene);
+		mScriptManager->load(mGame.current_scene);
 	}
 
 	void Engine::run() {
 		double current_time = mPlatform->get_time();
 		double accumulator = 0;
 		double t = 0;
-		double dt = 0.005;
+		double dt = 1.0/1200.0;
 		while (mRunning) {
 			double new_time = mPlatform->get_time();
 			double frame_time = new_time - current_time;
@@ -62,7 +63,5 @@ namespace Aurora {
 			mPlatform->swap_buffers();
 			mEventManager->update_previous();
 		}
-	
-	
 	}
 }

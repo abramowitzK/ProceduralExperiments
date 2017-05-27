@@ -1,7 +1,7 @@
 #include "physics.hpp"
-#include <BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h>
-#include <BulletCollision\CollisionShapes\btShapeHull.h>
-#include <glm\gtc\type_ptr.hpp>
+#include <BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h>
+#include <BulletCollision/CollisionShapes/btShapeHull.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Aurora {
 	Physics* Physics::sInstance;
@@ -36,11 +36,14 @@ namespace Aurora {
 		auto motionState = new btDefaultMotionState(btTransform(btQuaternion(quat.x, quat.y, quat.z, quat.w), { trans.x, trans.y, trans.z }));
 		btScalar mass = isStatic ? 0.0f : 1.0f;
 
-		btVector3 inertia(0,0,0);
+		btVector3 inertia;
 		shape->calculateLocalInertia(mass, inertia);
 		shape->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
 		auto info = btRigidBody::btRigidBodyConstructionInfo(mass, motionState, shape, inertia);
+		info.m_restitution = 1.0f;
+		info.m_friction = 0.5f;
 		auto body = new btRigidBody(info);
+		body->setLinearFactor(btVector3(1,1,0));
 		mWorld->addRigidBody(body);
 		mRigidBodies.push_back(body);
 		return body;
@@ -63,12 +66,12 @@ namespace Aurora {
 
 	btBvhTriangleMeshShape * Physics::create_bvh_triangle_mesh_shape(Mesh * mesh) {
 		auto data = mesh->get_data();
-		auto vertices = &data->vertices;
+		const auto& vertices = data->vertices;
 		auto verts = new btScalar[data->get_num_vertices()*3];
 		for (int i = 0; i < data->get_num_vertices(); i++) {
-			verts[i * 3] = (*vertices)[i].pos.x;
-			verts[i * 3 + 1] = (*vertices)[i].pos.y;
-			verts[i * 3 + 2] = (*vertices)[i].pos.z;
+			verts[i * 3] = vertices[i].pos.x;
+			verts[i * 3 + 1] = vertices[i].pos.y;
+			verts[i * 3 + 2] = vertices[i].pos.z;
 		}
 		auto indices = new int[data->get_num_indices()];
 		memcpy(indices, data->indices.data(), data->get_num_indices() * sizeof(int));
@@ -80,12 +83,12 @@ namespace Aurora {
 
 	btConvexHullShape * Physics::create_convex_hull_shape(Mesh * mesh) {
 		auto data = mesh->get_data();
-		auto vertices = &data->vertices;
+		const auto& vertices = data->vertices;
 		auto verts = new btScalar[data->get_num_vertices()*3];
 		for (int i = 0; i < data->get_num_vertices(); i++) {
-			verts[i * 3] = (*vertices)[i].pos.x;
-			verts[i * 3 + 1] = (*vertices)[i].pos.y;
-			verts[i * 3 + 2] = (*vertices)[i].pos.z;
+			verts[i * 3] = vertices[i].pos.x;
+			verts[i * 3 + 1] = vertices[i].pos.y;
+			verts[i * 3 + 2] = vertices[i].pos.z;
 		}
 		//According to the docs, this makes a copy of the points so it should be safe to delete here.
 		auto test = sizeof(btVector3);
@@ -99,7 +102,7 @@ namespace Aurora {
 	Physics::~Physics() {}
 
 	void Physics::fixed_update(double dt) {
-		mWorld->stepSimulation(dt, 1, dt);
+		mWorld->stepSimulation(dt, 20, 1.0/1000.0);
 	}
 
 }

@@ -85,6 +85,7 @@ namespace Aurora {
 			//return s;
 		}
 		if (strcmp("RigidBody", comp.Value()) == 0) {
+			//TODO Make this not suck
 			btRigidBody* rb = nullptr;
 			if (strcmp(comp.Attribute("shape"), "convex_hull") == 0) {
 				rb = Physics::instance()->create_convex_hull_rigid_body(true, mMeshes[comp.Attribute("mesh")], &parent->transform);
@@ -129,6 +130,7 @@ namespace Aurora {
 		auto scene = importer.ReadFile(ModelPath + name, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_GenUVCoords);
 		if (!scene) {
 			//Todo error log
+			assert(false);
 		}
 		//TODO handle case of multiple meshes
 		auto model = scene->mMeshes[0];

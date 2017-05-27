@@ -22,7 +22,6 @@ namespace Aurora {
 			assert(false);
 		}
 		apply_render_state(DefaultRenderState);
-		SDL_GL_SetSwapInterval(1);
 
 		mWidth = width;
 		mHeight = height;

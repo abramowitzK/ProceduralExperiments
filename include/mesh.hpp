@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <vector_math.hpp>
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include <component.hpp>
 #include <render_state.hpp>
 #include <material.hpp>

@@ -4,21 +4,21 @@
 #include <vector>
 #include <unordered_map>
 #include <texture.hpp>
-#include <assimp\Importer.hpp>
-#include <assimp\postprocess.h>
-#include <assimp\scene.h>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
 #include <mesh.hpp>
 using namespace tinyxml2;
 namespace Aurora {
 	using namespace std;
-	const std::string ResourcePath = "..\\..\\Data\\";
-	const std::string TexturePath = ResourcePath + "Textures\\";
-	const std::string ModelPath = ResourcePath + "Models\\";
-	const std::string FontPath = ResourcePath + "Fonts\\";
-	const std::string AudioPath = ResourcePath + "Sounds\\";
-	const std::string ScenePath = ResourcePath + "Scenes\\";
-	const std::string ShaderPath = ResourcePath + "Shaders\\";
-	const std::string ScriptPath = ResourcePath + "Scripts\\";
+	const std::string ResourcePath = "../../Data/";
+	const std::string TexturePath = ResourcePath + "Textures/";
+	const std::string ModelPath = ResourcePath + "Models/";
+	const std::string FontPath = ResourcePath + "Fonts/";
+	const std::string AudioPath = ResourcePath + "Sounds/";
+	const std::string ScenePath = ResourcePath + "Scenes/";
+	const std::string ShaderPath = ResourcePath + "Shaders/";
+	const std::string ScriptPath = ResourcePath + "Scripts/";
 	struct Scene;
 	class ResourceManager {
 	public:

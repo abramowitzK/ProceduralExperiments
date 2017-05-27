@@ -1,8 +1,7 @@
 //
 // Created by Kyle on 12/8/2016.
 //
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+
 #include <engine.hpp>
 using namespace Aurora;
 #undef main
@@ -10,12 +9,14 @@ using namespace Aurora;
 #pragma comment(linker, "/subsystem:console")
 int main(char** argv, int argc)
 #else
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 #pragma comment(linker, "/subsystem:windows")
 int CALLBACK WinMain(
-	 HINSTANCE hInstance,
-	 HINSTANCE hPrevInstance,
-	 LPSTR     lpCmdLine,
-	 int       nCmdShow
+	 _In_		HINSTANCE hInstance,
+	 _In_opt_	HINSTANCE hPrevInstance,
+	 _In_		LPSTR     lpCmdLine,
+	 _In_		int       nCmdShow
 )
 #endif
 {

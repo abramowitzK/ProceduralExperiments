@@ -76,7 +76,7 @@ namespace Aurora {
 		PolygonMode PolyMode;
 	};
 	static const RenderState DefaultRenderState = {
-			CullState::Off,
+			CullState::On,
 			BlendState::Off,
 			DepthState::On,
 

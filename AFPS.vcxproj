@@ -211,6 +211,7 @@
     <ClInclude Include="include\game.hpp" />
     <ClInclude Include="include\game_object.hpp" />
     <ClInclude Include="include\key_state.hpp" />
+    <ClInclude Include="include\marching_cubes.hpp" />
     <ClInclude Include="include\material.hpp" />
     <ClInclude Include="include\mesh.hpp" />
     <ClInclude Include="include\mesh_renderer.hpp" />

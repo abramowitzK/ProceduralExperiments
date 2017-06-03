@@ -11,7 +11,7 @@ uniform mat4 m;
 uniform mat4 v;
 uniform mat4 p;
 uniform mat4 mvp;
-vec3 LightPos = vec3(0.0, 100.0, 0.0);
+vec3 LightPos = vec3(0.0, 1.0, 1.0);
 vec4 color = vec4(1.0, 1.0, 1.0, 1.0);
 void main(){
 	mat4 modelView = v*m;
@@ -19,9 +19,9 @@ void main(){
 	vec3 transformedVertex = vec3(transformed)/transformed.w;
 	vec3 transformedNormal = normalize((m*vec4(normal,0.0)).xyz);
 	float d = length(LightPos - transformedVertex);
-	vec3 lightVector = normalize(LightPos - transformedVertex);
+	vec3 lightVector = normalize(LightPos);
 	float diffuse = max(dot(transformedNormal, lightVector), 0.0);
-	float attenuation = (4000.0/(1.0 + (pow(d,2))));
+	float attenuation = 1.0;
 	diffuse = diffuse*attenuation;
 	vec3 reflectDir = reflect(-lightVector, transformedNormal);
 	vec3 viewDir = normalize(-transformedVertex);

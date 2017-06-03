@@ -5,6 +5,7 @@
 #include <physics.hpp>
 #include <script_manager.hpp>
 #include <scene.hpp>
+#include <marching_cubes.hpp>
 namespace Aurora {
 	ResourceManager* ResourceManager::sInstance;
 	void ResourceManager::reload_scripts() {}
@@ -32,6 +33,7 @@ namespace Aurora {
 		load_shader("texturedGouraud");
 		load_texture("default.png");
 		load_material("default", mShaders["texturedGouraud"], mTextures["default.png"]);
+		mMeshes.insert({ "marching_cubes", generate_test_data() });
 	}
 
 	Scene* ResourceManager::load_scene(const std::string & name) {
@@ -69,6 +71,16 @@ namespace Aurora {
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			parse_game_object(&s->root, e, s);
 		}
+		auto obj = s->create_object();
+		obj->parent = &s->root;
+		obj->parent->mChildren.push_back(obj);
+		obj->transform = Transform();
+		obj->transform.mParent = &s->root.transform;
+		obj->transform.set_translation({0,0,0});
+		obj->transform.set_scale(10);
+		auto renderer = new MeshRenderer(mMeshes["marching_cubes"], mMaterials["default"]);
+		renderer->mOwner = obj;
+		obj->add_component(renderer);
 		return s;
 	}
 

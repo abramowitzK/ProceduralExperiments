@@ -24,7 +24,17 @@ namespace Aurora {
 		l->set_usertype("ResourceManager", type);
 	}
 
-	ResourceManager::~ResourceManager() {}
+	ResourceManager::~ResourceManager() {
+		for (const auto& mesh : mMeshes) {
+			delete mesh.second;
+		}
+		for (const auto& m : mMaterials) {
+			delete m.second;
+		}
+		for (const auto& s : mShaders) {
+			delete s.second;
+		}
+	}
 
 	void ResourceManager::load_defaults() {
 		load_shader("basic");
@@ -32,7 +42,7 @@ namespace Aurora {
 		load_shader("spriteBatch");
 		load_shader("texturedGouraud");
 		load_texture("default.png");
-		load_material("default", mShaders["texturedGouraud"], mTextures["default.png"]);
+		load_material("default", mShaders["texturedGouraud"], {mTextures["default"]});
 		mMeshes.insert({ "marching_cubes", generate_test_data() });
 	}
 
@@ -59,9 +69,13 @@ namespace Aurora {
 		}
 		for (auto e = matList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			auto s = e->FirstChildElement("Shader");
-			auto t = e->FirstChildElement("Texture");
-			auto texName = std::string(t->Attribute("name"));
-			load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))], mTextures[texName]);
+			std::vector<Texture> texs;
+			for (auto t = e->FirstChildElement("Texture"); t != nullptr; t = t->NextSiblingElement("Texture")) {
+				auto texName = std::string(t->Attribute("name"));
+				texs.push_back(mTextures[texName]);
+			}
+
+			load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))], texs);
 		}
 		for (auto e = scriptList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			load_script(std::string(e->Attribute("name")));
@@ -77,9 +91,13 @@ namespace Aurora {
 		obj->transform = Transform();
 		obj->transform.mParent = &s->root.transform;
 		obj->transform.set_translation({0,0,0});
-		obj->transform.set_scale(10);
-		auto renderer = new MeshRenderer(mMeshes["marching_cubes"], mMaterials["default"]);
+		obj->transform.set_scale(1);
+		auto renderer = new MeshRenderer(mMeshes["marching_cubes"], mMaterials["procedural"]);
 		renderer->mOwner = obj;
+		btRigidBody* rb = Physics::instance()->create_convex_hull_rigid_body(true, mMeshes["marching_cubes"], &obj->transform);
+		auto rigid = new RigidBody(rb);
+		rigid->mOwner = obj;
+		obj->add_component(rigid);
 		obj->add_component(renderer);
 		return s;
 	}
@@ -102,7 +120,7 @@ namespace Aurora {
 			if (strcmp(comp.Attribute("shape"), "convex_hull") == 0) {
 				rb = Physics::instance()->create_convex_hull_rigid_body(true, mMeshes[comp.Attribute("mesh")], &parent->transform);
 			} else if (strcmp(comp.Attribute("shape"), "capsule") == 0) {
-				rb = Physics::instance()->create_convex_hull_rigid_body(false, mMeshes[comp.Attribute("mesh")], &parent->transform);
+				rb = Physics::instance()->create_capsule_rigid_body(1, 1, &parent->transform);
 			}
 			return new RigidBody(rb);
 		}
@@ -134,6 +152,7 @@ namespace Aurora {
 
 	void ResourceManager::load_texture(const std::string& name){
 		Texture t = create_2d_texture(TexturePath + name);
+		t.name = name;
 		mTextures.insert({ name, t });
 	}
 
@@ -178,8 +197,13 @@ namespace Aurora {
 		auto s = new Shader(name + ".vert", name + ".frag", ShaderPath);
 		mShaders.insert({ name, s });
 	}
-	void ResourceManager::load_material(const std::string & name, Shader* shader, Texture tex) {
-		auto m = new Material(shader, tex);
+	void ResourceManager::load_material(const std::string & name, Shader* shader, std::vector<Texture> tex) {
+		auto m = new Material(shader, tex[0]);
+		if (tex.size() > 1) {
+			for (int i = 1; i < tex.size(); i++) {
+				m->tex.push_back(tex[i]);
+			}
+		}
 		mMaterials.insert({ name, m });
 	}
 	void ResourceManager::load_script(const std::string & name) {

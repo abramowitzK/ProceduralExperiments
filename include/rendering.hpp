@@ -52,6 +52,7 @@ namespace Aurora {
 		GLuint mTtfVao;
 		GLuint mTtfVbo;
 		RenderState mTtf;
+		std::vector<GLuint> mSamplers;
 	};
 }
 

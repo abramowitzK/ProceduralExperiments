@@ -87,6 +87,9 @@
     <ClCompile Include="src\component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="include\world.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\events.hpp">
@@ -182,6 +185,15 @@
     <ClInclude Include="include\resource_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\marching_cubes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stb_image_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\world.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -200,6 +212,8 @@
     <None Include="Data\Shaders\texturedGouraud.frag" />
     <None Include="Data\Shaders\texturedGouraud.vert" />
     <None Include="Data\Scripts\player.lua" />
+    <None Include="Data\Shaders\texture_lit_procedural.vert" />
+    <None Include="Data\Shaders\texture_lit_procedural.frag" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\Scenes\test.xml" />

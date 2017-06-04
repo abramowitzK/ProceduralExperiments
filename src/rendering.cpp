@@ -81,7 +81,6 @@ namespace Aurora {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
-		
 
 	}
 
@@ -96,7 +95,6 @@ namespace Aurora {
 	}
 
 	void Renderer::render() {
-		render_ttf("Hello, World!", 50, 50, 2.0f, { 1,0,0,1 });
 	}
 
 	void Renderer::clear_screen(bool depth, bool color) {
@@ -131,14 +129,29 @@ namespace Aurora {
 		auto m = mesh->mOwner->transform.get_transform();
 		auto v = mCamera->view;
 		auto p = mCamera->projection;
+		auto first = GL_TEXTURE0;
+		auto second = GL_TEXTURE1;
 		mesh->material->shader->bind();
-		glBindTexture(GL_TEXTURE_2D,mesh->material->tex.Tex);
+		int i = 0;
+		for (const auto& t: mesh->material->tex) {
+			glUniform1i(glGetUniformLocation(mesh->material->shader->get_program(), (std::string("tex")+std::to_string(i)).c_str()), i);
+			glActiveTexture(first++);
+			glBindTexture(GL_TEXTURE_2D, t.Tex);
+			i++;
+		}
+		first = GL_TEXTURE0;
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "mvp"), 1, GL_FALSE, glm::value_ptr(vp));
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "m"), 1, GL_FALSE, glm::value_ptr(m));
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "v"), 1, GL_FALSE, glm::value_ptr(v));
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "p"), 1, GL_FALSE, glm::value_ptr(p));
 
 		mesh->mesh->render();
+		for (const auto& t: mesh->material->tex) {
+			glBindSampler(i, 0);
+			glActiveTexture(first++);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			i++;
+		}
 		current_render_state = oldState;
 		apply_render_state(current_render_state);
 	}

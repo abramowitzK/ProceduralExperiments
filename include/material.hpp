@@ -6,9 +6,10 @@
 #include <texture.hpp>
 namespace Aurora {
 	struct Material {
-		Material(Shader* shader, Texture t) : shader(shader), tex(t){
+		Material(Shader* shader, Texture t) : shader(shader){
+			tex.push_back(t);
 		}
 		Shader* shader;
-		Texture tex;
+		std::vector<Texture> tex;
 	};
 }

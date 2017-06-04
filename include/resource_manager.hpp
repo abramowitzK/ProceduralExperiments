@@ -52,7 +52,7 @@ namespace Aurora {
 		void load_texture(const std::string& name);
 		void load_model(const std::string& name);
 		void load_shader(const std::string& name);
-		void load_material(const std::string& name, Shader* shader, Texture tex);
+		void load_material(const std::string& name, Shader* shader, std::vector<Texture> tex);
 		void load_script(const std::string& name);
 	private:
 		static ResourceManager* sInstance;

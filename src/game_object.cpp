@@ -21,6 +21,9 @@ namespace Aurora {
 	}
 
 	GameObject::~GameObject() {
+		for (const auto& child : mChildren) {
+			delete child;
+		}
 	}
 	void GameObject::update(double dt) {
 		for (const auto comp : mComponents) {

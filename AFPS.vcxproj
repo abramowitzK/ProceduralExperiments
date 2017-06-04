@@ -84,7 +84,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
@@ -108,7 +108,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
@@ -135,7 +135,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
@@ -159,7 +159,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
@@ -177,6 +177,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\world.cpp" />
     <ClCompile Include="src\component.cpp" />
     <ClCompile Include="src\transform.cpp" />
     <ClCompile Include="src\rigid_body.cpp" />
@@ -229,12 +230,14 @@
     <ClInclude Include="include\sprite.hpp" />
     <ClInclude Include="include\sprite_batch.hpp" />
     <ClInclude Include="include\stb_image.h" />
+    <ClInclude Include="include\stb_image_write.h" />
     <ClInclude Include="include\structures.hpp" />
     <ClInclude Include="include\texture.hpp" />
     <ClInclude Include="include\transform.hpp" />
     <ClInclude Include="include\vector_math.hpp" />
     <ClInclude Include="include\tinyxml2.h" />
     <ClInclude Include="include\sol.hpp" />
+    <ClInclude Include="include\world.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -249,6 +252,8 @@
     <None Include="Data\shaders\texturedLit.vert" />
     <None Include="Data\Shaders\texturedGouraud.frag" />
     <None Include="Data\Shaders\texturedGouraud.vert" />
+    <None Include="Data\Shaders\texture_lit_procedural.frag" />
+    <None Include="Data\Shaders\texture_lit_procedural.vert" />
     <None Include="Data\shaders\ttf.frag" />
     <None Include="Data\shaders\ttf.vert" />
     <None Include="Data\shaders\unlit_textured.frag" />

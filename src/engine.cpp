@@ -34,7 +34,7 @@ namespace Aurora {
 		std::function<void()> shutdown = [=]() { mRunning = false; };
 		mEventManager->subscribe_to_event(Intents::Shutdown, shutdown);
 		mEventManager->subscribe_to_resize_event(std::move([=](int a, int b) {mPlatform->handle_resize(a, b); }));
-		mEventManager->subscribe_to_event(Intents::Escape, std::move((std::function<void()>)[=]() {mPlatform->capture_mouse(false); }));
+		mEventManager->subscribe_to_event(Intents::Escape, std::move((std::function<void()>)[=]() {mPlatform->capture_mouse(!mPlatform->capture); mPlatform->capture = !mPlatform->capture; }));
 		mGame.load(initialScene);
 		mScriptManager->load(mGame.current_scene);
 	}
@@ -43,7 +43,7 @@ namespace Aurora {
 		double current_time = mPlatform->get_time();
 		double accumulator = 0;
 		double t = 0;
-		double dt = 1.0/1200.0;
+		double dt = 1.0/60.0;
 		while (mRunning) {
 			double new_time = mPlatform->get_time();
 			double frame_time = new_time - current_time;

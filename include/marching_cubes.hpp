@@ -26,7 +26,7 @@ Vector3 VertexInterp(double isolevel, Vector3 p1, Vector3 p2, double valp1, doub
 
 	return(p);
 }
-void Polygonise(float*** data, std::vector<Vector3>& verts, std::vector<unsigned>& triangles, double isolevel, int dims[3]) {
+void Polygonise(float* data, std::vector<Vector3>& verts, std::vector<unsigned>& triangles, double isolevel, int dims[3]) {
 	int edges[12];
 	float grid[8];
 	int edgeTable[256]={
@@ -344,16 +344,14 @@ void Polygonise(float*** data, std::vector<Vector3>& verts, std::vector<unsigned
 		{ 3,7 }
 	};
 	int xs[3] = {0,0,0};
-	for (xs[2] = 0; xs[2]<dims[2]-1; xs[2]++) {
-		for (xs[1] = 0; xs[1] < dims[1]-1; xs[1]++) {
-			for (xs[0] = 0; xs[0] < dims[0]-1; xs[0]++) {
+	int n = 0;
+	for (xs[2] = 0; xs[2]<dims[2]-1; xs[2]++, n+=dims[0]) {
+		for (xs[1] = 0; xs[1] < dims[1]-1; xs[1]++, n++) {
+			for (xs[0] = 0; xs[0] < dims[0]-1; xs[0]++, n++) {
 				int cubeindex = 0;
 				for (int it = 0; it < 8; it++) {
 					auto v = cubeVerts[it];
-					auto locali = xs[2] + cubeVerts[it][0];
-					auto localj = xs[1] + cubeVerts[it][1];
-					auto localk = xs[0] + cubeVerts[it][2];
-					auto s = data[locali][localj][localk];
+					auto s = data[n+v[0]+dims[0]*(v[1]+dims[1]*v[2])];
 					grid[it] = s;
 					cubeindex |= (s > 0) ? 1 << it : 0;
 				}
@@ -373,7 +371,7 @@ void Polygonise(float*** data, std::vector<Vector3>& verts, std::vector<unsigned
 					auto a = grid[e[0]];
 					auto b = grid[e[1]];
 					auto d = a - b;
-					auto t = 0;
+					float t = 0;
 					if (fabs(d) > 1e-6) {
 						t = a/d;
 					}
@@ -385,7 +383,7 @@ void Polygonise(float*** data, std::vector<Vector3>& verts, std::vector<unsigned
 				auto f = triTable[cubeindex];
 				for (auto it = 0; it < 16; it+=3) {
 					if (f[it] == -1) {
-						break;
+						continue;
 					}
 					triangles.push_back(edges[f[it]]);
 					triangles.push_back(edges[f[it+1]]);
@@ -397,59 +395,64 @@ void Polygonise(float*** data, std::vector<Vector3>& verts, std::vector<unsigned
 }
 Mesh* generate_test_data() {
 	auto noise = FastNoise::FastNoise(1337);
-	noise.SetNoiseType(FastNoise::NoiseType::Simplex);
-	noise.SetFrequency(.1);
-	int dims[] ={ 128,128, 128 };
-	float*** volume = new float**[dims[0]];
-	for (int i = 0; i < dims[0]; i++) {
-		volume[i] = new float*[dims[1]];
-		for (int j = 0; j < dims[1]; j++) {
-			volume[i][j] = new float[dims[2]];
-		}
+	noise.SetNoiseType(FastNoise::NoiseType::Perlin);
+	noise.SetFrequency(0.04);
+	float resolution = 20.0;
+	float dims[3][3] ={ {-1000, 1000, resolution },{ -1000, 1000, resolution },{ -1000, 1000, resolution } };
+	int res[3];
+	for (int i = 0; i < 3; i++) {
+		res[i] = 2+ (int)ceil((dims[i][1] - dims[i][0])/ dims[i][2]);
 	}
-	for (int i = 0; i < dims[0]; i++) {
-		for (int j = 0; j < dims[1]; j++) {
-			for (int k = 0; k < dims[2]; k++) {
-				volume[i][j][k] = 10.0*noise.GetSimplex(i, j, k);
+	float* volume = new float[res[0]*res[1]*res[2]];
+	int n = 0;
+	float x, y,z;
+	int k,j,i;
+	for (k = 0,z = dims[2][0] - dims[2][2]; k < res[2]; k++, z+=dims[2][2]) {
+		for (j = 0,y = dims[1][0] - dims[1][2]; j < res[1]; j++, y += dims[1][2]) {
+			for (i = 0, x = dims[0][0] - dims[0][2]; i < res[0]; i++, x+= dims[0][2], n++) {
+				volume[n] = y - 10*noise.GetNoise(x, y, z);
 			}
 		}
 	}
 	std::vector<Vector3> verts;
 	std::vector<unsigned> indices;
-	Polygonise(volume, verts, indices, 0.0, dims);
-	delete[] volume;
+	Polygonise(volume, verts, indices, 0.0, res);
 	MeshData data;
-	std::vector<Vector3> normals;
-	std::vector<Vector3> faceNormals;
-	faceNormals.reserve(indices.size()/3);
-	for (int i = 0; i < indices.size(); i+=3) {
-		auto p1 = verts[indices[i]];
-		auto p2 = verts[indices[i+1]];
-		auto p3 = verts[indices[i+2]];
-		auto u = p2 - p1;
-		auto v = p3 - p1;
-		Vector3 n = glm::cross(u,v);
-		faceNormals.push_back(n);
-	}
-	normals.resize(verts.size());
-	for (int i = 0; i < indices.size(); i++) {
-		unsigned f = i/3;
-		unsigned v = indices[i];
-		normals[v] += faceNormals[f];
-	}
-	for (int i = 0; i < normals.size(); i++) {
-		normals[i] = glm::normalize(normals[i]);
-	}
 	data.indices = std::move(indices);
 	data.vertices.reserve(verts.size());
-	assert(normals.size() == verts.size());
-	for (int i = 0; i < normals.size(); i++) {
+	Vector3 min = *std::max_element(verts.begin(), verts.end(), [](const Vector3& l, const Vector3& r) { return l.y < r.y; });
+	for (int i = 0; i < verts.size(); i++) {
+		Vector3 grad;
+		int x = verts[i].x;
+		int y = verts[i].y;
+		int z = verts[i].z;
+		int d = res[0];
+		int stride = 1;
+		if (x < 1 || x == d-1) {
+			grad.x = 0.0;
+		} else {
+			grad.x = volume[(x + stride) + d*(y + d*z)] - volume[(x - stride) + d*(y + d *z)];
+		}
+		if (y < 1 || y == d-1) {
+			grad.y = 0.0;
+		} else {
+			grad.y = volume[x + d*((y + stride) + d*z)] - volume[(x)+d*((y - stride) + d *z)];
+		}
+		if (z < 1 || z == d-1) {
+			grad.z = 0.0;
+		} else {
+			grad.z = volume[x + d*(y + d*(z + stride))] - volume[x + d*(y + d *(z - stride))];
+		}
 		Vertex vertex;
-		vertex.pos = verts[i];
-		vertex.normal = normals[i];
+		verts[i].y -= min.y;
+		verts[i].x -= 100;
+		verts[i].z -= 100;
+		vertex.pos = verts[i]*resolution;
+		vertex.normal = glm::normalize(grad);
 		vertex.texCoords ={0,0};
 		data.vertices.push_back(vertex);
 	}
+	delete[] volume;
 	return new Mesh(data);
 }
 }

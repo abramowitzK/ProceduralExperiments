@@ -7,6 +7,7 @@ namespace Aurora {
 		int width;
 		int height;
 		int comp;
+		std::string name;
 	};
 
 	Texture create_2d_texture(std::string &filepath);

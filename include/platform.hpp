@@ -24,6 +24,7 @@ namespace Aurora {
 		double get_time();
 		void swap_buffers();
 		void capture_mouse(bool capture);
+		bool capture = true;
 	private:
 		SDL_Window *mWindowHandle;
 		SDL_GLContext mContext;

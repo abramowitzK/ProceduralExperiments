@@ -22,8 +22,8 @@ namespace Aurora {
 				sInstance = new Physics();
 			return sInstance;
 		}
-		btRigidBody* create_capsule_rigid_body(float radius, float height);
-		btRigidBody* create_box_rigid_body(bool isStatic, Vector3 min, Vector3 max, Transform t);
+		btRigidBody* create_capsule_rigid_body(float radius, float height, Transform* t);
+		btRigidBody* create_box_rigid_body(bool isStatic, Vector3 min, Vector3 max, Transform* t);
 		btRigidBody* create_convex_hull_rigid_body(bool isStatic, Mesh* mesh, Transform* t);
 	private:
 		Physics();

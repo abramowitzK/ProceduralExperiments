@@ -395,10 +395,10 @@ void Polygonise(float* data, std::vector<Vector3>& verts, std::vector<unsigned>&
 }
 Mesh* generate_test_data() {
 	auto noise = FastNoise::FastNoise(1337);
-	noise.SetNoiseType(FastNoise::NoiseType::Perlin);
-	noise.SetFrequency(0.05);
-	float resolution = 1.5;
-	float dims[3][3] ={ {-100, 100, resolution },{-100, 100, resolution },{ -100, 100, resolution } };
+	noise.SetNoiseType(FastNoise::NoiseType::Simplex);
+	noise.SetFrequency(0.1);
+	float resolution = 1;
+	float dims[3][3] ={ {-50, 50, resolution },{-50, 50, resolution },{ -50, 50, resolution } };
 	int res[3];
 	for (int i = 0; i < 3; i++) {
 		res[i] = 2+ (int)ceil(abs(dims[i][1] - dims[i][0])/ dims[i][2]);
@@ -410,7 +410,7 @@ Mesh* generate_test_data() {
 	for (k = 0,z = dims[2][0] - dims[2][2]; k < res[2]; k++, z+=dims[2][2]) {
 		for (j = 0,y = dims[1][0] - dims[1][2]; j < res[1]; j++, y += dims[1][2]) {
 			for (i = 0, x = dims[0][0] - dims[0][2]; i < res[0]; i++, x+= dims[0][2], n++) {
-				volume[n] = y -(10*noise.GetNoise(x, y, z));
+				volume[n] = y +(10*noise.GetNoise(x, y, z));
 			}
 		}
 	}

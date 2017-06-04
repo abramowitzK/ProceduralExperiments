@@ -214,6 +214,7 @@
     <None Include="Data\Scripts\player.lua" />
     <None Include="Data\Shaders\texture_lit_procedural.vert" />
     <None Include="Data\Shaders\texture_lit_procedural.frag" />
+    <None Include="Data\Scripts\error_handling.lua" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\Scenes\test.xml" />

@@ -14,6 +14,7 @@ namespace Aurora {
 		}
 		void update(double dt);
 		void load(Scene* currentScene);
+		void load_error_handling(std::string errorHandlingScript);
 		sol::state* get_lua_state() { return mLua; }
 	private:
 		void handle_lua_error(sol::optional<std::string> msg) {
@@ -27,5 +28,6 @@ namespace Aurora {
 		sol::state* mLua;
 		std::vector<Script> mScripts;
 		EventManager* mEvents;
+		std::string mErrorHandler;
 	};
 }

@@ -18,5 +18,7 @@ namespace Aurora {
 			self.set("value", value);
 		}
 		void init();
+		bool valid = true;
+		sol::state* global_state;
 	};
 }

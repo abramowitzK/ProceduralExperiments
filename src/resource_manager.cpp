@@ -44,6 +44,7 @@ namespace Aurora {
 		load_texture("default.png");
 		load_material("default", mShaders["texturedGouraud"], {mTextures["default"]});
 		mMeshes.insert({ "marching_cubes", generate_test_data() });
+		load_script("error_handling");
 	}
 
 	Scene* ResourceManager::load_scene(const std::string & name, EventManager* manager) {
@@ -81,6 +82,7 @@ namespace Aurora {
 			load_script(std::string(e->Attribute("name")));
 		}
 		Scene* s = new Scene(manager);
+		s->mScriptManager->load_error_handling(mScripts["error_handling.lua"]);
 		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			parse_game_object(&s->root, e, s);

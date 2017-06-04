@@ -11,6 +11,10 @@ namespace Aurora {
 		if(!debug)
 			return;
 		mWorld->debugDrawWorld();
+		//auto cube = mRigidBodies[0];
+		//btTransform t;
+		//cube->getMotionState()->getWorldTransform(t);
+		//mWorld->debugDrawObject(t, cube->getCollisionShape(), { 1.0,0.0,0.0 });
 
 	}
 	btKinematicCharacterController* Physics::create_character_controller(float radius, float height, Transform* t) {
@@ -90,7 +94,7 @@ namespace Aurora {
 		btGImpactCollisionAlgorithm::registerAlgorithm(mDispatcher);
 		mSolver = new btSequentialImpulseConstraintSolver();
 		mWorld = new btDiscreteDynamicsWorld(mDispatcher, mBroadPhase, mSolver, mCollisionConfiguration);
-		mWorld->setGravity({ 0.0f,-9.8f, 0.0f });
+		mWorld->setGravity({ 0.0f,-4.8f, 0.0f });
 		drawer = new GLDebugDrawer();
 		drawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 		mWorld->setDebugDrawer(drawer);

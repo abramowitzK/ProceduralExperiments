@@ -84,7 +84,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SOL_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
@@ -108,7 +108,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SOL_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
@@ -135,7 +135,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SOL_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
@@ -159,7 +159,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\include;$(SolutionDir)sol; $(SolutionDir)Lua\src;$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SOL_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_MBCS;GLEW_STATIC%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
@@ -242,6 +242,7 @@
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="Data\Scripts\error_handling.lua" />
     <None Include="Data\Scripts\player.lua" />
     <None Include="Data\Scripts\testing.lua" />
     <None Include="Data\shaders\basic.frag" />

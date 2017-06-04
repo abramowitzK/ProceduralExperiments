@@ -3,5 +3,5 @@ testing = {
 		}
 function testing:update(dt)
     --self.this.transform:rotate_x(self.value*dt)
-	--print(events.get_mouse_relative_y())
+	print(events.gest_key_down(Keys.f))
 end

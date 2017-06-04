@@ -5,8 +5,9 @@
 namespace Aurora {
 
 	struct RigidBody : public Component {
-		RigidBody(btRigidBody* rigidBody);
+		RigidBody(btRigidBody* rigidBody, bool isStatic = false);
 		void update(double dt);
 		btRigidBody* mRigidBody;
+		bool mIsStatic = false;
 	};
 }

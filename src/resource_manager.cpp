@@ -95,7 +95,8 @@ namespace Aurora {
 		auto renderer = new MeshRenderer(mMeshes["marching_cubes"], mMaterials["procedural"]);
 		renderer->mOwner = obj;
 		btRigidBody* rb = Physics::instance()->create_convex_hull_rigid_body(true, mMeshes["marching_cubes"], &obj->transform);
-		auto rigid = new RigidBody(rb);
+		auto rigid = new RigidBody(rb, true);
+		rigid->mIsStatic = true;
 		rigid->mOwner = obj;
 		obj->add_component(rigid);
 		obj->add_component(renderer);
@@ -117,12 +118,14 @@ namespace Aurora {
 		if (strcmp("RigidBody", comp.Value()) == 0) {
 			//TODO Make this not suck
 			btRigidBody* rb = nullptr;
+			bool is_static = false;
 			if (strcmp(comp.Attribute("shape"), "convex_hull") == 0) {
+				is_static = true;
 				rb = Physics::instance()->create_convex_hull_rigid_body(true, mMeshes[comp.Attribute("mesh")], &parent->transform);
 			} else if (strcmp(comp.Attribute("shape"), "capsule") == 0) {
 				rb = Physics::instance()->create_capsule_rigid_body(1, 1, &parent->transform);
 			}
-			return new RigidBody(rb);
+			return new RigidBody(rb, is_static);
 		}
 		return nullptr;
 	}

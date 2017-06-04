@@ -46,7 +46,7 @@
   <SceneGraph>
     <GameObject name="playerasdfasdfadfasdfasdf">
       <Transform>
-        <Pos>100,50,100</Pos>
+        <Pos>100,100,100</Pos>
         <Rot>0,0,0</Rot>
         <Scale>1,1,1</Scale>
       </Transform>

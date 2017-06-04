@@ -6,6 +6,11 @@
 
 namespace Aurora {
 	Physics* Physics::sInstance;
+	void Physics::render(Renderer* renderer) {
+		if(!debug)
+			return;
+
+	}
 	btKinematicCharacterController* Physics::create_character_controller(float radius, float height, Transform* t) {
 		auto rbc = new  btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 		auto ghost = new btPairCachingGhostObject();
@@ -22,10 +27,14 @@ namespace Aurora {
 	btRigidBody * Physics::create_capsule_rigid_body(float radius, float height, Transform* t) {
 
 		auto rbc = new  btBoxShape(btVector3(1.0f,1.0f,1.0f));
-		btTransform transform;
-		transform.setIdentity();
+		/*auto quat = t->mRotation;
+		auto trans = t->mTranslation;
 		auto scale = t->mScale;
+		btTransform transform = btTransform(btQuaternion(quat.x, quat.y, quat.z, quat.w), { trans.x, trans.y, trans.z });*/
+		auto scale = t->mScale;
+		btTransform transform;
 		transform.setFromOpenGLMatrix(glm::value_ptr(t->get_transform()));
+		auto rot = transform.getRotation();
 		auto motionState = new btDefaultMotionState(transform);
 		btVector3 inertia;
 		rbc->calculateLocalInertia(100.0f, inertia);
@@ -53,20 +62,16 @@ namespace Aurora {
 	}
 	btRigidBody * Physics::create_convex_hull_rigid_body(bool isStatic, Mesh * mesh, Transform* t) {
 		auto shape = create_bvh_triangle_mesh_shape(mesh);
-		//shape->initializePolyhedralFeatures();
-		//shape->optimizeConvexHull();
-		auto quat = t->mRotation;
-		auto trans = t->mTranslation;
+		//auto quat = t->mRotation;
+		//auto trans = t->mTranslation;
 		auto scale = t->mScale;
-		/*btTransform transform;
+		btTransform transform;
 		transform.setIdentity();
-		transform.setFromOpenGLMatrix(glm::value_ptr(t->get_transform()));*/
-		auto motionState = new btDefaultMotionState(btTransform(btQuaternion(quat.x, quat.y, quat.z, quat.w), { trans.x, trans.y, trans.z }));
+		transform.setFromOpenGLMatrix(glm::value_ptr(t->get_transform()));
+		auto motionState = new btDefaultMotionState(transform);
 		btScalar mass = isStatic ? 0.0f : 1.0f;
-
-		btVector3 inertia(0,0,0);
 		shape->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
-		auto info = btRigidBody::btRigidBodyConstructionInfo(mass, motionState, shape, inertia);
+		auto info = btRigidBody::btRigidBodyConstructionInfo(mass, motionState, shape);
 		info.m_restitution = 1.0f;
 		info.m_friction = 0.5f;
 		auto body = new btRigidBody(info);
@@ -134,5 +139,27 @@ namespace Aurora {
 	void Physics::fixed_update(double dt) {
 		mWorld->stepSimulation(dt, 2);
 	}
+
+	GLDebugDrawer::GLDebugDrawer() {}
+
+	GLDebugDrawer::~GLDebugDrawer() {}
+
+	void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & fromColor, const btVector3 & toColor) {
+		
+	}
+
+	void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color) {}
+
+	void GLDebugDrawer::drawSphere(const btVector3 & p, btScalar radius, const btVector3 & color) {}
+
+	void GLDebugDrawer::drawTriangle(const btVector3 & a, const btVector3 & b, const btVector3 & c, const btVector3 & color, btScalar alpha) {}
+
+	void GLDebugDrawer::drawContactPoint(const btVector3 & PointOnB, const btVector3 & normalOnB, btScalar distance, int lifeTime, const btVector3 & color) {}
+
+	void GLDebugDrawer::reportErrorWarning(const char * warningString) {}
+
+	void GLDebugDrawer::draw3dText(const btVector3 & location, const char * textString) {}
+
+	void GLDebugDrawer::setDebugMode(int debugMode) {}
 
 }

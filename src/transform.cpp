@@ -13,9 +13,12 @@ namespace Aurora {
 			"rotate_x", &Transform::rotate_x,
 			"rotate_y", &Transform::rotate_y,
 			"rotate_z", &Transform::rotate_z,
+			"translate", &Transform::translate,
+			"set_translation", static_cast<void (Transform::*)(const float x, const float y, const float z)>(&Transform::set_translation),
 			"translation", sol::property(&Transform::mTranslation, &Transform::mTranslation),
 			"rotation", sol::property(&Transform::mRotation, &Transform::mRotation),
 			"scale", sol::property(&Transform::mScale, &Transform::mScale)
+
 		};
 		sol::constructors<sol::types<>, sol::types<float>, sol::types<float, float>> vector2Constructors;
 		sol::constructors<sol::types<>, sol::types<float>, sol::types<float, float, float>> vector3Constructors;

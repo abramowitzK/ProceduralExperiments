@@ -30,17 +30,12 @@
     <Textures>
       <Texture>rock.jpg</Texture>
       <Texture>grass.png</Texture>
-      <Texture>kyle.jpg</Texture>
-      <Texture>crosshairs.png</Texture>
       <Texture>stone01.tga</Texture>
     </Textures>
     <Models>
-      <Model>plane.obj</Model>
       <Model>monkey.obj</Model>
-      <Model>teapot.obj</Model>
       <Model>cube.obj</Model>
       <Model>capsule.obj</Model>
-      <Model>sphere.obj</Model>
     </Models>
   </ResourceList>
   <SceneGraph>

@@ -7,14 +7,14 @@
 
 namespace Aurora {
 	struct Scene;
+	struct EventManager;
 	struct ScriptManager {
-		
+		ScriptManager(EventManager* manager);
 		~ScriptManager() {
 		}
 		void update(double dt);
 		void load(Scene* currentScene);
 		sol::state* get_lua_state() { return mLua; }
-		ScriptManager();
 	private:
 		void handle_lua_error(sol::optional<std::string> msg) {
 			printf("Lua error\n");
@@ -26,5 +26,6 @@ namespace Aurora {
 		bool mLuaError = false;
 		sol::state* mLua;
 		std::vector<Script> mScripts;
+		EventManager* mEvents;
 	};
 }

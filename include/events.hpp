@@ -4,7 +4,9 @@
 #include <SDL2/SDL.h>
 #include <key_state.hpp>
 #include <mouse_state.hpp>
+
 namespace Aurora {
+	struct ScriptManager;
 	enum Keys {
 		a = SDL_SCANCODE_A, b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 	};
@@ -18,6 +20,7 @@ namespace Aurora {
 		Escape,
 	};
 	struct EventManager {
+		static void expose_to_script(ScriptManager* manager);
 		EventManager();
 		void poll_input();
 		void subscribe_to_resize_event(std::function<void(int,int)> behaviour){

@@ -396,12 +396,12 @@ void Polygonise(float* data, std::vector<Vector3>& verts, std::vector<unsigned>&
 Mesh* generate_test_data() {
 	auto noise = FastNoise::FastNoise(1337);
 	noise.SetNoiseType(FastNoise::NoiseType::Perlin);
-	noise.SetFrequency(0.04);
-	float resolution = 20.0;
-	float dims[3][3] ={ {-1000, 1000, resolution },{ -1000, 1000, resolution },{ -1000, 1000, resolution } };
+	noise.SetFrequency(0.05);
+	float resolution = 1.5;
+	float dims[3][3] ={ {-100, 100, resolution },{-100, 100, resolution },{ -100, 100, resolution } };
 	int res[3];
 	for (int i = 0; i < 3; i++) {
-		res[i] = 2+ (int)ceil((dims[i][1] - dims[i][0])/ dims[i][2]);
+		res[i] = 2+ (int)ceil(abs(dims[i][1] - dims[i][0])/ dims[i][2]);
 	}
 	float* volume = new float[res[0]*res[1]*res[2]];
 	int n = 0;
@@ -410,7 +410,7 @@ Mesh* generate_test_data() {
 	for (k = 0,z = dims[2][0] - dims[2][2]; k < res[2]; k++, z+=dims[2][2]) {
 		for (j = 0,y = dims[1][0] - dims[1][2]; j < res[1]; j++, y += dims[1][2]) {
 			for (i = 0, x = dims[0][0] - dims[0][2]; i < res[0]; i++, x+= dims[0][2], n++) {
-				volume[n] = y - 10*noise.GetNoise(x, y, z);
+				volume[n] = y -(10*noise.GetNoise(x, y, z));
 			}
 		}
 	}
@@ -445,8 +445,6 @@ Mesh* generate_test_data() {
 		}
 		Vertex vertex;
 		verts[i].y -= min.y;
-		verts[i].x -= 100;
-		verts[i].z -= 100;
 		vertex.pos = verts[i]*resolution;
 		vertex.normal = glm::normalize(grad);
 		vertex.texCoords ={0,0};

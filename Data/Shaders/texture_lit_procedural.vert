@@ -19,7 +19,7 @@ void main(){
 	normal_out = normal;
 	mat4 modelView = v*m;
 	vec4 transformed = (m*vec4(pos,1.0));
-	world_pos = (transformed/ sqrt(m[0][0]*m[0][0]+m[0][1]*m[0][1]+m[0][2]*m[0][2])).xyz;
+	world_pos = (transformed/ 10.0*sqrt(m[0][0]*m[0][0]+m[0][1]*m[0][1]+m[0][2]*m[0][2])).xyz;
 	vec3 transformedVertex = vec3(transformed)/transformed.w;
 	vec3 transformedNormal = normalize((m*vec4(normal,0.0)).xyz);
 	float d = length(LightPos - transformedVertex);

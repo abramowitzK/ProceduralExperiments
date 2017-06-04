@@ -12,9 +12,9 @@ namespace Aurora {
 	void Game::expose_to_script(ScriptManager* m) {
 		auto l = m->get_lua_state();
 	}
-	void Game::load(const std::string & initialScene) {
+	void Game::load(const std::string & initialScene, EventManager* events) {
 		auto manager = ResourceManager::instance();
-		current_scene = manager->load_scene(initialScene);
+		current_scene = manager->load_scene(initialScene, events);
 		current_scene->init();
 	}
 }

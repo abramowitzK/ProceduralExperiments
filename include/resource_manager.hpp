@@ -20,12 +20,13 @@ namespace Aurora {
 	const std::string ShaderPath = ResourcePath + "Shaders/";
 	const std::string ScriptPath = ResourcePath + "Scripts/";
 	struct Scene;
+	struct EventManager;
 	class ResourceManager {
 	public:
 		static void expose_to_script(ScriptManager* m);
 		~ResourceManager();
 		void load_defaults();
-		Scene* load_scene(const std::string& name);
+		Scene* load_scene(const std::string& name, EventManager* manager);
 		inline Texture* get_texture(const std::string& name) {
 			return &mTextures[name];
 		}
@@ -56,7 +57,7 @@ namespace Aurora {
 		void load_script(const std::string& name);
 	private:
 		static ResourceManager* sInstance;
-		Component* parse_component(XMLElement& comp, GameObject* parent);
+		Component* parse_component(XMLElement& comp, GameObject* parent, Scene* s);
 		GameObject* parse_game_object(GameObject* parent, XMLElement* o, Scene* s);
 		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;

@@ -1,7 +1,10 @@
 #include "scene.hpp"
 namespace Aurora {
 
-	Scene::Scene() {}
+	Scene::Scene(EventManager* manager) {
+		mScriptManager = new ScriptManager(manager);
+		mScriptManager->load(this);
+	}
 	Scene::~Scene() {}
 
 	void Scene::expose_to_script(ScriptManager* m) {

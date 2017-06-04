@@ -25,7 +25,6 @@ namespace Aurora {
 		Renderer* mRenderer;
 		ResourceManager* mManager;
 		EventManager* mEventManager;
-		ScriptManager* mScriptManager;
 		Physics* mPhysics;
 		Game mGame;
 	};

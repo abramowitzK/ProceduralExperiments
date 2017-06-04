@@ -3,8 +3,23 @@
 * Copyright (c) 2016 Kyle All rights reserved.
 */
 #include "events.hpp"
-
+#include <script_manager.hpp>
 namespace Aurora {
+	void EventManager::expose_to_script(ScriptManager* manager) {
+		auto lua = manager->get_lua_state();
+		sol::usertype<EventManager> managerType{
+			"get_key_down", &EventManager::get_key_down ,
+			"get_mouse_relative_x", &EventManager::get_mouse_relative_x,
+			"get_mouse_relative_y", &EventManager::get_mouse_relative_y
+		};
+		lua->set_usertype("EventManager", managerType);
+		lua->new_enum("Keys", 
+					  "w", Keys::w,
+					  "a", Keys::a,
+					  "s", Keys::s,
+					  "d", Keys::d
+					  );
+	}
 	KeyState EventManager::sKeyboardState;
 	MouseState EventManager::sMouseState;
 	EventManager::EventManager() {

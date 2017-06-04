@@ -3,9 +3,8 @@
 namespace Aurora {
 	Engine::Engine(int width, int height, const std::string & title) : mWidth(width), mHeight(height), mTitle(title), mRunning(false) {
 		mPlatform = new Platform();
-		mManager = ResourceManager::instance();
 		mEventManager = new EventManager();
-		mScriptManager = new ScriptManager();
+		mManager = ResourceManager::instance();
 		mPhysics = Physics::instance();
 		
 	}
@@ -35,8 +34,7 @@ namespace Aurora {
 		mEventManager->subscribe_to_event(Intents::Shutdown, shutdown);
 		mEventManager->subscribe_to_resize_event(std::move([=](int a, int b) {mPlatform->handle_resize(a, b); }));
 		mEventManager->subscribe_to_event(Intents::Escape, std::move((std::function<void()>)[=]() {mPlatform->capture_mouse(!mPlatform->capture); mPlatform->capture = !mPlatform->capture; }));
-		mGame.load(initialScene);
-		mScriptManager->load(mGame.current_scene);
+		mGame.load(initialScene, mEventManager);
 	}
 
 	void Engine::run() {

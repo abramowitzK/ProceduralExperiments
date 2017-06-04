@@ -8,7 +8,7 @@ namespace Aurora {
 	*/
 	struct Game {
 		static void expose_to_script(ScriptManager* m);
-		void load(const std::string& initialScene);
+		void load(const std::string& initialScene, EventManager* manager);
 		Scene* current_scene;
 		std::vector<Scene> scenes;
 	};

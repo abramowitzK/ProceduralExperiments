@@ -46,7 +46,7 @@ namespace Aurora {
 		mMeshes.insert({ "marching_cubes", generate_test_data() });
 	}
 
-	Scene* ResourceManager::load_scene(const std::string & name) {
+	Scene* ResourceManager::load_scene(const std::string & name, EventManager* manager) {
 		using namespace tinyxml2;
 		tinyxml2::XMLDocument doc;
 		auto path = ScenePath + name;
@@ -80,7 +80,7 @@ namespace Aurora {
 		for (auto e = scriptList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			load_script(std::string(e->Attribute("name")));
 		}
-		Scene* s = new Scene();
+		Scene* s = new Scene(manager);
 		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			parse_game_object(&s->root, e, s);
@@ -102,7 +102,7 @@ namespace Aurora {
 		return s;
 	}
 
-	Component* ResourceManager::parse_component(XMLElement & comp, GameObject* parent) {
+	Component* ResourceManager::parse_component(XMLElement & comp, GameObject* parent, Scene* scene) {
 		if (strcmp("Model", comp.Value()) == 0) {
 			auto m = comp.FirstChildElement("Material");
 			auto mat = mMaterials[std::string(m->Attribute("name"))];
@@ -111,8 +111,8 @@ namespace Aurora {
 		if (strcmp("Script", comp.Value()) == 0) {
 			auto name = comp.Attribute("name");
 			//TODO FIX
-			//auto s = new Script(name,mScripts[name]);
-			//return s;
+			auto s = new Script(name,mScripts[name], scene->mScriptManager);
+			return s;
 		}
 		if (strcmp("RigidBody", comp.Value()) == 0) {
 			//TODO Make this not suck
@@ -141,7 +141,7 @@ namespace Aurora {
 		object->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
 		auto componentList = o->FirstChildElement("Components");
 		for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
-			auto comp = parse_component(*c, object);
+			auto comp = parse_component(*c, object, s);
 			if (comp == nullptr)
 				continue;
 			comp->mOwner = object;

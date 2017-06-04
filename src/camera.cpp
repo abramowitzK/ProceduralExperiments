@@ -21,7 +21,7 @@ namespace Aurora {
 		rotation = {0,0,0,1};
 		projection = glm::perspective(70.0f, (float)w/(float)h, 0.1f, 10000.0f);
 		acceleration = 1.0f;
-		speed = 200.0f;
+		speed = 20.0f;
 		velocity = { 0.f,0.f,0.f,1.0f};
 	}
 	void Camera::update(double dt) {

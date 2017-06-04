@@ -1,23 +1,38 @@
 #include "physics.hpp"
 #include <BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h>
 #include <BulletCollision/CollisionShapes/btShapeHull.h>
+
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Aurora {
 	Physics* Physics::sInstance;
+	btKinematicCharacterController* Physics::create_character_controller(float radius, float height, Transform* t) {
+		auto rbc = new  btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+		auto ghost = new btPairCachingGhostObject();
+		btTransform trans;
+		trans.setFromOpenGLMatrix(glm::value_ptr(t->get_transform()));
+		ghost->setWorldTransform(trans);
+		ghost->setCollisionShape(rbc);
+		ghost->setCollisionFlags (btCollisionObject::CF_CHARACTER_OBJECT);
+		auto kinematicController = new btKinematicCharacterController(ghost, rbc, 1.0f);
+		return kinematicController;
+		mWorld->addCollisionObject(ghost, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::StaticFilter|btBroadphaseProxy::DefaultFilter);
+		mWorld->addAction(kinematicController);
+	}
 	btRigidBody * Physics::create_capsule_rigid_body(float radius, float height, Transform* t) {
-		auto rbc = new  btCapsuleShape(radius, height);
+
+		auto rbc = new  btBoxShape(btVector3(1.0f,1.0f,1.0f));
 		btTransform transform;
 		transform.setIdentity();
 		auto scale = t->mScale;
 		transform.setFromOpenGLMatrix(glm::value_ptr(t->get_transform()));
 		auto motionState = new btDefaultMotionState(transform);
 		btVector3 inertia;
-		rbc->calculateLocalInertia(100000.0f, inertia);
+		rbc->calculateLocalInertia(100.0f, inertia);
 		rbc->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
 		auto info = btRigidBody::btRigidBodyConstructionInfo(100.0f, motionState, rbc, inertia);
 		info.m_restitution = 0.4f;
-		info.m_friction = 0.5f;
+		info.m_friction = 0.3f;
 		auto body = new btRigidBody(info);
 		body->setLinearFactor(btVector3(1, 1, 0));
 		mWorld->addRigidBody(body);

@@ -1,6 +1,7 @@
 #include "game_object.hpp"
 #include <rigid_body.hpp>
 #include <script_manager.hpp>
+#include <transform.hpp>
 namespace Aurora {
 	GameObject::GameObject() : parent(nullptr) {}
 
@@ -52,6 +53,10 @@ namespace Aurora {
 		}
 	}
 	void GameObject::add_component(Component* comp) {
+		comp->mOwner = this;
+		if(!comp->mTransform)
+			comp->mTransform = new Transform();
+		comp->mTransform->mParent = &this->transform;
 		mComponents.push_back(comp);
 	}
 	void GameObject::init() {

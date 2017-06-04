@@ -3,12 +3,14 @@
 #include <BulletCollision/CollisionShapes/btShapeHull.h>
 
 #include <glm/gtc/type_ptr.hpp>
+#include <gl/glew.h>
 
 namespace Aurora {
 	Physics* Physics::sInstance;
 	void Physics::render(Renderer* renderer) {
 		if(!debug)
 			return;
+		mWorld->debugDrawWorld();
 
 	}
 	btKinematicCharacterController* Physics::create_character_controller(float radius, float height, Transform* t) {
@@ -81,6 +83,7 @@ namespace Aurora {
 		return body;
 	}
 	Physics::Physics() {
+
 		mBroadPhase = new btDbvtBroadphase();
 		mCollisionConfiguration = new btDefaultCollisionConfiguration();
 		mDispatcher = new btCollisionDispatcher(mCollisionConfiguration);
@@ -88,6 +91,9 @@ namespace Aurora {
 		mSolver = new btSequentialImpulseConstraintSolver();
 		mWorld = new btDiscreteDynamicsWorld(mDispatcher, mBroadPhase, mSolver, mCollisionConfiguration);
 		mWorld->setGravity({ 0.0f,-9.8f, 0.0f });
+		drawer = new GLDebugDrawer();
+		drawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+		mWorld->setDebugDrawer(drawer);
 	}
 
 	btBvhTriangleMeshShape * Physics::create_bvh_triangle_mesh_shape(Mesh * mesh) {
@@ -140,15 +146,46 @@ namespace Aurora {
 		mWorld->stepSimulation(dt, 2);
 	}
 
-	GLDebugDrawer::GLDebugDrawer() {}
+	GLDebugDrawer::GLDebugDrawer() {
+		glGenVertexArrays(1, &vao);
+
+	}
 
 	GLDebugDrawer::~GLDebugDrawer() {}
 
 	void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & fromColor, const btVector3 & toColor) {
-		
+			float tmp[6] ={ from.getX(), from.getY(), from.getZ(),
+				to.getX(), to.getY(), to.getZ() };
+
+			glPushMatrix();
+			{
+				glColor4f(fromColor.getX(), fromColor.getY(), fromColor.getZ(), 1.0f);
+				glVertexPointer(3,
+								GL_FLOAT,
+								0,
+								&tmp);
+
+				glPointSize(5.0f);
+				glDrawArrays(GL_POINTS, 0, 2);
+				glDrawArrays(GL_LINES, 0, 2);
+			}
+			glPopMatrix();
 	}
 
-	void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color) {}
+	void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color) {
+		glBindVertexArray(vao);
+		float tmp[6] ={ from.getX(), from.getY(), from.getZ(),
+			to.getX(), to.getY(), to.getZ() };
+		glLineWidth(5.0f);
+		auto err = glGetError();
+		glBegin(GL_LINES);
+//		glColor4f(1.0f, 0.0f,0.0f,1.0f);
+
+		glVertex3f(from.x(), from.y(), from.z());
+		glVertex3f(to.x(), to.y(), to.z());
+		glEnd();
+		err = glGetError();
+	}
 
 	void GLDebugDrawer::drawSphere(const btVector3 & p, btScalar radius, const btVector3 & color) {}
 
@@ -156,10 +193,14 @@ namespace Aurora {
 
 	void GLDebugDrawer::drawContactPoint(const btVector3 & PointOnB, const btVector3 & normalOnB, btScalar distance, int lifeTime, const btVector3 & color) {}
 
-	void GLDebugDrawer::reportErrorWarning(const char * warningString) {}
+	void GLDebugDrawer::reportErrorWarning(const char * warningString) {
+		printf("Error in debug drawing!");
+	}
 
 	void GLDebugDrawer::draw3dText(const btVector3 & location, const char * textString) {}
 
-	void GLDebugDrawer::setDebugMode(int debugMode) {}
+	void GLDebugDrawer::setDebugMode(int debugMode) {
+		m_debugMode = debugMode;
+	}
 
 }

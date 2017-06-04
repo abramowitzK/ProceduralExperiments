@@ -90,7 +90,7 @@ namespace Aurora {
 			PolygonMode::Fill
 	};
 	static const RenderState DefaultTTFState = {
-			CullState::On,
+			CullState::Off,
 			BlendState::On,
 			DepthState::Off,
 

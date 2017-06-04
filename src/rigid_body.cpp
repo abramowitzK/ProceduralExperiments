@@ -10,7 +10,8 @@ namespace Aurora {
 			btTransform tf;
 			mRigidBody->getMotionState()->getWorldTransform(tf);
 			auto& rot = tf.getRotation();
-			Quaternion q(rot.x(), rot.y(), rot.z(), rot.w());
+			Quaternion q = Quaternion(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
+
 			auto vec = glm::eulerAngles(q);
 			mOwner->transform.set_rotation(q);
 			auto& trans = tf.getOrigin();

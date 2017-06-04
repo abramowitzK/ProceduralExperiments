@@ -5,7 +5,7 @@ namespace Aurora {
 		mPlatform = new Platform();
 		mEventManager = new EventManager();
 		mManager = ResourceManager::instance();
-		mPhysics = Physics::instance();
+
 		
 	}
 	void Engine::start(const std::string& initialScene) {
@@ -22,6 +22,7 @@ namespace Aurora {
 	void Engine::render() {
 		render_game(&mGame, mRenderer);
 		mRenderer->render();
+		mPhysics->render(mRenderer);
 	}
 
 	void Engine::init(const std::string& initialScene) {
@@ -30,6 +31,8 @@ namespace Aurora {
 		mManager->load_defaults();
 		mRenderer->init_default_resources();
 		mRenderer->create_camera(*mEventManager);
+		mPhysics = Physics::instance();
+		mPhysics->debug = true;
 		std::function<void()> shutdown = [=]() { mRunning = false; };
 		mEventManager->subscribe_to_event(Intents::Shutdown, shutdown);
 		mEventManager->subscribe_to_resize_event(std::move([=](int a, int b) {mPlatform->handle_resize(a, b); }));

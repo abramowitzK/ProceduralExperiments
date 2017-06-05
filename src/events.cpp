@@ -19,7 +19,8 @@ namespace Aurora {
 					  "s", Keys::s,
 					  "d", Keys::d,
 					  "f", Keys::f,
-					  "r", Keys::r
+					  "r", Keys::r,
+					  "space", Keys::space
 					  );
 	}
 	KeyState EventManager::sKeyboardState;

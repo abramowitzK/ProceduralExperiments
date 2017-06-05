@@ -77,6 +77,7 @@ namespace Aurora {
 		 void rotate_x(float degrees);
 		 void rotate_y(float degrees);
 		 void rotate_z(float degrees);
+		 void rotate_axis(Vector3 axis, float degrees);
 		 void translate(const float x, const float y, const float z);
 
 		Transform* mParent;

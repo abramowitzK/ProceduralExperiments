@@ -35,7 +35,7 @@ namespace Aurora {
 		mRenderer->init_default_resources();
 		mRenderer->create_camera(*mEventManager);
 		mPhysics = Physics::instance();
-		mPhysics->debug = true;
+		mPhysics->debug = false;
 		std::function<void()> shutdown = [=]() { mRunning = false; };
 		mEventManager->subscribe_to_event(Intents::Shutdown, shutdown);
 		mEventManager->subscribe_to_resize_event(std::move([=](int a, int b) {mPlatform->handle_resize(a, b); }));

@@ -8,7 +8,7 @@
 namespace Aurora {
 	struct ScriptManager;
 	enum Keys {
-		a = SDL_SCANCODE_A, b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+		a = SDL_SCANCODE_A, b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z, space = SDL_SCANCODE_SPACE, 
 	};
 	template<typename E>
 	constexpr auto to_underlying(E e) noexcept {

@@ -179,6 +179,10 @@ namespace Aurora {
 	 void Transform::rotate_z(float degrees) {
 		mRotation = glm::angleAxis(glm::radians(degrees), glm::vec3(0.0f, 0.0f, 1.0f))*mRotation;
 	}
+	 void Transform::rotate_axis(Vector3 axis, float degrees) {
+	 
+		 mRotation = glm::angleAxis(glm::radians(degrees), axis)*mRotation;
+	}
 
 	 void Transform::translate(const float x, const float y, const float z) {
 		mTranslation += Vector3(x, y, z);

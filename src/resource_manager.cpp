@@ -6,6 +6,7 @@
 #include <script_manager.hpp>
 #include <scene.hpp>
 #include <marching_cubes.hpp>
+#include <character_controller.hpp>
 namespace Aurora {
 	ResourceManager* ResourceManager::sInstance;
 	void ResourceManager::reload_scripts() {}
@@ -106,6 +107,10 @@ namespace Aurora {
 	}
 
 	Component* ResourceManager::parse_component(XMLElement & comp, GameObject* parent, Scene* scene) {
+		if (strcmp("CharacterController", comp.Value()) == 0) {
+			btKinematicCharacterController* cc = Physics::instance()->create_character_controller(1.0,1.0, &parent->transform);
+			return new CharacterController(cc);
+		}
 		if (strcmp("Model", comp.Value()) == 0) {
 			auto m = comp.FirstChildElement("Material");
 			auto mat = mMaterials[std::string(m->Attribute("name"))];
@@ -113,7 +118,6 @@ namespace Aurora {
 		}
 		if (strcmp("Script", comp.Value()) == 0) {
 			auto name = comp.Attribute("name");
-			//TODO FIX
 			auto s = new Script(name,mScripts[name], scene->mScriptManager);
 			return s;
 		}

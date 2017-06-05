@@ -239,7 +239,6 @@
     <ClInclude Include="include\tinyxml2.h" />
     <ClInclude Include="include\sol.hpp" />
     <ClInclude Include="include\world.hpp" />
-    <ClInclude Include="src\character_controller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />

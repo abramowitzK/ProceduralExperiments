@@ -1,7 +1,6 @@
 #include "physics.hpp"
 #include <BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h>
 #include <BulletCollision/CollisionShapes/btShapeHull.h>
-
 #include <glm/gtc/type_ptr.hpp>
 #include <gl/glew.h>
 
@@ -25,10 +24,13 @@ namespace Aurora {
 		ghost->setWorldTransform(trans);
 		ghost->setCollisionShape(rbc);
 		ghost->setCollisionFlags (btCollisionObject::CF_CHARACTER_OBJECT);
-		auto kinematicController = new btKinematicCharacterController(ghost, rbc, 1.0f);
-		return kinematicController;
+		auto kinematicController = new btKinematicCharacterController(ghost, rbc, 0.2f);
+		kinematicController->setUseGhostSweepTest(false);
+		kinematicController->setGravity({0,-9.8f,0});
+		kinematicController->setWalkDirection(btVector3(0.0f, 0.0f, 0.01f));
 		mWorld->addCollisionObject(ghost, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::StaticFilter|btBroadphaseProxy::DefaultFilter);
 		mWorld->addAction(kinematicController);
+		return kinematicController;
 	}
 	btRigidBody * Physics::create_capsule_rigid_body(float radius, float height, Transform* t) {
 

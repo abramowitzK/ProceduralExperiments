@@ -9,6 +9,7 @@ namespace Aurora {
 		Script,
 		Physics,
 		Camera,
+		CharacterController
 	};
 	struct Component {
 		static void expose_to_script(ScriptManager* m);

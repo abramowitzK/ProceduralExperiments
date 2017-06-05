@@ -1,7 +1,8 @@
-#include "game_object.hpp"
+#include <game_object.hpp>
 #include <rigid_body.hpp>
 #include <script_manager.hpp>
 #include <transform.hpp>
+#include <character_controller.hpp>
 namespace Aurora {
 	GameObject::GameObject() : parent(nullptr) {}
 
@@ -12,6 +13,7 @@ namespace Aurora {
 		auto l = m->get_lua_state();
 		sol::usertype<GameObject> type{
 			"add_component", &GameObject::add_component,
+			"get_component", &GameObject::get_component,
 			"parent", sol::property(&GameObject::parent, &GameObject::parent),
 			"transform", sol::property(&GameObject::transform, &GameObject::transform),
 			"id", sol::property(&GameObject::mId, &GameObject::mId),
@@ -33,6 +35,9 @@ namespace Aurora {
 			}
 			if (comp->mType == ComponentType::Physics) {
 				((RigidBody*)comp)->update(dt);
+			}
+			if (comp->mType == ComponentType::CharacterController) {
+				((CharacterController*)comp)->update(dt);
 			}
 		}
 		for (const auto& go : mChildren) {
@@ -58,6 +63,16 @@ namespace Aurora {
 			comp->mTransform = new Transform();
 		comp->mTransform->mParent = &this->transform;
 		mComponents.push_back(comp);
+	}
+
+	Component* GameObject::get_component(ComponentType type) {
+	
+		for (const auto comp : mComponents) {
+			if (comp->mType == type) {
+				return comp;
+			}
+		}
+		return nullptr;
 	}
 	void GameObject::init() {
 		for (const auto comp : mComponents) {

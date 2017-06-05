@@ -14,5 +14,12 @@ namespace Aurora {
 			"owning_object", &Component::mOwner
 		};
 		l->set_usertype("Component", type);
+		l->new_enum("ComponentType",
+					  "Script", ComponentType::Script,
+					  "Physics", ComponentType::Physics,
+					  "Mesh", ComponentType::Mesh,
+					  "Camera", ComponentType::Camera,
+					  "CharacterController", ComponentType::CharacterController
+		);
 	}
 }

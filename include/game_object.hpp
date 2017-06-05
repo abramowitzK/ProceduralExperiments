@@ -13,6 +13,7 @@ namespace Aurora {
 		void update(double dt);
 		void render(Renderer* renderer);
 		void add_component(Component* comp);
+		Component* get_component(ComponentType type);
 		void init();
 		GameObject* parent;
 		Transform transform;

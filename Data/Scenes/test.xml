@@ -50,12 +50,14 @@
         <Model name="cube.obj">
           <Material name="basic"/>
         </Model>
-        <RigidBody shape="capsule" mesh="cube.obj" static="false"/>
+        <!--<RigidBody shape="capsule" mesh="cube.obj" static="false"/>-->
+        <CharacterController name="testCC"/>
+        <Camera name="main"/>
       </Components>
     </GameObject>
     <GameObject name="monkey">
       <Transform>
-        <Pos>20,20,0</Pos>
+        <Pos>40,20,30</Pos>
         <Rot>0,0,0</Rot>
         <Scale>1,1,1</Scale>
       </Transform>

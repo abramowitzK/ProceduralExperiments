@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <resource_manager.hpp>
 #include <script_manager.hpp>
+#include <camera_component.hpp>
 
 namespace Aurora {
 	void Renderer::expose_to_script(ScriptManager* m) {
@@ -94,7 +95,10 @@ namespace Aurora {
 		mDefaultTtfShader = manager->get_shader("ttf");
 	}
 
-	void Renderer::render() {
+	void Renderer::render(CameraComponent* cam) {
+		cam->render(this);
+		view = cam->view;
+		proj = cam->proj;
 	}
 
 	void Renderer::clear_screen(bool depth, bool color) {
@@ -124,11 +128,16 @@ namespace Aurora {
 		RenderState oldState = current_render_state;
 		current_render_state = mesh->required_state;
 		apply_render_state(current_render_state, &oldState);
-		mCamera->render();
-		auto vp = mCamera->projection*mCamera->view*(mesh->mOwner->transform.get_transform());
-		auto m = mesh->mOwner->transform.get_transform();
-		auto v = mCamera->view;
-		auto p = mCamera->projection;
+		Matrix4 vp, m,v,p;
+		if (debug) {
+			mCamera->render();
+			view = mCamera->view;
+			proj = mCamera->projection;
+		}
+		vp = proj*view*mesh->mTransform->get_transform();//mCamera->projection*mCamera->view*(mesh->mOwner->transform.get_transform());
+		m = mesh->mOwner->transform.get_transform();
+		v = view;
+		p = proj;
 		auto first = GL_TEXTURE0;
 		auto second = GL_TEXTURE1;
 		mesh->material->shader->bind();

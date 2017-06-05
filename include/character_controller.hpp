@@ -3,8 +3,18 @@
 #include <vector_math.hpp>
 #include <BulletDynamics/Character/btKinematicCharacterController.h>
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
+#include <script_manager.hpp>
 namespace Aurora {
 struct CharacterController : public Component {
+
+	static void expose_to_script(ScriptManager* manager) {
+		auto l = manager->get_lua_state();
+		sol::usertype<CharacterController> type{
+			"set_walk_dir", &CharacterController::set_walk_dir,
+			"speed", sol::property(&CharacterController::speed)
+		};
+		l->set_usertype("CharacterController", type);
+	}
 	CharacterController(btKinematicCharacterController * controller) : mController(controller) {
 		mGhost = controller->getGhostObject();
 		mType = ComponentType::CharacterController;
@@ -26,7 +36,7 @@ struct CharacterController : public Component {
 		}
 	}
 	//TODO handle other dirs and do rotation
-	void set_walk_dir(bool forward) {
+	void set_walk_dir(bool forward, bool back, bool right, bool left, double dt) {
 		btTransform xform;
 		xform = mGhost->getWorldTransform ();
 		btVector3 forwardDir = xform.getBasis()[2];
@@ -40,6 +50,16 @@ struct CharacterController : public Component {
 		if (forward) {
 			walkDirection += forwardDir;
 		}
+		if (back) {
+			walkDirection -= forwardDir;
+		}
+		if (left) {
+			walkDirection -= strafeDir;
+		}
+		if (right) {
+			walkDirection += strafeDir;
+		}
+		mController->setVelocityForTimeInterval(walkDirection*speed, dt);
 	}
 	float speed = 10.0f;
 	float walk_velocity = 0;

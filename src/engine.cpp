@@ -4,6 +4,8 @@ namespace Aurora {
 	Engine::Engine(int width, int height, const std::string & title) : mWidth(width), mHeight(height), mTitle(title), mRunning(false) {
 		mPlatform = new Platform();
 		mEventManager = new EventManager();
+		mEventManager->mResizeX = width;
+		mEventManager->mResizeY = height;
 		mManager = ResourceManager::instance();
 
 		
@@ -22,7 +24,6 @@ namespace Aurora {
 	void Engine::render() {
 
 		render_game(&mGame, mRenderer);
-		mRenderer->render();
 		mPhysics->render(mRenderer);
 
 	}
@@ -39,6 +40,7 @@ namespace Aurora {
 		mEventManager->subscribe_to_event(Intents::Shutdown, shutdown);
 		mEventManager->subscribe_to_resize_event(std::move([=](int a, int b) {mPlatform->handle_resize(a, b); }));
 		mEventManager->subscribe_to_event(Intents::Escape, std::move((std::function<void()>)[=]() {mPlatform->capture_mouse(!mPlatform->capture); mPlatform->capture = !mPlatform->capture; }));
+		mEventManager->subscribe_to_event(Intents::Debug, std::move((std::function<void()>)[=]() {mRenderer->debug = !mRenderer->debug; }));
 		mGame.load(initialScene, mEventManager);
 	}
 

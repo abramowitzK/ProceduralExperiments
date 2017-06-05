@@ -177,6 +177,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera_component.cpp" />
     <ClCompile Include="src\world.cpp" />
     <ClCompile Include="src\component.cpp" />
     <ClCompile Include="src\transform.cpp" />
@@ -205,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\camera.hpp" />
+    <ClInclude Include="include\camera_component.hpp" />
     <ClInclude Include="include\character_controller.hpp" />
     <ClInclude Include="include\component.hpp" />
     <ClInclude Include="include\engine.hpp" />

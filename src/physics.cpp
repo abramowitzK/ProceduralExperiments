@@ -17,9 +17,11 @@ namespace Aurora {
 
 	}
 	btKinematicCharacterController* Physics::create_character_controller(float radius, float height, Transform* t) {
-		auto rbc = new  btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+		auto rbc = new  btCapsuleShape(1.0, 2.0);
+		auto axis = rbc->getUpAxis();
 		auto ghost = new btPairCachingGhostObject();
 		btTransform trans;
+		auto auroraTrans = t->get_transform();
 		trans.setFromOpenGLMatrix(glm::value_ptr(t->get_transform()));
 		ghost->setWorldTransform(trans);
 		ghost->setCollisionShape(rbc);
@@ -27,9 +29,11 @@ namespace Aurora {
 		auto kinematicController = new btKinematicCharacterController(ghost, rbc, 0.2f);
 		kinematicController->setUseGhostSweepTest(false);
 		kinematicController->setGravity({0,-9.8f,0});
-		kinematicController->setWalkDirection(btVector3(0.0f, 0.0f, 0.01f));
+		kinematicController->setUp(btVector3(0.0,1.0f,0.0));
 		mWorld->addCollisionObject(ghost, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::StaticFilter|btBroadphaseProxy::DefaultFilter);
 		mWorld->addAction(kinematicController);
+		auto basis = btMatrix3x3::getIdentity();
+		ghost->getWorldTransform().setBasis(basis);
 		return kinematicController;
 	}
 	btRigidBody * Physics::create_capsule_rigid_body(float radius, float height, Transform* t) {

@@ -39,6 +39,11 @@ namespace Aurora {
 						mDirty = true;
 						break;
 					}
+					if (mEvent.key.keysym.scancode == SDL_SCANCODE_LALT) {
+						mIntents[to_underlying(Intents::Debug)] = true;
+						mDirty = true;
+						break;
+					}
 					sKeyboardState.key_down(mEvent.key.keysym.scancode);
 					break;
 				case SDL_KEYUP:

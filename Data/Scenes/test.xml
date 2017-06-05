@@ -33,9 +33,9 @@
       <Texture>stone01.tga</Texture>
     </Textures>
     <Models>
-      <Model>monkey.obj</Model>
-      <Model>cube.obj</Model>
-      <Model>capsule.obj</Model>
+      <Model invert="false">monkey.obj</Model>
+      <Model invert="false">cube.obj</Model>
+      <Model invert="true">capsule_fixed.obj</Model>
     </Models>
   </ResourceList>
   <SceneGraph>
@@ -47,7 +47,7 @@
       </Transform>
       <Components>
         <Script name="player"/>
-        <Model name="cube.obj">
+        <Model name="capsule_fixed.obj">
           <Material name="basic"/>
         </Model>
         <!--<RigidBody shape="capsule" mesh="cube.obj" static="false"/>-->
@@ -74,7 +74,7 @@
           <Scale>2,2,2</Scale>
         </Transform>
         <Components>
-          <Model name="capsule.obj">
+          <Model name="capsule_fixed.obj">
             <Material name="grass"/>
           </Model>
         </Components>

@@ -18,6 +18,7 @@ namespace Aurora {
 		Shutdown,
 		Resize,
 		Escape,
+		Debug,
 	};
 	struct EventManager {
 		static void expose_to_script(ScriptManager* manager);
@@ -33,14 +34,15 @@ namespace Aurora {
 		static float get_mouse_relative_x();
 		static float get_mouse_relative_y();
 		void update_previous();
+		int mResizeX;
+		int mResizeY;
+		bool debug;
 	private:
 		void notify_subscribers();
 	private:
 		std::vector<std::vector<std::function<void()>>> mSubscribers;
 		std::vector<bool> mIntents;
 		SDL_Event mEvent;
-		int mResizeX;
-		int mResizeY;
 		int mMouseRelX;
 		int mMouseRelY;
 		static KeyState sKeyboardState;

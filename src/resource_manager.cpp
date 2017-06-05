@@ -7,6 +7,8 @@
 #include <scene.hpp>
 #include <marching_cubes.hpp>
 #include <character_controller.hpp>
+#include <camera_component.hpp>
+#include <platform.hpp>
 namespace Aurora {
 	ResourceManager* ResourceManager::sInstance;
 	void ResourceManager::reload_scripts() {}
@@ -64,7 +66,8 @@ namespace Aurora {
 			load_texture(e->GetText());
 		}
 		for (auto e = modelList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
-			load_model(e->GetText());
+			auto inv = e->BoolAttribute("invert");
+			load_model(e->GetText(), inv);
 		}
 		for (auto e = shaderList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			load_shader(std::string(e->Attribute("name")));
@@ -86,7 +89,7 @@ namespace Aurora {
 		s->mScriptManager->load_error_handling(mScripts["error_handling.lua"]);
 		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
-			parse_game_object(&s->root, e, s);
+			parse_game_object(&s->root, e, s, manager);
 		}
 		auto obj = s->create_object();
 		obj->parent = &s->root;
@@ -106,7 +109,10 @@ namespace Aurora {
 		return s;
 	}
 
-	Component* ResourceManager::parse_component(XMLElement & comp, GameObject* parent, Scene* scene) {
+	Component* ResourceManager::parse_component(XMLElement & comp, GameObject* parent, Scene* scene, EventManager* manager) {
+		if (strcmp("Camera", comp.Value()) == 0) {
+			return new CameraComponent(manager->mResizeX, manager->mResizeY, *manager);
+		}
 		if (strcmp("CharacterController", comp.Value()) == 0) {
 			btKinematicCharacterController* cc = Physics::instance()->create_character_controller(1.0,1.0, &parent->transform);
 			return new CharacterController(cc);
@@ -136,13 +142,13 @@ namespace Aurora {
 		return nullptr;
 	}
 
-	GameObject * ResourceManager::parse_game_object(GameObject * parent, XMLElement* o, Scene* s) {
+	GameObject * ResourceManager::parse_game_object(GameObject * parent, XMLElement* o, Scene* s, EventManager* manager) {
 		GameObject* object = s->create_object();
 		object->parent = parent;
 		object->transform.mParent = &parent->transform;
 		parent->mChildren.push_back(object);
 		for (auto e = o->FirstChildElement("GameObject"); e != nullptr; e = e->NextSiblingElement()) {
-			parse_game_object(object, e, s);
+			parse_game_object(object, e, s, manager);
 		}
 		auto tf = o->FirstChildElement("Transform");
 		object->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
@@ -150,10 +156,12 @@ namespace Aurora {
 		object->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
 		auto componentList = o->FirstChildElement("Components");
 		for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
-			auto comp = parse_component(*c, object, s);
+			auto comp = parse_component(*c, object, s, manager);
 			if (comp == nullptr)
 				continue;
 			comp->mOwner = object;
+			comp->mTransform = new Transform();
+			comp->mTransform->mParent = &object->transform;
 			object->add_component(comp);
 		}
 		return object;
@@ -165,7 +173,7 @@ namespace Aurora {
 		mTextures.insert({ name, t });
 	}
 
-	void ResourceManager::load_model(const std::string& name) {
+	void ResourceManager::load_model(const std::string& name, bool invert) {
 		Assimp::Importer importer;
 		auto scene = importer.ReadFile(ModelPath + name, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_GenUVCoords);
 		if (!scene) {

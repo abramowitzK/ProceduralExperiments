@@ -16,6 +16,7 @@
 #include FT_FREETYPE_H
 
 namespace Aurora {
+	struct CameraComponent;
 	struct Character {
 		GLuint TextureID;
 		glm::ivec2 Size;
@@ -29,13 +30,14 @@ namespace Aurora {
 		Renderer() {};
 		void init_default_resources();
 		void update(double dt) { mCamera->update(dt); }
-		void render();
+		void render(CameraComponent* cam);
 		void clear_screen(bool depth, bool color);
 		void handle_resize(int width, int height);
 		void create_camera(EventManager& manager);
 		void render_mesh(MeshRenderer* mesh);
 		void render_ttf(const std::string& text, float x, float y, float scale, glm::vec4 color);
 		RenderState current_render_state = DefaultRenderState;
+		bool debug = false;
 	private:
 		RenderState mDefault = DefaultRenderState;
 		Shader* mDefaultShader;
@@ -53,6 +55,9 @@ namespace Aurora {
 		GLuint mTtfVbo;
 		RenderState mTtf;
 		std::vector<GLuint> mSamplers;
+		Matrix4 proj;
+		Matrix4 view;
+
 	};
 }
 

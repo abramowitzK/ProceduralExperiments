@@ -6,6 +6,7 @@
 #include <game.hpp>
 #include <scene.hpp>
 #include <events.hpp>
+#include <character_controller.hpp>
 namespace Aurora {
 	ScriptManager::ScriptManager(EventManager* manager) {
 		mEvents = manager;
@@ -33,6 +34,7 @@ namespace Aurora {
 		Component::expose_to_script(this);
 		GameObject::expose_to_script(this);
 		EventManager::expose_to_script(this);
+		CharacterController::expose_to_script(this);
 		(*mLua)["scene"] = std::ref(currentScene);
 		(*mLua)["events"] = std::ref(mEvents);
 	}

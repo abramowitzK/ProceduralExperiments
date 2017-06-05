@@ -51,14 +51,14 @@ namespace Aurora {
 		void reload_scripts();
 		ResourceManager();
 		void load_texture(const std::string& name);
-		void load_model(const std::string& name);
+		void load_model(const std::string& name, bool invert);
 		void load_shader(const std::string& name);
 		void load_material(const std::string& name, Shader* shader, std::vector<Texture> tex);
 		void load_script(const std::string& name);
 	private:
 		static ResourceManager* sInstance;
-		Component* parse_component(XMLElement& comp, GameObject* parent, Scene* s);
-		GameObject* parse_game_object(GameObject* parent, XMLElement* o, Scene* s);
+		Component* parse_component(XMLElement & comp, GameObject* parent, Scene* scene, EventManager* manager);
+		GameObject* parse_game_object(GameObject * parent, XMLElement* o, Scene* s, EventManager* manager);
 		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;
 		unordered_map<string, Shader*> mShaders;

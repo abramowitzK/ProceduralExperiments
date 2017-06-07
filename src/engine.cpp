@@ -48,7 +48,7 @@ namespace Aurora {
 		double current_time = mPlatform->get_time();
 		double accumulator = 0;
 		double t = 0;
-		double dt = 1.0/60.0;
+		double dt = 1.0/144.0;
 		while (mRunning) {
 			double new_time = mPlatform->get_time();
 			double frame_time = new_time - current_time;

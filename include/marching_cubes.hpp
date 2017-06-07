@@ -395,8 +395,8 @@ void Polygonise(float* data, std::vector<Vector3>& verts, std::vector<unsigned>&
 }
 Mesh* generate_test_data() {
 	auto noise = FastNoise::FastNoise(1337);
-	noise.SetNoiseType(FastNoise::NoiseType::Simplex);
-	noise.SetFrequency(0.1);
+	noise.SetNoiseType(FastNoise::NoiseType::Cubic);
+	noise.SetFrequency(0.05);
 	float resolution = 1;
 	float dims[3][3] ={ {-50, 50, resolution },{-50, 50, resolution },{ -50, 50, resolution } };
 	int res[3];

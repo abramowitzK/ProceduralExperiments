@@ -24,13 +24,17 @@ struct CharacterController : public Component {
 		mController->setJumpSpeed(200.0f);
 		mController->setMaxJumpHeight(10.0f);
 		mController->setMaxSlope(M_PI/4.0f);
+		mController->setMaxPenetrationDepth(0.01);
 		mType = ComponentType::CharacterController;
 	}
 	void CharacterController::update(double dt) {
+
+		auto mat = mGhost->getWorldTransform().getBasis();
+		mat *= btMatrix3x3(btQuaternion(btVector3(0, 0, 1), 0))*btMatrix3x3(btQuaternion(btVector3(1, 0, 0), 0));
+		mGhost->getWorldTransform().setBasis(mat);
 		btTransform tf = mGhost->getWorldTransform();
 		auto& rot = tf.getRotation();
 		Quaternion q = Quaternion(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
-		auto vec = glm::eulerAngles(q);
 		mOwner->transform.set_rotation(q);
 		auto& trans = tf.getOrigin();
 		mOwner->transform.set_translation(trans.x(), trans.y(), trans.z());
@@ -51,12 +55,40 @@ struct CharacterController : public Component {
 		}
 	}
 	void rotate(float yaw, float pitch) {
-		auto mat = mGhost->getWorldTransform().getBasis();
-		mat *= btMatrix3x3(btQuaternion(btVector3(0,1,0), yaw));
-		auto strafe = mat[0];
 		auto cam = mOwner->get_component<CameraComponent>(ComponentType::Camera);
-		cam->mTransform->rotate_axis({strafe.x(), strafe.y(), strafe.z()}, pitch*100);
+		//cam->mTransform->mRotation =  q*cam->mTransform->mRotation;
+		cam->rotate(0,pitch);
+		auto mat = mGhost->getWorldTransform().getBasis();
+		auto strafe = mat[0];
+		strafe = strafe.normalize();
+		mat *= btMatrix3x3(btQuaternion(btVector3(0,1,0), yaw));
 		mGhost->getWorldTransform().setBasis(mat);
+
+		//mat *= btMatrix3x3(btQuaternion(strafe, pitch));
+		auto btquat =  btQuaternion(strafe, pitch);
+		Quaternion q = Quaternion(btquat.getW(), btquat.getX(), btquat.getY(), btquat.getZ());
+		//Handles yaw
+		cam->forward = Vector4(mat[2].x(), mat[2].y(), mat[2].z(), 0);
+		//cam->up = glm::normalize(cam->up*q);
+		//mGhost->getWorldTransform().setBasis(mat);
+		//auto yawQbt= btQuaternion(btVector3(0, 1, 0), yaw);
+		//Quaternion yawQ = Quaternion(yawQbt.getW(), yawQbt.getX(), yawQbt.getY(), yawQbt.getZ());
+		//cam->forward =  q* Vector4(mat[2].x(), mat[2].y(), mat[2].z(), 0) + cam->forward;
+		//cam->up = q*cam->up + glm::normalize(Vector4(mat[1].x(), mat[1].y(), mat[1].z(), 0));
+		//TODO figure out how to make camera pitching work correctly. Until then, just pitch the dude
+		//auto cam = mOwner->get_component<CameraComponent>(ComponentType::Camera);
+		//Vector4 up ={0,1,0,0};
+		//up = Quaternion(cam->mTransform->get_transform())*up;
+		//up = glm::normalize(up);
+		//if (up.y > 0.15) {
+		//	cam->mTransform->rotate_axis({ strafe.x(), strafe.y(), strafe.z() }, pitch*100);
+		//} else {
+		//	if(pitch < 0)
+		//		cam->mTransform->rotate_axis({ strafe.x(), strafe.y(), strafe.z() }, 0.1);
+		//	else
+		//		cam->mTransform->rotate_axis({ strafe.x(), strafe.y(), strafe.z() }, -0.1);
+		//}
+
 	
 	}
 	//TODO handle other dirs and do rotation

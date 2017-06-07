@@ -30,6 +30,7 @@ namespace Aurora {
 		@returns A 4x4 homogenous matrix of floats in column Major order representing the transformation in world coordinates
 		*/
 		 Matrix4 get_transform() const;
+		 Matrix4 get_local_transform() const;
 		 Matrix4 get_parent_transforms(Transform* parent) const;
 		/**
 		Sets the translation in world coordinates
@@ -78,8 +79,9 @@ namespace Aurora {
 		 void rotate_y(float degrees);
 		 void rotate_z(float degrees);
 		 void rotate_axis(Vector3 axis, float degrees);
+		 void transform_by(Matrix4 trans);
 		 void translate(const float x, const float y, const float z);
-
+		 void look_at(Vector3 point, Vector3 up);
 		Transform* mParent;
 		Vector3 mTranslation;
 		Quaternion mRotation;

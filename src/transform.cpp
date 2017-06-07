@@ -1,4 +1,5 @@
 #include <transform.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 namespace Aurora {
 	 void Transform::expose_to_script(ScriptManager* m) {
 		auto l = m->get_lua_state();
@@ -80,6 +81,12 @@ namespace Aurora {
 			return translation * rot * scale;
 	}
 
+	 Matrix4 Transform::get_local_transform() const {
+		 Matrix4 rot = glm::mat4_cast(mRotation);
+		 Matrix4 scale = glm::scale(mScale);
+		 Matrix4 translation = glm::translate(mTranslation);
+		return translation * rot * scale;
+	 }
 	 Matrix4 Transform::get_parent_transforms(Transform* parent) const {
 		 return parent->get_transform();
 	 }
@@ -187,4 +194,20 @@ namespace Aurora {
 	 void Transform::translate(const float x, const float y, const float z) {
 		mTranslation += Vector3(x, y, z);
 	}
+
+	 void Transform::transform_by(Matrix4 trans) {
+		 auto transform = trans*get_local_transform();
+		 glm::vec3 scale;
+		 glm::quat rotation;
+		 glm::vec3 translation;
+		 glm::vec3 skew;
+		 glm::vec4 perspective;
+		 glm::decompose(transform, scale, rotation, translation, skew, perspective);
+		 set_scale(scale);
+		 set_translation(translation);
+		 set_rotation(rotation);
+	 }
+	 void Transform::look_at(Vector3 point, Vector3 up) {
+		
+	 }
 }

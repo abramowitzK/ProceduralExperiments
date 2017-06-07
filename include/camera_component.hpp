@@ -9,9 +9,11 @@ namespace Aurora {
 		static void expose_to_script();
 		void update(double dt);
 		void render(Renderer* renderer);
+		void rotate(float yaw, float pitch);
 		Matrix4 view;
 		Matrix4 proj;
 		Vector4 up;
 		Vector4 forward;
+		Vector2 rotation;
 	};
 }

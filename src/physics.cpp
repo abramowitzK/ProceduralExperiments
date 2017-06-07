@@ -153,7 +153,7 @@ namespace Aurora {
 	Physics::~Physics() {}
 
 	void Physics::fixed_update(double dt) {
-		mWorld->stepSimulation(dt, 2);
+		mWorld->stepSimulation(dt, 1, dt);
 	}
 
 	GLDebugDrawer::GLDebugDrawer() {

@@ -161,6 +161,13 @@ namespace Aurora {
 				continue;
 			comp->mOwner = object;
 			comp->mTransform = new Transform();
+			
+			auto tf = c->FirstChildElement("Transform");
+			if (tf) {
+				comp->mTransform->set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
+				comp->mTransform->set_rotation(parse_vector3(tf->FirstChildElement("Rot")->GetText()));
+				comp->mTransform->set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
+			}
 			comp->mTransform->mParent = &object->transform;
 			object->add_component(comp);
 		}

@@ -26,14 +26,15 @@ void Aurora::CameraComponent::rotate(float yaw, float pitch) {
 	auto quaternion = glm::angleAxis(rotation.y, right);
 	auto upVector = glm::normalize(quaternion*up);
 	while (fabs(upVector.y) < 0.4) {
-		rotation.y += 0.001;
+		if(glm::dot(upVector, forward) > 0)
+			rotation.y += 0.001;
+		else 
+			rotation.y -= 0.001;
 		right = -glm::cross(Vector3(up), Vector3(forward));
 		quaternion = glm::angleAxis(rotation.y, right);
 		upVector = glm::normalize(quaternion*up);
 	} 
-	if (fabs(upVector.y) < 0.4) {
-			rotation.y += 0.001;
-	}
+
 }
 void Aurora::CameraComponent::update(double dt) {
 	//Vector4 upVector;

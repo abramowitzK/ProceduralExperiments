@@ -104,8 +104,6 @@ namespace Aurora {
 			PolygonMode::Fill
 	};
 
-//TODO how to make this more efficient? This is efficient for the OpenGL but probably not friendly
-//to the branch prediction hw?
 	static void apply_render_state(const RenderState &state, const RenderState *oldState = nullptr) {
 
 		if(oldState) {

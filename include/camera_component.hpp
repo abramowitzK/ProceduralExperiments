@@ -6,7 +6,6 @@ namespace Aurora {
 	struct Renderer;
 	struct CameraComponent : public Component {
 		CameraComponent(int w, int h, EventManager& manager);
-		static void expose_to_script();
 		void update(double dt);
 		void render(Renderer* renderer);
 		void rotate(float yaw, float pitch);

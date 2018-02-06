@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SDL2\SDL.h>
-#include <SDL2\SDL_filesystem.h>
+#include <SDL.h>
+#include <SDL_filesystem.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <stdio.h>

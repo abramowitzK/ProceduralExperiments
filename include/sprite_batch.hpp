@@ -13,16 +13,13 @@ namespace Aurora {
 	struct Texture;
 
 	struct RenderBatch {
-	public:
-		RenderBatch(GLuint offset, GLuint numVertices, Texture *tex) : offset(offset), numVerts(numVertices),
-		                                                               texture(tex) {};
+		RenderBatch(GLuint offset, GLuint numVertices, Texture *tex) : offset(offset), numVerts(numVertices), texture(tex) {};
 		GLuint offset;
 		GLuint numVerts;
 		Texture *texture;
 	};
 
 	struct Glyph {
-	public:
 		Glyph() {}
 
 		Glyph(const Vector4 &destRect, const Vector4 &uvRect, float depth, Texture *Texture, const Color &color) {
@@ -55,7 +52,6 @@ namespace Aurora {
 	};
 
 	struct SpriteBatch {
-	public:
 		SpriteBatch();
 
 		~SpriteBatch();

@@ -3,11 +3,9 @@
 #include <component.hpp>
 #include <transform.hpp>
 #include <rendering.hpp>
-#include <script.hpp>
 namespace Aurora {
 	struct GameObject {
 		friend struct Scene;
-		static void expose_to_script(ScriptManager* m);
 		~GameObject();
 		std::vector<GameObject*> mChildren;
 		void update(double dt);

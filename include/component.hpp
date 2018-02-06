@@ -9,10 +9,11 @@ namespace Aurora {
 		Script,
 		Physics,
 		Camera,
-		CharacterController
+		CharacterController,
+		GUIText,
+		Sprite
 	};
 	struct Component {
-		static void expose_to_script(ScriptManager* m);
 		ComponentType mType;
 		GameObject* mOwner;
 		Transform* mTransform = nullptr;

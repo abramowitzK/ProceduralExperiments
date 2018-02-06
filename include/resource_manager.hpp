@@ -39,9 +39,6 @@ namespace Aurora {
 		inline Material* get_material(const std::string& name) {
 			return mMaterials[name];
 		}
-		inline const std::string& get_script(const std::string& name) {
-			return mScripts[name];
-		}
 		
 		static ResourceManager* instance() {
 			if (!sInstance)

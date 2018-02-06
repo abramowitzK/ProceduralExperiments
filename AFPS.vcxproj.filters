@@ -66,12 +66,6 @@
     <ClCompile Include="src\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\script_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\script.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,10 +81,10 @@
     <ClCompile Include="src\component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\world.cpp">
+    <ClCompile Include="src\camera_component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\camera_component.cpp">
+    <ClCompile Include="src\camera_2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -164,19 +158,10 @@
     <ClInclude Include="include\mesh_renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\script.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\engine.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\script_manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\sol.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\rigid_body.hpp">
@@ -188,19 +173,16 @@
     <ClInclude Include="include\resource_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\marching_cubes.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\stb_image_write.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\world.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\character_controller.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\camera_component.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\camera_2d.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui_text.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -217,16 +199,15 @@
     <None Include="Data\shaders\ttf.vert" />
     <None Include="Data\shaders\unlit_textured.frag" />
     <None Include="Data\shaders\unlit_textured.vert" />
-    <None Include="Data\Scripts\testing.lua" />
     <None Include="Data\Shaders\texturedGouraud.frag" />
     <None Include="Data\Shaders\texturedGouraud.vert" />
-    <None Include="Data\Scripts\player.lua" />
     <None Include="Data\Shaders\texture_lit_procedural.vert" />
     <None Include="Data\Shaders\texture_lit_procedural.frag" />
-    <None Include="Data\Scripts\error_handling.lua" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\Scenes\test.xml" />
+    <Xml Include="Data\Scenes\menu.xml" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Desktop\test.png">

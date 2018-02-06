@@ -15,6 +15,7 @@
 #include <mesh.hpp>
 #include FT_FREETYPE_H
 
+
 namespace Aurora {
 	struct CameraComponent;
 	struct Character {
@@ -35,7 +36,7 @@ namespace Aurora {
 		void handle_resize(int width, int height);
 		void create_camera(EventManager& manager);
 		void render_mesh(MeshRenderer* mesh);
-		void render_ttf(const std::string& text, float x, float y, float scale, glm::vec4 color);
+		void render_ttf(const std::string& text, float x, float y, float scale, glm::vec4 color = {1.0,0,0,1});
 		RenderState current_render_state = DefaultRenderState;
 		bool debug = false;
 	private:

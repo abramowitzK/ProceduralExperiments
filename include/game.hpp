@@ -7,7 +7,6 @@ namespace Aurora {
 	has? It might be better to just have the engine provide some basic stuff to the game and have everything stored in game.
 	*/
 	struct Game {
-		static void expose_to_script(ScriptManager* m);
 		void load(const std::string& initialScene, EventManager* manager);
 		Scene* current_scene;
 		std::vector<Scene> scenes;

@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D6F8135E-F73F-4DFB-9B55-56A2540B85C7}</ProjectGuid>
     <RootNamespace>AFPS</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -72,11 +72,15 @@
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableCppCoreCheck>false</EnableCppCoreCheck>
+    <Linkage-glew>
+    </Linkage-glew>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableCppCoreCheck>false</EnableCppCoreCheck>
+    <Linkage-glew>static</Linkage-glew>
+    <Linkage-unofficial-flayan-glew>static</Linkage-unofficial-flayan-glew>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -115,12 +119,13 @@
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Lua.lib;sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;BulletCollision_vs2010_x64_debug.lib;BulletDynamics_vs2010_x64_debug.lib;LinearMath_vs2010_x64_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Debug;$(AWE_DIR)build\lib</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(SolutionDir)third_party\bin\Debug\*.dll" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -166,27 +171,28 @@
       <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>sol.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Lua.lib;sdl2.lib;opengl32.lib;glew32.lib;freetype27.lib;assimp-vc140-mt.lib;CEGUIBase-0.lib;CEGUIOpenGLRenderer-0.lib;BulletCollision_vs2010_x64_release.lib;BulletDynamics_vs2010_x64_release.lib;LinearMath_vs2010_x64_release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib\Release;$(AWE_DIR)build\lib</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(SolutionDir)third_party\bin\Release\*.dll" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera_2d.cpp" />
     <ClCompile Include="src\camera_component.cpp" />
-    <ClCompile Include="src\world.cpp" />
     <ClCompile Include="src\component.cpp" />
     <ClCompile Include="src\transform.cpp" />
     <ClCompile Include="src\rigid_body.cpp" />
     <ClCompile Include="src\physics.cpp" />
-    <ClCompile Include="src\script.cpp" />
-    <ClCompile Include="src\script_manager.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\platform.cpp" />
     <ClCompile Include="src\engine.cpp" />
@@ -208,16 +214,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\camera.hpp" />
+    <ClInclude Include="include\camera_2d.hpp" />
     <ClInclude Include="include\camera_component.hpp" />
-    <ClInclude Include="include\character_controller.hpp" />
     <ClInclude Include="include\component.hpp" />
     <ClInclude Include="include\engine.hpp" />
     <ClInclude Include="include\events.hpp" />
     <ClInclude Include="include\FastNoise.h" />
     <ClInclude Include="include\game.hpp" />
     <ClInclude Include="include\game_object.hpp" />
+    <ClInclude Include="include\gui_text.hpp" />
     <ClInclude Include="include\key_state.hpp" />
-    <ClInclude Include="include\marching_cubes.hpp" />
     <ClInclude Include="include\material.hpp" />
     <ClInclude Include="include\mesh.hpp" />
     <ClInclude Include="include\mesh_renderer.hpp" />
@@ -229,8 +235,6 @@
     <ClInclude Include="include\resource_manager.hpp" />
     <ClInclude Include="include\rigid_body.hpp" />
     <ClInclude Include="include\scene.hpp" />
-    <ClInclude Include="include\script.hpp" />
-    <ClInclude Include="include\script_manager.hpp" />
     <ClInclude Include="include\shader.hpp" />
     <ClInclude Include="include\sprite.hpp" />
     <ClInclude Include="include\sprite_batch.hpp" />
@@ -241,15 +245,10 @@
     <ClInclude Include="include\transform.hpp" />
     <ClInclude Include="include\vector_math.hpp" />
     <ClInclude Include="include\tinyxml2.h" />
-    <ClInclude Include="include\sol.hpp" />
-    <ClInclude Include="include\world.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
-    <None Include="Data\Scripts\error_handling.lua" />
-    <None Include="Data\Scripts\player.lua" />
-    <None Include="Data\Scripts\testing.lua" />
     <None Include="Data\shaders\basic.frag" />
     <None Include="Data\shaders\basic.vert" />
     <None Include="Data\shaders\spriteBatch.frag" />
@@ -264,8 +263,10 @@
     <None Include="Data\shaders\ttf.vert" />
     <None Include="Data\shaders\unlit_textured.frag" />
     <None Include="Data\shaders\unlit_textured.vert" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="Data\Scenes\menu.xml" />
     <Xml Include="Data\Scenes\test.xml">
       <SubType>Designer</SubType>
     </Xml>
@@ -275,5 +276,34 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\sdl2.redist.2.0.5\build\native\sdl2.redist.targets" Condition="Exists('packages\sdl2.redist.2.0.5\build\native\sdl2.redist.targets')" />
+    <Import Project="packages\sdl2.2.0.5\build\native\sdl2.targets" Condition="Exists('packages\sdl2.2.0.5\build\native\sdl2.targets')" />
+    <Import Project="packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets" Condition="Exists('packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets')" />
+    <Import Project="packages\Assimp.3.0.0\build\native\Assimp.targets" Condition="Exists('packages\Assimp.3.0.0\build\native\Assimp.targets')" />
+    <Import Project="packages\Assimp.symbols.3.0.0\build\native\Assimp.symbols.targets" Condition="Exists('packages\Assimp.symbols.3.0.0\build\native\Assimp.symbols.targets')" />
+    <Import Project="packages\freetype.redist.2.8.0.1\build\native\freetype.redist.targets" Condition="Exists('packages\freetype.redist.2.8.0.1\build\native\freetype.redist.targets')" />
+    <Import Project="packages\freetype.2.8.0.1\build\native\freetype.targets" Condition="Exists('packages\freetype.2.8.0.1\build\native\freetype.targets')" />
+    <Import Project="packages\glew.redist.1.9.0.1\build\native\glew.redist.targets" Condition="Exists('packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" />
+    <Import Project="packages\glm.0.9.8.4\build\native\glm.targets" Condition="Exists('packages\glm.0.9.8.4\build\native\glm.targets')" />
+    <Import Project="packages\glew.v140.1.12.0\build\native\glew.v140.targets" Condition="Exists('packages\glew.v140.1.12.0\build\native\glew.v140.targets')" />
+    <Import Project="packages\sdl2_mixer.vc.redist.2.0.1.1\build\native\sdl2_mixer.vc.redist.targets" Condition="Exists('packages\sdl2_mixer.vc.redist.2.0.1.1\build\native\sdl2_mixer.vc.redist.targets')" />
+    <Import Project="packages\sdl2_mixer.vc.2.0.1.1\build\native\sdl2_mixer.vc.targets" Condition="Exists('packages\sdl2_mixer.vc.2.0.1.1\build\native\sdl2_mixer.vc.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\sdl2.redist.2.0.5\build\native\sdl2.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\sdl2.redist.2.0.5\build\native\sdl2.redist.targets'))" />
+    <Error Condition="!Exists('packages\sdl2.2.0.5\build\native\sdl2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\sdl2.2.0.5\build\native\sdl2.targets'))" />
+    <Error Condition="!Exists('packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets'))" />
+    <Error Condition="!Exists('packages\Assimp.3.0.0\build\native\Assimp.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Assimp.3.0.0\build\native\Assimp.targets'))" />
+    <Error Condition="!Exists('packages\Assimp.symbols.3.0.0\build\native\Assimp.symbols.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Assimp.symbols.3.0.0\build\native\Assimp.symbols.targets'))" />
+    <Error Condition="!Exists('packages\freetype.redist.2.8.0.1\build\native\freetype.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\freetype.redist.2.8.0.1\build\native\freetype.redist.targets'))" />
+    <Error Condition="!Exists('packages\freetype.2.8.0.1\build\native\freetype.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\freetype.2.8.0.1\build\native\freetype.targets'))" />
+    <Error Condition="!Exists('packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\glew.redist.1.9.0.1\build\native\glew.redist.targets'))" />
+    <Error Condition="!Exists('packages\glm.0.9.8.4\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\glm.0.9.8.4\build\native\glm.targets'))" />
+    <Error Condition="!Exists('packages\glew.v140.1.12.0\build\native\glew.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\glew.v140.1.12.0\build\native\glew.v140.targets'))" />
+    <Error Condition="!Exists('packages\sdl2_mixer.vc.redist.2.0.1.1\build\native\sdl2_mixer.vc.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\sdl2_mixer.vc.redist.2.0.1.1\build\native\sdl2_mixer.vc.redist.targets'))" />
+    <Error Condition="!Exists('packages\sdl2_mixer.vc.2.0.1.1\build\native\sdl2_mixer.vc.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\sdl2_mixer.vc.2.0.1.1\build\native\sdl2_mixer.vc.targets'))" />
+  </Target>
 </Project>

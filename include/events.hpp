@@ -1,7 +1,7 @@
 #pragma once
 #include <functional>
 #include <vector>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <key_state.hpp>
 #include <mouse_state.hpp>
 
@@ -21,7 +21,6 @@ namespace Aurora {
 		Debug,
 	};
 	struct EventManager {
-		static void expose_to_script(ScriptManager* manager);
 		EventManager();
 		void poll_input();
 		void subscribe_to_resize_event(std::function<void(int,int)> behaviour){
@@ -48,6 +47,5 @@ namespace Aurora {
 		static KeyState sKeyboardState;
 		static MouseState sMouseState;
 		bool mDirty;
-
 	};
 }

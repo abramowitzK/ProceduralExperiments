@@ -18,7 +18,6 @@ Aurora::CameraComponent::CameraComponent(int w, int h, EventManager & manager) {
 	proj = glm::perspective(70.0f, (float)w/(float)h, 0.1f, 10000.0f);
 }
 
-void Aurora::CameraComponent::expose_to_script() {}
 void Aurora::CameraComponent::rotate(float yaw, float pitch) {
 	rotation.x += yaw;
 	rotation.y += pitch;

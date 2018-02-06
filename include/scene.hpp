@@ -2,7 +2,6 @@
 #include <rendering.hpp>
 #include <game_object.hpp>
 #include <resource_manager.hpp>
-#include <script_manager.hpp>
 #include <string>
 struct ResourceManager;
 namespace Aurora {
@@ -15,12 +14,10 @@ namespace Aurora {
 		void update(double dt);
 		GameObject* create_object();
 		GameObject root;
-		ScriptManager* mScriptManager;
-	private:
 		uint64_t mID;
 		std::vector<GameObject*> mObjects;
 		ResourceManager mManager;
-		Renderer mRenderer;
+		Renderer* mRenderer;
 
 	};
 }

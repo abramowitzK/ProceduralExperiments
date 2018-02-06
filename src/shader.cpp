@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 
 namespace Aurora {
-	std::string Shader::SHADER_DIR = "..\\..\\shaders\\";
+	std::string Shader::SHADER_DIR = "";
 
 	Shader::Shader() {
 		mProgram = glCreateProgram();

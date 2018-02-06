@@ -13,7 +13,7 @@
       </Material>
       <Material name="basic">
         <Texture name="stone01.tga"/>
-        <Shader name="texturedGouraud"/>
+        <Shader name="tex28turedGouraud"/>
       </Material>
     </Materials>
     <Shaders>
@@ -42,9 +42,11 @@
         <Scale>1,1,1</Scale>
       </Transform>
       <Components>
+        <Script name="player"/>
         <Model name="capsule_fixed.obj">
           <Material name="basic"/>
         </Model>
+        <!--<RigidBody shape="capsule" mesh="cube.obj" static="false"/>-->
         <CharacterController name="testCC"/>
         <Camera name="main">
           <Transform>

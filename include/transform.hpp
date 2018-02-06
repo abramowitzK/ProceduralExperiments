@@ -7,7 +7,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <vector_math.hpp>
-#include <script_manager.hpp>
 namespace Aurora {
 
 	static Quaternion multiply(Quaternion l, Quaternion r) {
@@ -19,7 +18,6 @@ namespace Aurora {
 	*/
 	class Transform {
 	public:
-		static void expose_to_script(ScriptManager* m);
 		/**
 		Constructs a Transform Object
 		*/

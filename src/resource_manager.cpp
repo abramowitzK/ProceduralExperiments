@@ -3,29 +3,12 @@
 #include <streambuf>
 #include <component.hpp>
 #include <physics.hpp>
-#include <script_manager.hpp>
 #include <scene.hpp>
-#include <marching_cubes.hpp>
-#include <character_controller.hpp>
 #include <camera_component.hpp>
 #include <platform.hpp>
 namespace Aurora {
 	ResourceManager* ResourceManager::sInstance;
-	void ResourceManager::reload_scripts() {}
 	ResourceManager::ResourceManager() {}
-
-
-	void ResourceManager::expose_to_script(ScriptManager* m) {
-		auto l = m->get_lua_state();
-		sol::usertype<ResourceManager> type {
-		"load_texture", &ResourceManager::load_texture,
-		"load_model", &ResourceManager::load_texture,
-		"load_shader", &ResourceManager::load_texture,
-		"load_material", &ResourceManager::load_texture,
-		"load_script", &ResourceManager::load_texture
-		};
-		l->set_usertype("ResourceManager", type);
-	}
 
 	ResourceManager::~ResourceManager() {
 		for (const auto& mesh : mMeshes) {
@@ -46,8 +29,6 @@ namespace Aurora {
 		load_shader("texturedGouraud");
 		load_texture("default.png");
 		load_material("default", mShaders["texturedGouraud"], {mTextures["default"]});
-		mMeshes.insert({ "marching_cubes", generate_test_data() });
-		load_script("error_handling");
 	}
 
 	Scene* ResourceManager::load_scene(const std::string & name, EventManager* manager) {
@@ -61,7 +42,6 @@ namespace Aurora {
 		auto matList = resourceList->FirstChildElement("Materials");
 		auto texList = resourceList->FirstChildElement("Textures");
 		auto shaderList = resourceList->FirstChildElement("Shaders");
-		auto scriptList = resourceList->FirstChildElement("Scripts");
 		for (auto e = texList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			load_texture(e->GetText());
 		}
@@ -82,11 +62,7 @@ namespace Aurora {
 
 			load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))], texs);
 		}
-		for (auto e = scriptList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
-			load_script(std::string(e->Attribute("name")));
-		}
 		Scene* s = new Scene(manager);
-		s->mScriptManager->load_error_handling(mScripts["error_handling.lua"]);
 		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
 			parse_game_object(&s->root, e, s, manager);
@@ -98,14 +74,6 @@ namespace Aurora {
 		obj->transform.mParent = &s->root.transform;
 		obj->transform.set_translation({0,0,0});
 		obj->transform.set_scale(1);
-		auto renderer = new MeshRenderer(mMeshes["marching_cubes"], mMaterials["procedural"]);
-		renderer->mOwner = obj;
-		btRigidBody* rb = Physics::instance()->create_convex_hull_rigid_body(true, mMeshes["marching_cubes"], &obj->transform);
-		auto rigid = new RigidBody(rb, true);
-		rigid->mIsStatic = true;
-		rigid->mOwner = obj;
-		obj->add_component(rigid);
-		obj->add_component(renderer);
 		return s;
 	}
 
@@ -114,30 +82,11 @@ namespace Aurora {
 			return new CameraComponent(manager->mResizeX, manager->mResizeY, *manager);
 		}
 		if (strcmp("CharacterController", comp.Value()) == 0) {
-			btKinematicCharacterController* cc = Physics::instance()->create_character_controller(1.0,1.0, &parent->transform);
-			return new CharacterController(cc);
 		}
 		if (strcmp("Model", comp.Value()) == 0) {
 			auto m = comp.FirstChildElement("Material");
 			auto mat = mMaterials[std::string(m->Attribute("name"))];
 			return new MeshRenderer(mMeshes[comp.Attribute("name")], mat);
-		}
-		if (strcmp("Script", comp.Value()) == 0) {
-			auto name = comp.Attribute("name");
-			auto s = new Script(name,mScripts[name], scene->mScriptManager);
-			return s;
-		}
-		if (strcmp("RigidBody", comp.Value()) == 0) {
-			//TODO Make this not suck
-			btRigidBody* rb = nullptr;
-			bool is_static = false;
-			if (strcmp(comp.Attribute("shape"), "convex_hull") == 0) {
-				is_static = true;
-				rb = Physics::instance()->create_convex_hull_rigid_body(true, mMeshes[comp.Attribute("mesh")], &parent->transform);
-			} else if (strcmp(comp.Attribute("shape"), "capsule") == 0) {
-				rb = Physics::instance()->create_capsule_rigid_body(1, 1, &parent->transform);
-			}
-			return new RigidBody(rb, is_static);
 		}
 		return nullptr;
 	}
@@ -229,17 +178,5 @@ namespace Aurora {
 			}
 		}
 		mMaterials.insert({ name, m });
-	}
-	void ResourceManager::load_script(const std::string & name) {
-		std::ifstream t(ScriptPath + name + ".lua");
-		std::string str;
-
-		t.seekg(0, std::ios::end);
-		str.reserve(t.tellg());
-		t.seekg(0, std::ios::beg);
-
-		str.assign((std::istreambuf_iterator<char>(t)),
-			std::istreambuf_iterator<char>());
-		mScripts.insert({ name, std::move(str) });
 	}
 }

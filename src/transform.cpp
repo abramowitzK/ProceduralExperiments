@@ -1,71 +1,12 @@
 #include <transform.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 namespace Aurora {
-	 void Transform::expose_to_script(ScriptManager* m) {
-		auto l = m->get_lua_state();
-		//Need to disambiguate the overloads so we take the address of the right function
-		//l->new_simple_usertype<Transform>("Transform", 
-		//	"set_translation", static_cast<void (Transform::*)(const float x, const float y, const float z)>(&Transform::set_translation), 
-		//	"set_scale", &Transform::set_scale
-		//	);
-		//TODO make each class make it's own transform type and then register them all in one place instead of doing the registering in each file.
-		sol::usertype<Transform> transformType{
-			"scale", &Transform::scale,
-			"rotate_x", &Transform::rotate_x,
-			"rotate_y", &Transform::rotate_y,
-			"rotate_z", &Transform::rotate_z,
-			"translate", &Transform::translate,
-			"set_translation", static_cast<void (Transform::*)(const float x, const float y, const float z)>(&Transform::set_translation),
-			"translation", sol::property(&Transform::mTranslation, &Transform::mTranslation),
-			"rotation", sol::property(&Transform::mRotation, &Transform::mRotation),
-			"scale", sol::property(&Transform::mScale, &Transform::mScale)
-
-		};
-		sol::constructors<sol::types<>, sol::types<float>, sol::types<float, float>> vector2Constructors;
-		sol::constructors<sol::types<>, sol::types<float>, sol::types<float, float, float>> vector3Constructors;
-		sol::constructors<sol::types<>, sol::types<float>, sol::types<float, float, float, float>> vector4Constructors;
-		sol::usertype<Vector2> vector2Type{
-			vector2Constructors,
-			"x", sol::property(&Vector2::x, &Vector2::x),
-			"y", sol::property(&Vector2::y, &Vector2::y),
-		};
-		sol::usertype<Vector3> vector3Type{
-			vector3Constructors,
-			"x", sol::property(&Vector3::x, &Vector3::x),
-			"y", sol::property(&Vector3::y, &Vector3::y),
-			"z", sol::property(&Vector3::z, &Vector3::z),
-		};
-		sol::usertype<Vector4> vector4Type{
-			vector4Constructors,
-			"x", sol::property(&Vector4::x, &Vector4::x),
-			"y", sol::property(&Vector4::y, &Vector4::y),
-			"z", sol::property(&Vector4::z, &Vector4::z),
-			"w", sol::property(&Vector4::w, &Vector4::w)
-		};
-		sol::usertype<Quaternion> quatType{
-			"x", sol::property(&Quaternion::x, &Quaternion::x),
-			"y", sol::property(&Quaternion::y, &Quaternion::y),
-			"z", sol::property(&Quaternion::z, &Quaternion::z),
-			"w", sol::property(&Quaternion::w, &Quaternion::w),
-			"length", &Quaternion::length,
-			"rotate_by", &multiply,
-		};
-		l->set_usertype("Vector2", vector2Type);
-		l->set_usertype("Vector3", vector3Type);
-		l->set_usertype("Vector4", vector4Type);
-		l->set_usertype("Quaternion", quatType);
-		l->set_usertype("Transform", transformType);
-
-	}
-
 	/**
 	Constructs a Transform Object
 	*/
 
-	 Transform::Transform() : mParent(nullptr), mTranslation(Vector3()), mRotation(Quaternion()), mScale(Vector3(1.0, 1.0, 1.0)) {}
-
+	 Transform::Transform() : mParent(nullptr), mTranslation(Vector3()), mRotation(Quaternion()), mScale(Vector3(1.0, 1.0, 1.0)) {} 
 	 Transform::~Transform() {}
-
 	/**
 	Get the transform in matrix form
 	@returns A 4x4 homogenous matrix of floats in column Major order representing the transformation in world coordinates

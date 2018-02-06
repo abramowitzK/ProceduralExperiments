@@ -9,13 +9,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <resource_manager.hpp>
-#include <script_manager.hpp>
 #include <camera_component.hpp>
 
 namespace Aurora {
-	void Renderer::expose_to_script(ScriptManager* m) {
-	
-	}
 	Renderer::Renderer(int width, int height) {
 		GLenum res = glewInit();
 		if(res != GLEW_OK) {

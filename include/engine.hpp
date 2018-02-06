@@ -4,7 +4,6 @@
 #include <resource_manager.hpp>
 #include <game.hpp>
 #include <events.hpp>
-#include <script_manager.hpp>
 #include <physics.hpp>
 namespace Aurora {
 	struct Platform;

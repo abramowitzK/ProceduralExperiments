@@ -8,11 +8,12 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
-
+#include <events.hpp>
+#include <vector_math.hpp>
 #include "camera.hpp"
 namespace Aurora {
-	Camera::Camera(EventManager& manager, int w, int h) {
-		manager.subscribe_to_resize_event([=](int width, int height){
+	Camera::Camera(int w, int h) {
+		EventManager::subscribe_to_resize_event([=](int width, int height){
 			projection = glm::perspective(70.0f, (float)width/(float)height, 0.1f, 10000.0f);
 		});
 		position = {0,0,0,1};

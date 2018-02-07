@@ -6,7 +6,15 @@
 namespace Aurora {
 	KeyState EventManager::sKeyboardState;
 	MouseState EventManager::sMouseState;
-	EventManager::EventManager() {
+	std::vector<std::vector<std::function<void()>>> EventManager::mSubscribers;
+	std::vector<bool> EventManager::mIntents;
+	SDL_Event EventManager::mEvent;
+	int EventManager::mMouseRelX;
+	int EventManager::mMouseRelY;
+	bool EventManager::mDirty;
+	int EventManager::mResizeX;
+	int EventManager::mResizeY;
+	void EventManager::init() {
 		mIntents.resize(UINT8_MAX);
 		mSubscribers.resize(UINT8_MAX);
 		mDirty = false;

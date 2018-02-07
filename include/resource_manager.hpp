@@ -18,15 +18,12 @@ namespace Aurora {
 	const std::string AudioPath = ResourcePath + "Sounds/";
 	const std::string ScenePath = ResourcePath + "Scenes/";
 	const std::string ShaderPath = ResourcePath + "Shaders/";
-	const std::string ScriptPath = ResourcePath + "Scripts/";
 	struct Scene;
-	struct EventManager;
 	class ResourceManager {
 	public:
-		static void expose_to_script(ScriptManager* m);
 		~ResourceManager();
 		void load_defaults();
-		Scene* load_scene(const std::string& name, EventManager* manager);
+		Scene* load_scene(const std::string& name);
 		inline Texture* get_texture(const std::string& name) {
 			return &mTextures[name];
 		}
@@ -45,22 +42,19 @@ namespace Aurora {
 				sInstance = new ResourceManager();
 			return sInstance;
 		}
-		void reload_scripts();
 		ResourceManager();
 		void load_texture(const std::string& name);
 		void load_model(const std::string& name, bool invert);
 		void load_shader(const std::string& name);
 		void load_material(const std::string& name, Shader* shader, std::vector<Texture> tex);
-		void load_script(const std::string& name);
 	private:
 		static ResourceManager* sInstance;
-		Component* parse_component(XMLElement & comp, GameObject* parent, Scene* scene, EventManager* manager);
-		GameObject* parse_game_object(GameObject * parent, XMLElement* o, Scene* s, EventManager* manager);
+		Component* parse_component(XMLElement & comp, GameObject* parent, Scene* scene);
+		GameObject* parse_game_object(GameObject * parent, XMLElement* o, Scene* s);
 		unordered_map<string, Mesh*> mMeshes;
 		unordered_map<string, Texture> mTextures;
 		unordered_map<string, Shader*> mShaders;
 		unordered_map<string, Material*> mMaterials;
-		unordered_map<string, std::string> mScripts;
 
 	};
 

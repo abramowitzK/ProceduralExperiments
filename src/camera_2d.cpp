@@ -3,15 +3,14 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
-
+#include <events.hpp>
 #include "camera_2d.hpp"
 namespace Aurora {
-	Camera2D::Camera2D(EventManager& manager, int w, int h) {
-		manager.subscribe_to_resize_event([=](int width, int height) {
+	Camera2D::Camera2D(int w, int h) {
+		EventManager::subscribe_to_resize_event([=](int width, int height) {
 			projection = glm::ortho(70.0f, (float)width / (float)height, 0.1f, 10000.0f);
 		});
 		position = { 0,0,0,1 };
-		up = { 0,0,0,1 };
 		forward = { 0,0,1,1 };
 		rotation = { 0,0,0,1 };
 		projection = glm::ortho(70.0f, (float)w / (float)h, 0.1f, 10000.0f);
@@ -23,12 +22,6 @@ namespace Aurora {
 		Vector4 upVector, positionVector, lookAtVector;
 		float yaw, pitch, roll;
 		Matrix4 rotationMatrix;
-
-
-		// Setup the vector that points upwards.
-		up.x = 0.0f;
-		up.y = 1.0f;
-		up.z = 0.0f;
 
 		// Load it into a XMVECTOR structure.
 		upVector = up;

@@ -7,9 +7,9 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
-Aurora::CameraComponent::CameraComponent(int w, int h, EventManager & manager) {
+Aurora::CameraComponent::CameraComponent(int w, int h) {
 	mType = ComponentType::Camera;
-	manager.subscribe_to_resize_event([=](int width, int height) {
+	EventManager::subscribe_to_resize_event([=](int width, int height) {
 		proj = glm::perspective(70.0f, (float)width/(float)height, 0.1f, 10000.0f);
 	});
 	up ={ 0,1,0,0 };

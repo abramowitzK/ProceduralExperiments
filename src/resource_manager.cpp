@@ -31,7 +31,7 @@ namespace Aurora {
 		load_material("default", mShaders["texturedGouraud"], {mTextures["default"]});
 	}
 
-	Scene* ResourceManager::load_scene(const std::string & name, EventManager* manager) {
+	Scene* ResourceManager::load_scene(const std::string & name) {
 		using namespace tinyxml2;
 		tinyxml2::XMLDocument doc;
 		auto path = ScenePath + name;
@@ -62,10 +62,10 @@ namespace Aurora {
 
 			load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))], texs);
 		}
-		Scene* s = new Scene(manager);
+		Scene* s = new Scene();
 		auto gameObjectList = sceneNode->FirstChildElement("SceneGraph");
 		for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
-			parse_game_object(&s->root, e, s, manager);
+			parse_game_object(&s->root, e, s);
 		}
 		auto obj = s->create_object();
 		obj->parent = &s->root;
@@ -77,9 +77,9 @@ namespace Aurora {
 		return s;
 	}
 
-	Component* ResourceManager::parse_component(XMLElement & comp, GameObject* parent, Scene* scene, EventManager* manager) {
+	Component* ResourceManager::parse_component(XMLElement & comp, GameObject* parent, Scene* scene) {
 		if (strcmp("Camera", comp.Value()) == 0) {
-			return new CameraComponent(manager->mResizeX, manager->mResizeY, *manager);
+			return new CameraComponent(EventManager::mResizeX, EventManager::mResizeY);
 		}
 		if (strcmp("CharacterController", comp.Value()) == 0) {
 		}
@@ -91,13 +91,13 @@ namespace Aurora {
 		return nullptr;
 	}
 
-	GameObject * ResourceManager::parse_game_object(GameObject * parent, XMLElement* o, Scene* s, EventManager* manager) {
+	GameObject * ResourceManager::parse_game_object(GameObject * parent, XMLElement* o, Scene* s) {
 		GameObject* object = s->create_object();
 		object->parent = parent;
 		object->transform.mParent = &parent->transform;
 		parent->mChildren.push_back(object);
 		for (auto e = o->FirstChildElement("GameObject"); e != nullptr; e = e->NextSiblingElement()) {
-			parse_game_object(object, e, s, manager);
+			parse_game_object(object, e, s);
 		}
 		auto tf = o->FirstChildElement("Transform");
 		object->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
@@ -105,7 +105,7 @@ namespace Aurora {
 		object->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
 		auto componentList = o->FirstChildElement("Components");
 		for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
-			auto comp = parse_component(*c, object, s, manager);
+			auto comp = parse_component(*c, object, s);
 			if (comp == nullptr)
 				continue;
 			comp->mOwner = object;

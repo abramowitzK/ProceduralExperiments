@@ -3,7 +3,6 @@
 #include <rendering.hpp>
 #include <resource_manager.hpp>
 #include <game.hpp>
-#include <events.hpp>
 #include <physics.hpp>
 namespace Aurora {
 	struct Platform;
@@ -23,7 +22,6 @@ namespace Aurora {
 		Platform* mPlatform;
 		Renderer* mRenderer;
 		ResourceManager* mManager;
-		EventManager* mEventManager;
 		Physics* mPhysics;
 		Game mGame;
 	};

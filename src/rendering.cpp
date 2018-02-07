@@ -115,9 +115,9 @@ namespace Aurora {
 		glViewport(0, 0, mWidth, mHeight);
 	}
 
-	void Renderer::create_camera(EventManager& manager){
-		manager.subscribe_to_resize_event([=](int a, int b) {this->handle_resize(a, b); });
-		mCamera = make_shared<Camera>(manager, mWidth, mHeight);
+	void Renderer::create_camera(){
+		EventManager::subscribe_to_resize_event([=](int a, int b) {this->handle_resize(a, b); });
+		mCamera = make_shared<Camera>(mWidth, mHeight);
 	}
 
 	void Renderer::render_mesh(MeshRenderer* mesh) {

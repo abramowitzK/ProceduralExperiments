@@ -1,12 +1,10 @@
 #pragma once
 #include <string>
 namespace Aurora {
-	struct ScriptManager;
 	struct GameObject;
 	class Transform;
 	enum class ComponentType {
 		Mesh,
-		Script,
 		Physics,
 		Camera,
 		CharacterController,

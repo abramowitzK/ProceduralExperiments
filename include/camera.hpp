@@ -1,10 +1,9 @@
 #pragma once
-#include <events.hpp>
-#include <vector_math.hpp>
+
 #include <component.hpp>
 namespace Aurora {
 	struct Camera : public Component{
-		Camera(EventManager& manager, int w, int h);
+		Camera(int w, int h);
 		void update(double dt);
 		void render();
 		Vector4 up, forward, position, rotation;

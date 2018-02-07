@@ -1,7 +1,7 @@
 #include "scene.hpp"
 namespace Aurora {
 
-	Scene::Scene(EventManager* manager) {
+	Scene::Scene() {
 	}
 	Scene::~Scene() {}
 

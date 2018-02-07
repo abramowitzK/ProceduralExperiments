@@ -1,5 +1,5 @@
 #pragma once
-#include <queue>
+#include <memory>
 /*****************************************************************************************
 * Represents the state of the mouse at a given point in time. Keeps track of button state
 * as well as positional info.

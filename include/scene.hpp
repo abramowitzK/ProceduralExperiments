@@ -6,9 +6,8 @@
 struct ResourceManager;
 namespace Aurora {
 	struct Scene {
-		Scene(EventManager* manager);
+		Scene();
 		~Scene();
-		static void expose_to_script(ScriptManager* m);
 		void init() { root.init(); }
 		void render(Renderer* renderer);
 		void update(double dt);
@@ -18,6 +17,7 @@ namespace Aurora {
 		std::vector<GameObject*> mObjects;
 		ResourceManager mManager;
 		Renderer* mRenderer;
+		std::string mName;
 
 	};
 }

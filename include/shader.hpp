@@ -1,41 +1,41 @@
 #pragma once
 #include <GL/glew.h>
-#include <string>
-#include <vector>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <istream>
 #include <sstream>
+#include <string>
+#include <vector>
 namespace Aurora {
-	struct Shader {
-	public:
-		Shader();
+struct Shader {
+  public:
+    Shader();
 
-		Shader(const std::string& vShaderFileName, const std::string& fShaderFileName);
-		Shader(const std::string& vShaderFileName, const std::string& fShaderFileName, const std::string& shaderPath);
-		~Shader();
+    Shader(const std::string& vShaderFileName,
+           const std::string& fShaderFileName);
+    Shader(const std::string& vShaderFileName,
+           const std::string& fShaderFileName, const std::string& shaderPath);
+    ~Shader();
 
-		void load_vertex_shader(std::string shaderFileName);
+    void load_vertex_shader(std::string shaderFileName);
 
-		void load_fragment_shader(std::string shaderFileName);
+    void load_fragment_shader(std::string shaderFileName);
 
-		void bind();
+    void bind();
 
-		GLuint get_program() const {
-			return mProgram;
-		}
+    GLuint get_program() const { return mProgram; }
 
-	private:
-		void add_vertex_shader(const GLchar *text);
+  private:
+    void add_vertex_shader(const GLchar* text);
 
-		void add_fragment_shader(const GLchar *text);
+    void add_fragment_shader(const GLchar* text);
 
-		void add_program(const GLchar *text, GLuint type);
+    void add_program(const GLchar* text, GLuint type);
 
-		void compile_shader();
+    void compile_shader();
 
-		std::vector<GLint> mShaders;
-		static std::string SHADER_DIR;
-		GLuint mProgram;
-	};
-}
+    std::vector<GLint> mShaders;
+    static std::string SHADER_DIR;
+    GLuint             mProgram;
+};
+} // namespace Aurora

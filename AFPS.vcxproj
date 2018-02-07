@@ -247,6 +247,7 @@
     <ClInclude Include="include\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".clang-format" />
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="Data\shaders\basic.frag" />

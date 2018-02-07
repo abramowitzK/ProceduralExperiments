@@ -13,29 +13,29 @@
 #include "camera.hpp"
 namespace Aurora {
 	Camera::Camera(int w, int h) {
-		EventManager::subscribe_to_resize_event([=](int width, int height){
-			projection = glm::perspective(70.0f, (float)width/(float)height, 0.1f, 10000.0f);
+		EventManager::subscribe_to_resize_event([=](int width, int height) {
+			projection = glm::perspective(70.0f, (float)width / (float)height, 0.1f, 10000.0f);
 		});
 		position = {0,0,0,1};
 		up = {0,0,0,1};
 		forward = {0,0,1,1};
 		rotation = {0,0,0,1};
-		projection = glm::perspective(70.0f, (float)w/(float)h, 0.1f, 10000.0f);
+		projection = glm::perspective(70.0f, (float)w / (float)h, 0.1f, 10000.0f);
 		acceleration = 1.0f;
 		speed = 20.0f;
-		velocity = { 0.f,0.f,0.f,1.0f};
+		velocity = {0.f,0.f,0.f,1.0f};
 	}
 	void Camera::update(double dt) {
-		if(EventManager::get_key_down(Keys::w))
-			position += forward*(float)dt*acceleration*speed;
+		if (EventManager::get_key_down(Keys::w))
+			position += forward * (float)dt*acceleration*speed;
 		if (EventManager::get_key_down(Keys::a))
 			position -= glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f)*(float)dt*acceleration*speed;
 		if (EventManager::get_key_down(Keys::d))
 			position += glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f)*(float)dt*acceleration*speed;
 		if (EventManager::get_key_down(Keys::s))
-			position -= forward*(float)dt*acceleration*speed;
-		auto look_x = EventManager::get_mouse_relative_x()/9.0*2.0*glm::pi<float>()*4.0f;
-		auto look_y = EventManager::get_mouse_relative_y()/9.0*2.0*glm::pi<float>()*4.0f;
+			position -= forward * (float)dt*acceleration*speed;
+		auto look_x = EventManager::get_mouse_relative_x() / 9.0*2.0*glm::pi<float>()*4.0f;
+		auto look_y = EventManager::get_mouse_relative_y() / 9.0*2.0*glm::pi<float>()*4.0f;
 
 		Vector2 now = {look_x, look_y};
 		now = glm::lerp(mPrevMouseTarget, now, 0.9f);
@@ -45,7 +45,7 @@ namespace Aurora {
 
 
 	}
-	void Camera::render(){
+	void Camera::render() {
 
 		Vector4 upVector, positionVector, lookAtVector;
 		float yaw, pitch, roll;

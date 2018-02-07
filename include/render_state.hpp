@@ -3,11 +3,11 @@
 #include "vector_math.hpp"
 
 namespace Aurora {
-	enum class BlendState : bool {
+	enum class BlendState: bool {
 		On = true,
 		Off = false
 	};
-	enum class BlendFunc : GLenum {
+	enum class BlendFunc: GLenum {
 		Zero = GL_ZERO,
 		One = GL_ONE,
 		SourceColor = GL_SRC_COLOR,
@@ -36,7 +36,7 @@ namespace Aurora {
 		On = true,
 		Off = false
 	};
-	enum class DepthFunc : GLenum {
+	enum class DepthFunc: GLenum {
 		Never = GL_NEVER,
 		Equal = GL_EQUAL,
 		NotEqual = GL_NOTEQUAL,
@@ -46,18 +46,18 @@ namespace Aurora {
 		Less = GL_LESS,
 		LessEqual = GL_LEQUAL,
 	};
-	enum class FrontFace : GLenum {
+	enum class FrontFace: GLenum {
 		Ccw = GL_CCW,
 		Cw = GL_CW
 	};
 
-	enum class CullFace : GLenum {
+	enum class CullFace: GLenum {
 		Front = GL_FRONT,
 		Back = GL_BACK,
 		FrontAndBack = GL_FRONT_AND_BACK,
 	};
 
-	enum class PolygonMode : GLenum {
+	enum class PolygonMode: GLenum {
 		Line = GL_LINE,
 		Fill = GL_FILL,
 	};
@@ -106,35 +106,35 @@ namespace Aurora {
 
 	static void apply_render_state(const RenderState &state, const RenderState *oldState = nullptr) {
 
-		if(oldState) {
-			if(state.CullState != oldState->CullState)
+		if (oldState) {
+			if (state.CullState != oldState->CullState)
 				state.CullState == CullState::On ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-			if(state.DepthState != oldState->DepthState)
+			if (state.DepthState != oldState->DepthState)
 				state.DepthState == DepthState::On ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-			if(state.BlendState != oldState->BlendState)
+			if (state.BlendState != oldState->BlendState)
 				state.BlendState == BlendState::On ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
-			if(state.FrontFace != oldState->FrontFace)
-				glFrontFace((GLenum) state.FrontFace);
-			if(state.ClearColor != oldState->ClearColor)
+			if (state.FrontFace != oldState->FrontFace)
+				glFrontFace((GLenum)state.FrontFace);
+			if (state.ClearColor != oldState->ClearColor)
 				glClearColor(state.ClearColor.x, state.ClearColor.y, state.ClearColor.z, state.ClearColor.z);
-			if(state.BlendFuncDest != oldState->BlendFuncDest || state.BlendFuncSource != oldState->BlendFuncSource)
-				glBlendFunc((GLenum) state.BlendFuncSource, (GLenum) state.BlendFuncDest);
-			if(state.DepthFunc != oldState->DepthFunc)
-				glDepthFunc((GLenum) state.DepthFunc);
-			if(state.CullFace != oldState->CullFace)
-				glCullFace((GLenum) state.CullFace);
-			if(state.PolyMode != oldState->PolyMode)
-				glPolygonMode(GL_FRONT_AND_BACK, (GLenum) state.PolyMode);
+			if (state.BlendFuncDest != oldState->BlendFuncDest || state.BlendFuncSource != oldState->BlendFuncSource)
+				glBlendFunc((GLenum)state.BlendFuncSource, (GLenum)state.BlendFuncDest);
+			if (state.DepthFunc != oldState->DepthFunc)
+				glDepthFunc((GLenum)state.DepthFunc);
+			if (state.CullFace != oldState->CullFace)
+				glCullFace((GLenum)state.CullFace);
+			if (state.PolyMode != oldState->PolyMode)
+				glPolygonMode(GL_FRONT_AND_BACK, (GLenum)state.PolyMode);
 		} else {
 			state.CullState == CullState::On ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
 			state.DepthState == DepthState::On ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
 			state.BlendState == BlendState::On ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
-			glFrontFace((GLenum) state.FrontFace);
+			glFrontFace((GLenum)state.FrontFace);
 			glClearColor(state.ClearColor.x, state.ClearColor.y, state.ClearColor.z, state.ClearColor.z);
-			glBlendFunc((GLenum) state.BlendFuncSource, (GLenum) state.BlendFuncDest);
-			glDepthFunc((GLenum) state.DepthFunc);
-			glCullFace((GLenum) state.CullFace);
-			glPolygonMode(GL_FRONT_AND_BACK, (GLenum) state.PolyMode);
+			glBlendFunc((GLenum)state.BlendFuncSource, (GLenum)state.BlendFuncDest);
+			glDepthFunc((GLenum)state.DepthFunc);
+			glCullFace((GLenum)state.CullFace);
+			glPolygonMode(GL_FRONT_AND_BACK, (GLenum)state.PolyMode);
 		}
 	}
 }

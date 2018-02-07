@@ -5,19 +5,19 @@
 #include <glm/gtx/transform.hpp>
 #include <events.hpp>
 #include "camera_2d.hpp"
+#include <vector_math.hpp>
 namespace Aurora {
 	Camera2D::Camera2D(int w, int h) {
 		EventManager::subscribe_to_resize_event([=](int width, int height) {
 			projection = glm::ortho(70.0f, (float)width / (float)height, 0.1f, 10000.0f);
 		});
-		position = { 0,0,0,1 };
-		forward = { 0,0,1,1 };
-		rotation = { 0,0,0,1 };
+		position = {0,0,0,1};
+		forward = {0,0,1,1};
+		rotation = {0,0,0,1};
 		projection = glm::ortho(70.0f, (float)w / (float)h, 0.1f, 10000.0f);
-		velocity = { 0.f,0.f,0.f,1.0f };
+		velocity = {0.f,0.f,0.f,1.0f};
 	}
-	void Camera2D::update(double dt) {
-	}
+	void Camera2D::update(double dt) {}
 	void Camera2D::render() {
 		Vector4 upVector, positionVector, lookAtVector;
 		float yaw, pitch, roll;

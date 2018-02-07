@@ -1,4 +1,5 @@
 #include <platform.hpp>
+#include <stdio.h>
 namespace Aurora {
 	Platform::Platform() {
 		SDL_Init(SDL_INIT_EVERYTHING);

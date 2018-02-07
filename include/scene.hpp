@@ -8,7 +8,9 @@ namespace Aurora {
 	struct Scene {
 		Scene();
 		~Scene();
-		void init() { root.init(); }
+		void init() {
+			root.init();
+		}
 		void render(Renderer* renderer);
 		void update(double dt);
 		GameObject* create_object();

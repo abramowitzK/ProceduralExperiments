@@ -7,15 +7,17 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include <vector_math.hpp>
+#include <events.hpp>
 Aurora::CameraComponent::CameraComponent(int w, int h) {
 	mType = ComponentType::Camera;
 	EventManager::subscribe_to_resize_event([=](int width, int height) {
-		proj = glm::perspective(70.0f, (float)width/(float)height, 0.1f, 10000.0f);
+		proj = glm::perspective(70.0f, (float)width / (float)height, 0.1f, 10000.0f);
 	});
-	up ={ 0,1,0,0 };
-	forward ={ 0,0,1,0 };
+	up = {0,1,0,0};
+	forward = {0,0,1,0};
 	rotation = {0,0};
-	proj = glm::perspective(70.0f, (float)w/(float)h, 0.1f, 10000.0f);
+	proj = glm::perspective(70.0f, (float)w / (float)h, 0.1f, 10000.0f);
 }
 
 void Aurora::CameraComponent::rotate(float yaw, float pitch) {
@@ -25,14 +27,14 @@ void Aurora::CameraComponent::rotate(float yaw, float pitch) {
 	auto quaternion = glm::angleAxis(rotation.y, right);
 	auto upVector = glm::normalize(quaternion*up);
 	while (fabs(upVector.y) < 0.4) {
-		if(glm::dot(upVector, forward) > 0)
+		if (glm::dot(upVector, forward) > 0)
 			rotation.y += 0.001;
-		else 
+		else
 			rotation.y -= 0.001;
 		right = -glm::cross(Vector3(up), Vector3(forward));
 		quaternion = glm::angleAxis(rotation.y, right);
 		upVector = glm::normalize(quaternion*up);
-	} 
+	}
 
 }
 void Aurora::CameraComponent::update(double dt) {
@@ -107,7 +109,7 @@ void Aurora::CameraComponent::render(Renderer * renderer) {
 
 	// Setup the position of the camera in the world.
 	// Load it into a XMVECTOR structure.
-	positionVector = Vector4(translation,0);
+	positionVector = Vector4(translation, 0);
 
 	//// Setup where the camera is looking by default.
 	//forward.x = 0.0f;

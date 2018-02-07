@@ -7,7 +7,6 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
-#include <mesh.hpp>
 using namespace tinyxml2;
 namespace Aurora {
 	using namespace std;
@@ -19,7 +18,12 @@ namespace Aurora {
 	const std::string ScenePath = ResourcePath + "Scenes/";
 	const std::string ShaderPath = ResourcePath + "Shaders/";
 	struct Scene;
-	class ResourceManager {
+	struct Shader;
+	struct Material;
+	struct Component;
+	struct GameObject;
+	struct Mesh;
+	struct ResourceManager {
 	public:
 		~ResourceManager();
 		void load_defaults();
@@ -36,7 +40,7 @@ namespace Aurora {
 		inline Material* get_material(const std::string& name) {
 			return mMaterials[name];
 		}
-		
+
 		static ResourceManager* instance() {
 			if (!sInstance)
 				sInstance = new ResourceManager();

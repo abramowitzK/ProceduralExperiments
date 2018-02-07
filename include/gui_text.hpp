@@ -3,7 +3,7 @@
 #include <component.hpp>
 
 namespace Aurora {
-	struct GuiText : public Component {
+	struct GuiText: public Component {
 
 	};
 }

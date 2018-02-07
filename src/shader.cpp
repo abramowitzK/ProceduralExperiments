@@ -7,7 +7,7 @@ namespace Aurora {
 
 	Shader::Shader() {
 		mProgram = glCreateProgram();
-		if(0 == mProgram) {
+		if (0 == mProgram) {
 			//Do error stuff here. For now we're just going to crash horribly
 			assert(false);
 		}
@@ -18,7 +18,7 @@ namespace Aurora {
 
 	Shader::Shader(const std::string& vShaderFileName, const std::string& fShaderFileName) {
 		mProgram = glCreateProgram();
-		if(0 == mProgram) {
+		if (0 == mProgram) {
 			assert(false);
 		}
 		load_vertex_shader(SHADER_DIR + vShaderFileName);
@@ -35,7 +35,7 @@ namespace Aurora {
 	}
 
 	Shader::~Shader() {
-		for(GLint i : mShaders) {
+		for (GLint i : mShaders) {
 			glDetachShader(mProgram, i);
 			glDeleteShader(i);
 		}
@@ -51,7 +51,7 @@ namespace Aurora {
 	}
 
 	void Shader::load_fragment_shader(std::string shaderFileName) {
-		shaderFileName =shaderFileName;
+		shaderFileName = shaderFileName;
 		std::ifstream fs(shaderFileName);
 		std::stringstream buffer;
 		buffer << fs.rdbuf();
@@ -72,14 +72,14 @@ namespace Aurora {
 
 	void Shader::add_program(const GLchar *text, GLuint type) {
 		GLint shader = glCreateShader(type);
-		if(0 == shader) {
+		if (0 == shader) {
 			assert(false);
 		}
 		glShaderSource(shader, 1, &text, nullptr);
 		glCompileShader(shader);
 		GLint success;
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-		if(!success) {
+		if (!success) {
 			GLchar InfoLog[1024];
 
 			glGetShaderInfoLog(shader, 1024, NULL, InfoLog);
@@ -96,7 +96,7 @@ namespace Aurora {
 		glLinkProgram(mProgram);
 		GLint success;
 		glGetProgramiv(mProgram, GL_LINK_STATUS, &success);
-		if(!success) {
+		if (!success) {
 			GLchar InfoLog[1024];
 			glGetProgramInfoLog(mProgram, sizeof(InfoLog), NULL, InfoLog);
 			fprintf(stderr, "Error linking shader!: %s\n", InfoLog);
@@ -104,7 +104,7 @@ namespace Aurora {
 		}
 		glValidateProgram(mProgram);
 		glGetProgramiv(mProgram, GL_VALIDATE_STATUS, &success);
-		if(!success) {
+		if (!success) {
 			fprintf(stderr, "Error linking shader!\n");
 			assert(false);
 		}

@@ -1,4 +1,9 @@
 #include <mesh.hpp>
+#include <vector_math.hpp>
+#include <GL/glew.h>
+#include <component.hpp>
+#include <render_state.hpp>
+#include <material.hpp>
 namespace Aurora {
 	Mesh::Mesh(MeshData& data) {
 		mNumIndices = (int)data.indices.size();
@@ -30,10 +35,10 @@ namespace Aurora {
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3,GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)12);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)12);
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void*)24);
-		glBufferData(GL_ARRAY_BUFFER, data.vertices.size()*sizeof(Vertex), data.vertices.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, data.vertices.size() * sizeof(Vertex), data.vertices.data(), GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIbo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.indices.size() * sizeof(int), data.indices.data(), GL_STATIC_DRAW);
 	}

@@ -1,8 +1,7 @@
 #include "scene.hpp"
 namespace Aurora {
 
-	Scene::Scene() {
-	}
+	Scene::Scene() {}
 	Scene::~Scene() {}
 
 	void Scene::render(Renderer* renderer) {
@@ -18,7 +17,7 @@ namespace Aurora {
 	}
 
 	GameObject* Scene::create_object() {
-		mObjects.push_back( new GameObject());
+		mObjects.push_back(new GameObject());
 		auto o = mObjects.back();
 		o->mId = mID++;
 		return o;

@@ -1,10 +1,7 @@
 #pragma once
 #include <vector>
 #include <vector_math.hpp>
-#include <GL/glew.h>
-#include <component.hpp>
-#include <render_state.hpp>
-#include <material.hpp>
+#include <GL\glew.h>
 namespace Aurora {
 	struct Vertex {
 		Vector3 pos;
@@ -21,8 +18,12 @@ namespace Aurora {
 			indices = std::move(other.indices);
 			return *this;
 		}
-		int get_num_vertices() { return (int)vertices.size(); }
-		int get_num_indices() { return (int)indices.size(); }
+		int get_num_vertices() {
+			return (int)vertices.size();
+		}
+		int get_num_indices() {
+			return (int)indices.size();
+		}
 	};
 	struct Mesh {
 		Mesh() {}
@@ -33,8 +34,10 @@ namespace Aurora {
 		Mesh& operator=(Mesh other) = delete;
 		Mesh& operator=(Mesh&& other);
 		void render();
-		MeshData* get_data() { return  &mData; }
-		
+		MeshData* get_data() {
+			return  &mData;
+		}
+
 	private:
 		void init(MeshData& data);
 		GLuint mVbo;

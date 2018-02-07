@@ -2,13 +2,13 @@
 #include <game_object.hpp>
 
 namespace Aurora {
-	RigidBody::RigidBody(bool isStatic) : mIsStatic(isStatic) {
+	RigidBody::RigidBody(bool isStatic): mIsStatic(isStatic) {
 		mType = ComponentType::Physics;
 	}
 
 	void RigidBody::update(double dt) {
-		if(!mIsStatic) {
-		
+		if (!mIsStatic) {
+
 		}
 	}
 }

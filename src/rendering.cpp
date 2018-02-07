@@ -10,11 +10,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <resource_manager.hpp>
 #include <camera_component.hpp>
+#include <material.hpp>
 
 namespace Aurora {
 	Renderer::Renderer(int width, int height) {
 		GLenum res = glewInit();
-		if(res != GLEW_OK) {
+		if (res != GLEW_OK) {
 			//TODO: Do something better here
 			assert(false);
 		}
@@ -86,7 +87,7 @@ namespace Aurora {
 		sb = new SpriteBatch();
 		sb->init();
 		sb->default_shader = manager->get_shader("spriteBatch");
-		sprite = {&tex , {0,0}, {50,50}, RED, 0 };
+		sprite = {&tex , {0,0}, {50,50}, RED, 0};
 		mDefaultShader = manager->get_shader("basic");
 		mDefaultTtfShader = manager->get_shader("ttf");
 	}
@@ -98,8 +99,8 @@ namespace Aurora {
 	}
 
 	void Renderer::clear_screen(bool depth, bool color) {
-		if(depth) {
-			if(color) {
+		if (depth) {
+			if (color) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			} else {
 				glClear(GL_DEPTH_BUFFER_BIT);
@@ -115,7 +116,7 @@ namespace Aurora {
 		glViewport(0, 0, mWidth, mHeight);
 	}
 
-	void Renderer::create_camera(){
+	void Renderer::create_camera() {
 		EventManager::subscribe_to_resize_event([=](int a, int b) {this->handle_resize(a, b); });
 		mCamera = make_shared<Camera>(mWidth, mHeight);
 	}
@@ -124,13 +125,13 @@ namespace Aurora {
 		RenderState oldState = current_render_state;
 		current_render_state = mesh->required_state;
 		apply_render_state(current_render_state, &oldState);
-		Matrix4 vp, m,v,p;
+		Matrix4 vp, m, v, p;
 		if (debug) {
 			mCamera->render();
 			view = mCamera->view;
 			proj = mCamera->projection;
 		}
-		vp = proj*view*mesh->mTransform->get_transform();//mCamera->projection*mCamera->view*(mesh->mOwner->transform.get_transform());
+		vp = proj * view*mesh->mTransform->get_transform();//mCamera->projection*mCamera->view*(mesh->mOwner->transform.get_transform());
 		m = mesh->mOwner->transform.get_transform();
 		v = view;
 		p = proj;
@@ -138,8 +139,8 @@ namespace Aurora {
 		auto second = GL_TEXTURE1;
 		mesh->material->shader->bind();
 		int i = 0;
-		for (const auto& t: mesh->material->tex) {
-			glUniform1i(glGetUniformLocation(mesh->material->shader->get_program(), (std::string("tex")+std::to_string(i)).c_str()), i);
+		for (const auto& t : mesh->material->tex) {
+			glUniform1i(glGetUniformLocation(mesh->material->shader->get_program(), (std::string("tex") + std::to_string(i)).c_str()), i);
 			glActiveTexture(first++);
 			glBindTexture(GL_TEXTURE_2D, t.Tex);
 			i++;
@@ -151,7 +152,7 @@ namespace Aurora {
 		glUniformMatrix4fv(glGetUniformLocation(mesh->material->shader->get_program(), "p"), 1, GL_FALSE, glm::value_ptr(p));
 
 		mesh->mesh->render();
-		for (const auto& t: mesh->material->tex) {
+		for (const auto& t : mesh->material->tex) {
 			glBindSampler(i, 0);
 			glActiveTexture(first++);
 			glBindTexture(GL_TEXTURE_2D, 0);

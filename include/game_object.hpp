@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
-#include <component.hpp>
 #include <transform.hpp>
-#include <rendering.hpp>
 namespace Aurora {
+	enum class ComponentType;
+	struct Renderer;
+	struct Component;
 	struct GameObject {
 		friend struct Scene;
 		~GameObject();
@@ -13,7 +14,7 @@ namespace Aurora {
 		void add_component(Component* comp);
 		Component* get_component_base(ComponentType type);
 		template<typename T>
-		T* get_component(ComponentType type){
+		T* get_component(ComponentType type) {
 			return static_cast<T*>(get_component_base(type));
 		}
 		void init();

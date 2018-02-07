@@ -1,19 +1,18 @@
 #pragma once
 #include <GL/glew.h>
 #include <vector>
-
-#include "vector_math.hpp"
-#include "sprite.hpp"
-#include "render_state.hpp"
-#include "structures.hpp"
-#include "shader.hpp"
+#include <vector_math.hpp>
+#include <render_state.hpp>
+#include <structures.hpp>
 namespace Aurora {
 	struct Renderer;
 	using namespace std;
 	struct Texture;
-
+	struct Sprite;
+	struct Shader;
+	struct Color;
 	struct RenderBatch {
-		RenderBatch(GLuint offset, GLuint numVertices, Texture *tex) : offset(offset), numVerts(numVertices), texture(tex) {};
+		RenderBatch(GLuint offset, GLuint numVertices, Texture *tex): offset(offset), numVerts(numVertices), texture(tex) {};
 		GLuint offset;
 		GLuint numVerts;
 		Texture *texture;
@@ -21,28 +20,7 @@ namespace Aurora {
 
 	struct Glyph {
 		Glyph() {}
-
-		Glyph(const Vector4 &destRect, const Vector4 &uvRect, float depth, Texture *Texture, const Color &color) {
-			texture = Texture;
-			depth = depth;
-
-			topLeft.color = color;
-			topLeft.position = {destRect.x, destRect.y + destRect.w};
-			topLeft.uvs = {uvRect.x, uvRect.y + uvRect.w};
-
-			bottomLeft.color = color;
-			bottomLeft.position = {destRect.x, destRect.y};
-			bottomLeft.uvs = {uvRect.x, uvRect.y};
-
-			bottomRight.color = color;
-			bottomRight.position = {destRect.x + destRect.z, destRect.y};
-			bottomRight.uvs = {uvRect.x + uvRect.z, uvRect.y};
-
-			topRight.color = color;
-			topRight.position = {destRect.x + destRect.z, destRect.y + destRect.w};
-			topRight.uvs = {uvRect.x + uvRect.z, uvRect.y + uvRect.w};
-		}
-
+		Glyph(const Vector4 &destRect, const Vector4 &uvRect, float depth, Texture *Texture, const Color &color);
 		Texture *texture;
 		float depth;
 		Vertex2D topLeft;
@@ -64,7 +42,7 @@ namespace Aurora {
 
 		void draw(const Vector4 &destRect, const Vector4 &uvRect, float depth, Texture *texture, const Color &color);
 
-		void draw(Sprite s);
+		void draw(const Sprite& s);
 
 		void render_batches(Renderer *renderer);
 
@@ -84,7 +62,7 @@ namespace Aurora {
 		vector<Glyph *> mGlyphs;
 		vector<RenderBatch> mBatches;
 		GlyphSortType mType;
-		const RenderState sSpriteBatchState{
+		const RenderState sSpriteBatchState {
 				CullState::On,
 				BlendState::Off,
 				DepthState::Off,

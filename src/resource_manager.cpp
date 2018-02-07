@@ -6,6 +6,7 @@
 #include <scene.hpp>
 #include <camera_component.hpp>
 #include <platform.hpp>
+#include <material.hpp>
 namespace Aurora {
 	ResourceManager* ResourceManager::sInstance;
 	ResourceManager::ResourceManager() {}
@@ -110,7 +111,7 @@ namespace Aurora {
 				continue;
 			comp->mOwner = object;
 			comp->mTransform = new Transform();
-			
+
 			auto tf = c->FirstChildElement("Transform");
 			if (tf) {
 				comp->mTransform->set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
@@ -123,10 +124,10 @@ namespace Aurora {
 		return object;
 	}
 
-	void ResourceManager::load_texture(const std::string& name){
+	void ResourceManager::load_texture(const std::string& name) {
 		Texture t = create_2d_texture(TexturePath + name);
 		t.name = name;
-		mTextures.insert({ name, t });
+		mTextures.insert({name, t});
 	}
 
 	void ResourceManager::load_model(const std::string& name, bool invert) {
@@ -164,11 +165,11 @@ namespace Aurora {
 			data.indices.push_back(face.mIndices[1]);
 			data.indices.push_back(face.mIndices[2]);
 		}
-		mMeshes.insert({ name, new Mesh(data)});
+		mMeshes.insert({name, new Mesh(data)});
 	}
 	void ResourceManager::load_shader(const std::string & name) {
 		auto s = new Shader(name + ".vert", name + ".frag", ShaderPath);
-		mShaders.insert({ name, s });
+		mShaders.insert({name, s});
 	}
 	void ResourceManager::load_material(const std::string & name, Shader* shader, std::vector<Texture> tex) {
 		auto m = new Material(shader, tex[0]);
@@ -177,6 +178,6 @@ namespace Aurora {
 				m->tex.push_back(tex[i]);
 			}
 		}
-		mMaterials.insert({ name, m });
+		mMaterials.insert({name, m});
 	}
 }

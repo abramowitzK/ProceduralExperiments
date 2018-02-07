@@ -1,16 +1,12 @@
 #pragma once
 #include <glm/mat4x4.hpp>
-#include <glm/vec4.hpp>
-#include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/matrix_interpolation.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
+
 #include <vector_math.hpp>
 namespace Aurora {
 
 	static Quaternion multiply(Quaternion l, Quaternion r) {
-		return r*l;
+		return r * l;
 	}
 	/**
 	Purpose: Represents the transformation of a game object. Every game object is required to have
@@ -27,59 +23,59 @@ namespace Aurora {
 		Get the transform in matrix form
 		@returns A 4x4 homogenous matrix of floats in column Major order representing the transformation in world coordinates
 		*/
-		 Matrix4 get_transform() const;
-		 Matrix4 get_local_transform() const;
-		 Matrix4 get_parent_transforms(Transform* parent) const;
+		Matrix4 get_transform() const;
+		Matrix4 get_local_transform() const;
+		Matrix4 get_parent_transforms(Transform* parent) const;
 		/**
 		Sets the translation in world coordinates
 		@param x The x value of the transformation
 		@param y The y value of the transformation
 		@param z The z value of the transformation
 		*/
-		 void set_translation(const float x, const float y, const float z);
+		void set_translation(const float x, const float y, const float z);
 		/**
 		Sets the translation in world coordinates
 		@param translation The xyz values of the transformation
 		*/
-		 void set_translation(Vector3 translation);
+		void set_translation(Vector3 translation);
 		/**
 		Sets the uniform scale. Will scale equally in all directions
 		@param xyz The scaling factor
 		*/
-		 void set_scale(const float xyz);
+		void set_scale(const float xyz);
 		/*
 		Sets the scale. This should be used only for non uniform scaling
 		@param x The x direction scaling factor
 		@param y The y direction scaling factor
 		@param z The z direction scaling factor
 		*/
-		 void set_scale(const float x, const float y, const float z);
+		void set_scale(const float x, const float y, const float z);
 		/**
 		Sets the scale by a vector instead of individual components
 		@param scale The scaling factors
 		*/
-		 void set_scale(Vector3 scale);
-		 void scale(const float xyz);
+		void set_scale(Vector3 scale);
+		void scale(const float xyz);
 		/**
 		Sets the rotation using Euler angles. This uses a Quaternion internally. User facing euler angles are expected however.
 		@param x The rotation in degrees in the x direction
 		@param y The rotation in degrees in the y direction
 		@param z The rotation in degrees in the z direction
 		*/
-		 void set_rotation(const float x, const float y, const float z);
-		 void set_rotation(const Quaternion q);
+		void set_rotation(const float x, const float y, const float z);
+		void set_rotation(const Quaternion q);
 		/**
 		Sets the rotation using Euler angles. This uses a Quaternion internally. User facing euler angles are expected however.
 		@param rot The rotation in degrees in the xyz directions in radians
 		*/
-		 void set_rotation(Vector3 rot);
-		 void rotate_x(float degrees);
-		 void rotate_y(float degrees);
-		 void rotate_z(float degrees);
-		 void rotate_axis(Vector3 axis, float degrees);
-		 void transform_by(Matrix4 trans);
-		 void translate(const float x, const float y, const float z);
-		 void look_at(Vector3 point, Vector3 up);
+		void set_rotation(Vector3 rot);
+		void rotate_x(float degrees);
+		void rotate_y(float degrees);
+		void rotate_z(float degrees);
+		void rotate_axis(Vector3 axis, float degrees);
+		void transform_by(Matrix4 trans);
+		void translate(const float x, const float y, const float z);
+		void look_at(Vector3 point, Vector3 up);
 		Transform* mParent;
 		Vector3 mTranslation;
 		Quaternion mRotation;

@@ -13,9 +13,8 @@
 #include <memory>
 #include <ft2build.h>
 #include <mesh.hpp>
+#include <sprite.hpp>
 #include FT_FREETYPE_H
-
-
 namespace Aurora {
 	struct CameraComponent;
 	struct Character {
@@ -29,7 +28,9 @@ namespace Aurora {
 		Renderer(int width, int height);
 		Renderer() {};
 		void init_default_resources();
-		void update(double dt) { mCamera->update(dt); }
+		void update(double dt) {
+			mCamera->update(dt);
+		}
 		void render(CameraComponent* cam);
 		void clear_screen(bool depth, bool color);
 		void handle_resize(int width, int height);
@@ -57,7 +58,6 @@ namespace Aurora {
 		std::vector<GLuint> mSamplers;
 		Matrix4 proj;
 		Matrix4 view;
-
 	};
 }
 

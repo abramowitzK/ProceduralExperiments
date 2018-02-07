@@ -2,8 +2,9 @@
 #include <component.hpp>
 #include <mesh.hpp>
 namespace Aurora {
-	struct MeshRenderer : public Component{
-		MeshRenderer(Mesh* m, Material* mat){
+	struct Material;
+	struct MeshRenderer: public Component {
+		MeshRenderer(Mesh* m, Material* mat) {
 			material = mat;
 			mesh = m;
 			mType = ComponentType::Mesh;

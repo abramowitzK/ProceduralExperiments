@@ -1,11 +1,5 @@
 #pragma once
-
 #include <SDL.h>
-#include <SDL_filesystem.h>
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <stdio.h>
-#include <type_traits>
 namespace Aurora {
 	/**
 	 * Platform layer state
@@ -26,7 +20,7 @@ namespace Aurora {
 		void capture_mouse(bool capture);
 		bool capture = true;
 	private:
-		SDL_Window *mWindowHandle;
+		SDL_Window * mWindowHandle;
 		SDL_GLContext mContext;
 		double mFreq;
 		Uint64 mStart;

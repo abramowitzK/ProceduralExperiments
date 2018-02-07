@@ -44,25 +44,43 @@ typedef float FN_DECIMAL;
 
 class FastNoise {
 public:
-	FastNoise(int seed = 1337) { SetSeed(seed); CalculateFractalBounding(); };
-	~FastNoise() { delete m_cellularNoiseLookup; }
+	FastNoise(int seed = 1337) {
+		SetSeed(seed); CalculateFractalBounding();
+	};
+	~FastNoise() {
+		delete m_cellularNoiseLookup;
+	}
 
-	enum NoiseType { Value, ValueFractal, Perlin, PerlinFractal, Simplex, SimplexFractal, Cellular, WhiteNoise, Cubic, CubicFractal };
-	enum Interp { Linear, Hermite, Quintic };
-	enum FractalType { FBM, Billow, RigidMulti };
-	enum CellularDistanceFunction { Euclidean, Manhattan, Natural };
-	enum CellularReturnType { CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div };
+	enum NoiseType {
+		Value, ValueFractal, Perlin, PerlinFractal, Simplex, SimplexFractal, Cellular, WhiteNoise, Cubic, CubicFractal
+	};
+	enum Interp {
+		Linear, Hermite, Quintic
+	};
+	enum FractalType {
+		FBM, Billow, RigidMulti
+	};
+	enum CellularDistanceFunction {
+		Euclidean, Manhattan, Natural
+	};
+	enum CellularReturnType {
+		CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div
+	};
 
 	// Returns seed used for all noise types
 	void SetSeed(int seed);
 
 	// Sets seed used for all noise types
 	// Default: 1337
-	int GetSeed(void) const { return m_seed; }
+	int GetSeed(void) const {
+		return m_seed;
+	}
 
 	// Sets frequency for all noise types
 	// Default: 0.01
-	void SetFrequency(FN_DECIMAL frequency) { m_frequency = frequency; }
+	void SetFrequency(FN_DECIMAL frequency) {
+		m_frequency = frequency;
+	}
 
 	// Changes the interpolation method used to smooth between noise values
 	// Possible interpolation methods (lowest to highest quality) :
@@ -71,42 +89,60 @@ public:
 	// - Quintic
 	// Used in Value, Perlin Noise and Position Warping
 	// Default: Quintic
-	void SetInterp(Interp interp) { m_interp = interp; }
+	void SetInterp(Interp interp) {
+		m_interp = interp;
+	}
 
 	// Sets noise return type of GetNoise(...)
 	// Default: Simplex
-	void SetNoiseType(NoiseType noiseType) { m_noiseType = noiseType; }
+	void SetNoiseType(NoiseType noiseType) {
+		m_noiseType = noiseType;
+	}
 
 
 	// Sets octave count for all fractal noise types
 	// Default: 3
-	void SetFractalOctaves(int octaves) { m_octaves = octaves; CalculateFractalBounding(); }
+	void SetFractalOctaves(int octaves) {
+		m_octaves = octaves; CalculateFractalBounding();
+	}
 
 	// Sets octave lacunarity for all fractal noise types
 	// Default: 2.0
-	void SetFractalLacunarity(FN_DECIMAL lacunarity) { m_lacunarity = lacunarity; }
+	void SetFractalLacunarity(FN_DECIMAL lacunarity) {
+		m_lacunarity = lacunarity;
+	}
 
 	// Sets octave gain for all fractal noise types
 	// Default: 0.5
-	void SetFractalGain(FN_DECIMAL gain) { m_gain = gain; CalculateFractalBounding(); }
+	void SetFractalGain(FN_DECIMAL gain) {
+		m_gain = gain; CalculateFractalBounding();
+	}
 
 	// Sets method for combining octaves in all fractal noise types
 	// Default: FBM
-	void SetFractalType(FractalType fractalType) { m_fractalType = fractalType; }
+	void SetFractalType(FractalType fractalType) {
+		m_fractalType = fractalType;
+	}
 
 
 	// Sets return type from cellular noise calculations
 	// Note: NoiseLookup requires another FastNoise object be set with SetCellularNoiseLookup() to function
 	// Default: CellValue
-	void SetCellularDistanceFunction(CellularDistanceFunction cellularDistanceFunction) { m_cellularDistanceFunction = cellularDistanceFunction; }
+	void SetCellularDistanceFunction(CellularDistanceFunction cellularDistanceFunction) {
+		m_cellularDistanceFunction = cellularDistanceFunction;
+	}
 
 	// Sets distance function used in cellular noise calculations
 	// Default: Euclidean
-	void SetCellularReturnType(CellularReturnType cellularReturnType) { m_cellularReturnType = cellularReturnType; }
+	void SetCellularReturnType(CellularReturnType cellularReturnType) {
+		m_cellularReturnType = cellularReturnType;
+	}
 
 	// Noise used to calculate a cell value if cellular return type is NoiseLookup
 	// The lookup value is acquired through GetNoise() so ensure you SetNoiseType() on the noise lookup, value, Perlin or simplex is recommended
-	void SetCellularNoiseLookup(FastNoise* noise) { m_cellularNoiseLookup = noise; }
+	void SetCellularNoiseLookup(FastNoise* noise) {
+		m_cellularNoiseLookup = noise;
+	}
 
 	// Sets the 2 distance indicies used for distance2 return types
 	// Default: 0, 1
@@ -117,12 +153,16 @@ public:
 	// Sets the maximum distance a cellular point can move from it's grid position
 	// Setting this high will make artifacts more common
 	// Default: 0.45
-	void SetCellularJitter(float cellularJitter) { m_cellularJitter = cellularJitter; }
+	void SetCellularJitter(float cellularJitter) {
+		m_cellularJitter = cellularJitter;
+	}
 
 
 	// Sets the maximum warp distance from original location when using GradientPerturb{Fractal}(...)
 	// Default: 1.0
-	void SetGradientPerturbAmp(FN_DECIMAL gradientPerturbAmp) { m_gradientPerturbAmp = gradientPerturbAmp; }
+	void SetGradientPerturbAmp(FN_DECIMAL gradientPerturbAmp) {
+		m_gradientPerturbAmp = gradientPerturbAmp;
+	}
 
 	//2D												
 	FN_DECIMAL GetValue(FN_DECIMAL x, FN_DECIMAL y);

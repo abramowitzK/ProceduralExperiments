@@ -133,7 +133,7 @@ namespace tinyxml2 {
 			COMMENT = NEEDS_NEWLINE_NORMALIZATION
 		};
 
-		StrPair() : _flags(0), _start(0), _end(0) {}
+		StrPair(): _flags(0), _start(0), _end(0) {}
 		~StrPair();
 
 		void Set(char* start, char* end, int flags) {
@@ -318,9 +318,9 @@ namespace tinyxml2 {
 	Template child class to create pools of the correct type.
 	*/
 	template< int ITEM_SIZE >
-	class MemPoolT : public MemPool {
+	class MemPoolT: public MemPool {
 	public:
-		MemPoolT() : _root(0), _currentAllocs(0), _nAllocs(0), _maxAllocs(0), _nUntracked(0) {}
+		MemPoolT(): _root(0), _currentAllocs(0), _nAllocs(0), _maxAllocs(0), _nUntracked(0) {}
 		~MemPoolT() {
 			Clear();
 		}
@@ -385,8 +385,8 @@ namespace tinyxml2 {
 		}
 		void Trace(const char* name) {
 			printf("Mempool %s watermark=%d [%dk] current=%d size=%d nAlloc=%d blocks=%d\n",
-				name, _maxAllocs, _maxAllocs * ITEM_SIZE / 1024, _currentAllocs,
-				ITEM_SIZE, _nAllocs, _blockPtrs.Size());
+				   name, _maxAllocs, _maxAllocs * ITEM_SIZE / 1024, _currentAllocs,
+				   ITEM_SIZE, _nAllocs, _blockPtrs.Size());
 		}
 
 		void SetTracked() {
@@ -408,7 +408,9 @@ namespace tinyxml2 {
 		//		64k:	4000	21000
 		// Declared public because some compilers do not accept to use ITEMS_PER_BLOCK
 		// in private part if ITEMS_PER_BLOCK is private
-		enum { ITEMS_PER_BLOCK = (4 * 1024) / ITEM_SIZE };
+		enum {
+			ITEMS_PER_BLOCK = (4 * 1024) / ITEM_SIZE
+		};
 
 	private:
 		MemPoolT(const MemPoolT&); // not supported
@@ -868,14 +870,18 @@ namespace tinyxml2 {
 		no way processes or interprets user data.
 		It is initially 0.
 		*/
-		void SetUserData(void* userData) { _userData = userData; }
+		void SetUserData(void* userData) {
+			_userData = userData;
+		}
 
 		/**
 		Get user data set into the XMLNode. TinyXML-2 in
 		no way processes or interprets user data.
 		It is initially 0.
 		*/
-		void* GetUserData() const { return _userData; }
+		void* GetUserData() const {
+			return _userData;
+		}
 
 	protected:
 		XMLNode(XMLDocument*);
@@ -896,7 +902,7 @@ namespace tinyxml2 {
 		void*			_userData;
 
 	private:
-		MemPool*		_memPool;
+		MemPool * _memPool;
 		void Unlink(XMLNode* child);
 		static void DeleteNode(XMLNode* node);
 		void InsertChildPreamble(XMLNode* insertThis) const;
@@ -919,7 +925,7 @@ namespace tinyxml2 {
 	you generally want to leave it alone, but you can change the output mode with
 	SetCData() and query it with CData().
 	*/
-	class TINYXML2_LIB XMLText : public XMLNode {
+	class TINYXML2_LIB XMLText: public XMLNode {
 		friend class XMLDocument;
 	public:
 		virtual bool Accept(XMLVisitor* visitor) const;
@@ -944,7 +950,7 @@ namespace tinyxml2 {
 		virtual bool ShallowEqual(const XMLNode* compare) const;
 
 	protected:
-		XMLText(XMLDocument* doc) : XMLNode(doc), _isCData(false) {}
+		XMLText(XMLDocument* doc): XMLNode(doc), _isCData(false) {}
 		virtual ~XMLText() {}
 
 		char* ParseDeep(char*, StrPair* endTag);
@@ -958,7 +964,7 @@ namespace tinyxml2 {
 
 
 	/** An XML Comment. */
-	class TINYXML2_LIB XMLComment : public XMLNode {
+	class TINYXML2_LIB XMLComment: public XMLNode {
 		friend class XMLDocument;
 	public:
 		virtual XMLComment*	ToComment() {
@@ -996,7 +1002,7 @@ namespace tinyxml2 {
 	The text of the declaration isn't interpreted. It is parsed
 	and written as a string.
 	*/
-	class TINYXML2_LIB XMLDeclaration : public XMLNode {
+	class TINYXML2_LIB XMLDeclaration: public XMLNode {
 		friend class XMLDocument;
 	public:
 		virtual XMLDeclaration*	ToDeclaration() {
@@ -1030,7 +1036,7 @@ namespace tinyxml2 {
 
 	DTD tags get thrown into XMLUnknowns.
 	*/
-	class TINYXML2_LIB XMLUnknown : public XMLNode {
+	class TINYXML2_LIB XMLUnknown: public XMLNode {
 		friend class XMLDocument;
 	public:
 		virtual XMLUnknown*	ToUnknown() {
@@ -1151,9 +1157,11 @@ namespace tinyxml2 {
 		void SetAttribute(float value);
 
 	private:
-		enum { BUF_SIZE = 200 };
+		enum {
+			BUF_SIZE = 200
+		};
 
-		XMLAttribute() : _next(0), _memPool(0) {}
+		XMLAttribute(): _next(0), _memPool(0) {}
 		virtual ~XMLAttribute() {}
 
 		XMLAttribute(const XMLAttribute&);	// not supported
@@ -1173,7 +1181,7 @@ namespace tinyxml2 {
 	and can contain other elements, text, comments, and unknowns.
 	Elements also contain an arbitrary number of attributes.
 	*/
-	class TINYXML2_LIB XMLElement : public XMLNode {
+	class TINYXML2_LIB XMLElement: public XMLNode {
 		friend class XMLDocument;
 	public:
 		/// Get the name of an element (which is the Value() of the node.)
@@ -1563,7 +1571,9 @@ namespace tinyxml2 {
 		char* ParseAttributes(char* p);
 		static void DeleteAttribute(XMLAttribute* attribute);
 
-		enum { BUF_SIZE = 200 };
+		enum {
+			BUF_SIZE = 200
+		};
 		int _closingType;
 		// The attribute list is ordered; there is no 'lastAttribute'
 		// because the list needs to be scanned for dupes before adding
@@ -1583,7 +1593,7 @@ namespace tinyxml2 {
 	All Nodes are connected and allocated to a Document.
 	If the Document is deleted, all its Nodes are also deleted.
 	*/
-	class TINYXML2_LIB XMLDocument : public XMLNode {
+	class TINYXML2_LIB XMLDocument: public XMLNode {
 		friend class XMLElement;
 	public:
 		/// constructor
@@ -1925,7 +1935,7 @@ namespace tinyxml2 {
 		}
 
 	private:
-		XMLNode* _node;
+		XMLNode * _node;
 	};
 
 
@@ -2039,7 +2049,7 @@ namespace tinyxml2 {
 	printer.CloseElement();
 	@endverbatim
 	*/
-	class TINYXML2_LIB XMLPrinter : public XMLVisitor {
+	class TINYXML2_LIB XMLPrinter: public XMLVisitor {
 	public:
 		/** Construct the printer. If the FILE* is specified,
 		this will print to the FILE. Else it will print
@@ -2125,7 +2135,9 @@ namespace tinyxml2 {
 		}
 
 	protected:
-		virtual bool CompactMode(const XMLElement&) { return _compactMode; }
+		virtual bool CompactMode(const XMLElement&) {
+			return _compactMode;
+		}
 
 		/** Prints out the space before an element. You may override to change
 		the space and tabs used. A PrintSpace() override should call Print().

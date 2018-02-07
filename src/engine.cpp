@@ -1,7 +1,10 @@
 #include <engine.hpp>
 #include <platform.hpp>
+#include <physics.hpp>
+#include <rendering.hpp>
+#include <resource_manager.hpp>
 namespace Aurora {
-	Engine::Engine(int width, int height, const std::string & title) : mWidth(width), mHeight(height), mTitle(title), mRunning(false) {
+	Engine::Engine(int width, int height, const std::string & title): mWidth(width), mHeight(height), mTitle(title), mRunning(false) {
 		mPlatform = new Platform();
 		EventManager::mResizeX = width;
 		EventManager::mResizeY = height;
@@ -20,7 +23,6 @@ namespace Aurora {
 
 	void Engine::render() {
 		render_game(&mGame, mRenderer);
-		mPhysics->render(mRenderer);
 	}
 
 	void Engine::init(const std::string& initialScene) {
@@ -44,7 +46,7 @@ namespace Aurora {
 		double current_time = mPlatform->get_time();
 		double accumulator = 0;
 		double t = 0;
-		double dt = 1.0/144.0;
+		double dt = 1.0 / 144.0;
 		while (mRunning) {
 			double new_time = mPlatform->get_time();
 			double frame_time = new_time - current_time;

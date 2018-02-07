@@ -1,8 +1,8 @@
 #pragma once
-
+#include <vector_math.hpp>
 #include <component.hpp>
 namespace Aurora {
-	struct Camera : public Component{
+	struct Camera: public Component {
 		Camera(int w, int h);
 		void update(double dt);
 		void render();

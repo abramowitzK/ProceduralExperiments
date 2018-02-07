@@ -21,8 +21,8 @@ namespace Aurora {
 	};
 
 	void EventManager::poll_input() {
-		while(SDL_PollEvent(&mEvent)) {
-			switch(mEvent.type) {
+		while (SDL_PollEvent(&mEvent)) {
+			switch (mEvent.type) {
 				case SDL_KEYDOWN:
 					if (mEvent.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
 						mIntents[to_underlying(Intents::Escape)] = true;
@@ -47,7 +47,7 @@ namespace Aurora {
 					sMouseState.set_relative(mEvent.motion.xrel, mEvent.motion.yrel);
 					break;
 				case SDL_WINDOWEVENT:
-					switch(mEvent.window.event) {
+					switch (mEvent.window.event) {
 						case SDL_WINDOWEVENT_RESIZED:
 							mIntents[to_underlying(Intents::Resize)] = true;
 							mDirty = true;

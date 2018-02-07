@@ -13,12 +13,10 @@ struct GameObject {
     void                     render(Renderer* renderer);
     void                     add_component(Component* comp);
     Component*               get_component_base(ComponentType type);
-    template <typename T> T* get_component(ComponentType type) {
-        return static_cast<T*>(get_component_base(type));
-    }
-    void        init();
-    GameObject* parent;
-    Transform   transform;
+    template <typename T> T* get_component(ComponentType type) { return static_cast<T*>(get_component_base(type)); }
+    void                     init();
+    GameObject*              parent;
+    Transform                transform;
 
   private:
     uint64_t mId;

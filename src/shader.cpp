@@ -17,8 +17,7 @@ Shader::Shader() {
     load_fragment_shader(SHADER_DIR + "basic.frag");
 }
 
-Shader::Shader(const std::string& vShaderFileName,
-               const std::string& fShaderFileName) {
+Shader::Shader(const std::string& vShaderFileName, const std::string& fShaderFileName) {
     mProgram = glCreateProgram();
     if (0 == mProgram) {
         assert(false);
@@ -27,9 +26,7 @@ Shader::Shader(const std::string& vShaderFileName,
     load_fragment_shader(SHADER_DIR + fShaderFileName);
 }
 
-Shader::Shader(const std::string& vShaderFileName,
-               const std::string& fShaderFileName,
-               const std::string& shaderPath) {
+Shader::Shader(const std::string& vShaderFileName, const std::string& fShaderFileName, const std::string& shaderPath) {
     mProgram = glCreateProgram();
     if (0 == mProgram) {
         assert(false);
@@ -64,13 +61,9 @@ void Shader::load_fragment_shader(std::string shaderFileName) {
 
 void Shader::bind() { glUseProgram(mProgram); }
 
-void Shader::add_vertex_shader(const GLchar* text) {
-    add_program(text, GL_VERTEX_SHADER);
-}
+void Shader::add_vertex_shader(const GLchar* text) { add_program(text, GL_VERTEX_SHADER); }
 
-void Shader::add_fragment_shader(const GLchar* text) {
-    add_program(text, GL_FRAGMENT_SHADER);
-}
+void Shader::add_fragment_shader(const GLchar* text) { add_program(text, GL_FRAGMENT_SHADER); }
 
 void Shader::add_program(const GLchar* text, GLuint type) {
     GLint shader = glCreateShader(type);
@@ -85,8 +78,7 @@ void Shader::add_program(const GLchar* text, GLuint type) {
         GLchar InfoLog[1024];
 
         glGetShaderInfoLog(shader, 1024, NULL, InfoLog);
-        fprintf(stderr, "Error compiling shader type %d: '%s'\n", shader,
-                InfoLog);
+        fprintf(stderr, "Error compiling shader type %d: '%s'\n", shader, InfoLog);
 
         assert(false);
     }

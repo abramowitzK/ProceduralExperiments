@@ -3,14 +3,7 @@
 namespace Aurora {
 struct GameObject;
 class Transform;
-enum class ComponentType {
-    Mesh,
-    Physics,
-    Camera,
-    CharacterController,
-    GUIText,
-    Sprite
-};
+enum class ComponentType { Mesh, Physics, Camera, CharacterController, GUIText, Sprite };
 struct Component {
     ComponentType mType;
     GameObject*   mOwner;

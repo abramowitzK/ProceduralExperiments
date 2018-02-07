@@ -35,9 +35,7 @@ enum Keys {
     z,
     space = SDL_SCANCODE_SPACE,
 };
-template <typename E> constexpr auto to_underlying(E e) noexcept {
-    return static_cast<std::underlying_type_t<E>>(e);
-}
+template <typename E> constexpr auto to_underlying(E e) noexcept { return static_cast<std::underlying_type_t<E>>(e); }
 enum class Intents : uint8_t {
     Shutdown,
     Resize,
@@ -47,13 +45,11 @@ enum class Intents : uint8_t {
 struct EventManager {
     static void init();
     static void poll_input();
-    static void
-    subscribe_to_resize_event(const std::function<void(int, int)>&& behaviour) {
+    static void subscribe_to_resize_event(const std::function<void(int, int)>&& behaviour) {
         mSubscribers[to_underlying(Intents::Resize)].push_back(
             std::bind(behaviour, std::ref(mResizeX), std::ref(mResizeY)));
     }
-    static void subscribe_to_event(Intents                       intent,
-                                   const std::function<void()>&& f) {
+    static void subscribe_to_event(Intents intent, const std::function<void()>&& f) {
         mSubscribers[to_underlying(intent)].push_back(f);
     }
     static bool  get_key_down(Keys key);

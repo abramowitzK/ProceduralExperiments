@@ -66,17 +66,11 @@ void EventManager::poll_input() {
     notify_subscribers();
 }
 
-bool EventManager::get_key_down(Keys key) {
-    return sKeyboardState.is_key_pressed(key);
-}
+bool EventManager::get_key_down(Keys key) { return sKeyboardState.is_key_pressed(key); }
 
-float EventManager::get_mouse_relative_x() {
-    return (float)sMouseState.get_mouse_x();
-}
+float EventManager::get_mouse_relative_x() { return (float)sMouseState.get_mouse_x(); }
 
-float EventManager::get_mouse_relative_y() {
-    return (float)sMouseState.get_mouse_y();
-}
+float EventManager::get_mouse_relative_y() { return (float)sMouseState.get_mouse_y(); }
 
 void EventManager::update_previous() {
     sMouseState.update_prev();

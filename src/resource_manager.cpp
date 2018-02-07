@@ -29,8 +29,7 @@ void ResourceManager::load_defaults() {
     load_shader("spriteBatch");
     load_shader("texturedGouraud");
     load_texture("default.png");
-    load_material("default", mShaders["texturedGouraud"],
-                  {mTextures["default"]});
+    load_material("default", mShaders["texturedGouraud"], {mTextures["default"]});
 }
 
 Scene* ResourceManager::load_scene(const std::string& name) {
@@ -44,36 +43,29 @@ Scene* ResourceManager::load_scene(const std::string& name) {
     auto matList      = resourceList->FirstChildElement("Materials");
     auto texList      = resourceList->FirstChildElement("Textures");
     auto shaderList   = resourceList->FirstChildElement("Shaders");
-    for (auto e = texList->FirstChildElement(); e != nullptr;
-         e      = e->NextSiblingElement()) {
+    for (auto e = texList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
         load_texture(e->GetText());
     }
-    for (auto e = modelList->FirstChildElement(); e != nullptr;
-         e      = e->NextSiblingElement()) {
+    for (auto e = modelList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
         auto inv = e->BoolAttribute("invert");
         load_model(e->GetText(), inv);
     }
-    for (auto e = shaderList->FirstChildElement(); e != nullptr;
-         e      = e->NextSiblingElement()) {
+    for (auto e = shaderList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
         load_shader(std::string(e->Attribute("name")));
     }
-    for (auto e = matList->FirstChildElement(); e != nullptr;
-         e      = e->NextSiblingElement()) {
+    for (auto e = matList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
         auto                 s = e->FirstChildElement("Shader");
         std::vector<Texture> texs;
-        for (auto t = e->FirstChildElement("Texture"); t != nullptr;
-             t      = t->NextSiblingElement("Texture")) {
+        for (auto t = e->FirstChildElement("Texture"); t != nullptr; t = t->NextSiblingElement("Texture")) {
             auto texName = std::string(t->Attribute("name"));
             texs.push_back(mTextures[texName]);
         }
 
-        load_material(std::string(e->Attribute("name")),
-                      mShaders[std::string(s->Attribute("name"))], texs);
+        load_material(std::string(e->Attribute("name")), mShaders[std::string(s->Attribute("name"))], texs);
     }
     Scene* s              = new Scene();
     auto   gameObjectList = sceneNode->FirstChildElement("SceneGraph");
-    for (auto e = gameObjectList->FirstChildElement(); e != nullptr;
-         e      = e->NextSiblingElement()) {
+    for (auto e = gameObjectList->FirstChildElement(); e != nullptr; e = e->NextSiblingElement()) {
         parse_game_object(&s->root, e, s);
     }
     auto obj    = s->create_object();
@@ -86,11 +78,9 @@ Scene* ResourceManager::load_scene(const std::string& name) {
     return s;
 }
 
-Component* ResourceManager::parse_component(XMLElement& comp,
-                                            GameObject* parent, Scene* scene) {
+Component* ResourceManager::parse_component(XMLElement& comp, GameObject* parent, Scene* scene) {
     if (strcmp("Camera", comp.Value()) == 0) {
-        return new CameraComponent(EventManager::mResizeX,
-                                   EventManager::mResizeY);
+        return new CameraComponent(EventManager::mResizeX, EventManager::mResizeY);
     }
     if (strcmp("CharacterController", comp.Value()) == 0) {
     }
@@ -102,26 +92,20 @@ Component* ResourceManager::parse_component(XMLElement& comp,
     return nullptr;
 }
 
-GameObject* ResourceManager::parse_game_object(GameObject* parent,
-                                               XMLElement* o, Scene* s) {
+GameObject* ResourceManager::parse_game_object(GameObject* parent, XMLElement* o, Scene* s) {
     GameObject* object        = s->create_object();
     object->parent            = parent;
     object->transform.mParent = &parent->transform;
     parent->mChildren.push_back(object);
-    for (auto e = o->FirstChildElement("GameObject"); e != nullptr;
-         e      = e->NextSiblingElement()) {
+    for (auto e = o->FirstChildElement("GameObject"); e != nullptr; e = e->NextSiblingElement()) {
         parse_game_object(object, e, s);
     }
     auto tf = o->FirstChildElement("Transform");
-    object->transform.set_translation(
-        parse_vector3(tf->FirstChildElement("Pos")->GetText()));
-    object->transform.set_rotation(
-        parse_vector3(tf->FirstChildElement("Rot")->GetText()));
-    object->transform.set_scale(
-        parse_vector3(tf->FirstChildElement("Scale")->GetText()));
+    object->transform.set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
+    object->transform.set_rotation(parse_vector3(tf->FirstChildElement("Rot")->GetText()));
+    object->transform.set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
     auto componentList = o->FirstChildElement("Components");
-    for (auto c = componentList->FirstChildElement(); c != nullptr;
-         c      = c->NextSiblingElement()) {
+    for (auto c = componentList->FirstChildElement(); c != nullptr; c = c->NextSiblingElement()) {
         auto comp = parse_component(*c, object, s);
         if (comp == nullptr)
             continue;
@@ -130,12 +114,9 @@ GameObject* ResourceManager::parse_game_object(GameObject* parent,
 
         auto tf = c->FirstChildElement("Transform");
         if (tf) {
-            comp->mTransform->set_translation(
-                parse_vector3(tf->FirstChildElement("Pos")->GetText()));
-            comp->mTransform->set_rotation(
-                parse_vector3(tf->FirstChildElement("Rot")->GetText()));
-            comp->mTransform->set_scale(
-                parse_vector3(tf->FirstChildElement("Scale")->GetText()));
+            comp->mTransform->set_translation(parse_vector3(tf->FirstChildElement("Pos")->GetText()));
+            comp->mTransform->set_rotation(parse_vector3(tf->FirstChildElement("Rot")->GetText()));
+            comp->mTransform->set_scale(parse_vector3(tf->FirstChildElement("Scale")->GetText()));
         }
         comp->mTransform->mParent = &object->transform;
         object->add_component(comp);
@@ -151,9 +132,9 @@ void ResourceManager::load_texture(const std::string& name) {
 
 void ResourceManager::load_model(const std::string& name, bool invert) {
     Assimp::Importer importer;
-    auto             scene = importer.ReadFile(
-        ModelPath + name, aiProcess_Triangulate | aiProcess_GenSmoothNormals |
-                              aiProcess_FlipUVs | aiProcess_GenUVCoords);
+    auto             scene = importer.ReadFile(ModelPath + name,
+                                   aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs |
+                                       aiProcess_GenUVCoords);
     if (!scene) {
         // Todo error log
         assert(false);
@@ -168,12 +149,9 @@ void ResourceManager::load_model(const std::string& name, bool invert) {
         const auto& normal = model->mNormals[i];
         if (model->HasTextureCoords(0)) {
             const auto& uv   = model->mTextureCoords[0][i];
-            data.vertices[i] = {{vert.x, vert.y, vert.z},
-                                {normal.x, normal.y, normal.z},
-                                {uv.x, uv.y}};
+            data.vertices[i] = {{vert.x, vert.y, vert.z}, {normal.x, normal.y, normal.z}, {uv.x, uv.y}};
         } else {
-            data.vertices[i] = {{vert.x, vert.y, vert.z},
-                                {normal.x, normal.y, normal.z}};
+            data.vertices[i] = {{vert.x, vert.y, vert.z}, {normal.x, normal.y, normal.z}};
         }
     }
     for (unsigned i = 0; i < model->mNumFaces; i++) {
@@ -188,8 +166,7 @@ void ResourceManager::load_shader(const std::string& name) {
     auto s = new Shader(name + ".vert", name + ".frag", ShaderPath);
     mShaders.insert({name, s});
 }
-void ResourceManager::load_material(const std::string& name, Shader* shader,
-                                    std::vector<Texture> tex) {
+void ResourceManager::load_material(const std::string& name, Shader* shader, std::vector<Texture> tex) {
     auto m = new Material(shader, tex[0]);
     if (tex.size() > 1) {
         for (int i = 1; i < tex.size(); i++) {

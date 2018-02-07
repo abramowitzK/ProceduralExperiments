@@ -27,15 +27,14 @@ struct Renderer {
   public:
     Renderer(int width, int height);
     Renderer(){};
-    void init_default_resources();
-    void update(double dt) { mCamera->update(dt); }
-    void render(CameraComponent* cam);
-    void clear_screen(bool depth, bool color);
-    void handle_resize(int width, int height);
-    void create_camera();
-    void render_mesh(MeshRenderer* mesh);
-    void render_ttf(const std::string& text, float x, float y, float scale,
-                    glm::vec4 color = {1.0, 0, 0, 1});
+    void        init_default_resources();
+    void        update(double dt) { mCamera->update(dt); }
+    void        render(CameraComponent* cam);
+    void        clear_screen(bool depth, bool color);
+    void        handle_resize(int width, int height);
+    void        create_camera();
+    void        render_mesh(MeshRenderer* mesh);
+    void        render_ttf(const std::string& text, float x, float y, float scale, glm::vec4 color = {1.0, 0, 0, 1});
     RenderState current_render_state = DefaultRenderState;
     bool        debug                = false;
 

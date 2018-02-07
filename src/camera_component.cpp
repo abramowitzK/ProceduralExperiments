@@ -11,10 +11,8 @@
 #include <vector_math.hpp>
 Aurora::CameraComponent::CameraComponent(int w, int h) {
     mType = ComponentType::Camera;
-    EventManager::subscribe_to_resize_event([=](int width, int height) {
-        proj = glm::perspective(70.0f, (float)width / (float)height, 0.1f,
-                                10000.0f);
-    });
+    EventManager::subscribe_to_resize_event(
+        [=](int width, int height) { proj = glm::perspective(70.0f, (float)width / (float)height, 0.1f, 10000.0f); });
     up       = {0, 1, 0, 0};
     forward  = {0, 0, 1, 0};
     rotation = {0, 0};
@@ -126,9 +124,8 @@ void Aurora::CameraComponent::render(Renderer* renderer) {
     auto right = -glm::cross(Vector3(up), Vector3(forward));
     // Create the rotation matrix from the yaw, pitch, and roll values.
     // rotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
-    auto quaternion = glm::angleAxis(
-        pitch, right); // glm::eulerAngleYXZ(glm::radians(0.0f),
-                       // glm::radians(0.0f), glm::radians(pitch));
+    auto quaternion = glm::angleAxis(pitch, right); // glm::eulerAngleYXZ(glm::radians(0.0f),
+                                                    // glm::radians(0.0f), glm::radians(pitch));
     // Transform the lookAt and up vector by the rotation matrix so the view is
     // correctly rotated at the origin.
     // lookAtVector = XMVector3Normalize( XMVector3TransformCoord(lookAtVector,
@@ -143,6 +140,5 @@ void Aurora::CameraComponent::render(Renderer* renderer) {
 
     // Finally create the view matrix from the three updated vectors.
     // m_viewMatrix = XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
-    view = glm::lookAt(glm::vec3(positionVector), glm::vec3(lookAtVector),
-                       glm::vec3(up));
+    view = glm::lookAt(glm::vec3(positionVector), glm::vec3(lookAtVector), glm::vec3(up));
 }

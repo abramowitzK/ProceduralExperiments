@@ -35,17 +35,13 @@ void Engine::init(const std::string& initialScene) {
     mPhysics->debug                = false;
     std::function<void()> shutdown = [=]() { mRunning = false; };
     EventManager::subscribe_to_event(Intents::Shutdown, std::move(shutdown));
-    EventManager::subscribe_to_resize_event(
-        std::move([=](int a, int b) { mPlatform->handle_resize(a, b); }));
-    EventManager::subscribe_to_event(
-        Intents::Escape, std::move((std::function<void()>)[=]() {
-            mPlatform->capture_mouse(!mPlatform->capture);
-            mPlatform->capture = !mPlatform->capture;
-        }));
-    EventManager::subscribe_to_event(Intents::Debug,
-                                     std::move((std::function<void()>)[=]() {
-                                         mRenderer->debug = !mRenderer->debug;
+    EventManager::subscribe_to_resize_event(std::move([=](int a, int b) { mPlatform->handle_resize(a, b); }));
+    EventManager::subscribe_to_event(Intents::Escape, std::move((std::function<void()>)[=]() {
+                                         mPlatform->capture_mouse(!mPlatform->capture);
+                                         mPlatform->capture = !mPlatform->capture;
                                      }));
+    EventManager::subscribe_to_event(Intents::Debug,
+                                     std::move((std::function<void()>)[=]() { mRenderer->debug = !mRenderer->debug; }));
     mGame.load(initialScene);
 }
 

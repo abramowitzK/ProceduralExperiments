@@ -21,8 +21,7 @@ struct RenderBatch {
 
 struct Glyph {
     Glyph() {}
-    Glyph(const Vector4& destRect, const Vector4& uvRect, float depth,
-          Texture* Texture, const Color& color);
+    Glyph(const Vector4& destRect, const Vector4& uvRect, float depth, Texture* Texture, const Color& color);
     Texture* texture;
     float    depth;
     Vertex2D topLeft;
@@ -42,8 +41,7 @@ struct SpriteBatch {
 
     void end();
 
-    void draw(const Vector4& destRect, const Vector4& uvRect, float depth,
-              Texture* texture, const Color& color);
+    void draw(const Vector4& destRect, const Vector4& uvRect, float depth, Texture* texture, const Color& color);
 
     void draw(const Sprite& s);
 
@@ -64,14 +62,17 @@ struct SpriteBatch {
     vector<Glyph*>      mGlyphs;
     vector<RenderBatch> mBatches;
     GlyphSortType       mType;
-    const RenderState   sSpriteBatchState{
-        CullState::On,          BlendState::Off,
-        DepthState::Off,
+    const RenderState   sSpriteBatchState{CullState::On,
+                                        BlendState::Off,
+                                        DepthState::Off,
 
-        BlendFunc::SourceAlpha, BlendFunc::OneMinusSourceAlpha,
-        DepthFunc::Less,
+                                        BlendFunc::SourceAlpha,
+                                        BlendFunc::OneMinusSourceAlpha,
+                                        DepthFunc::Less,
 
-        {0.0, 0.0, 0.0, 1.0},   FrontFace::Ccw,
-        CullFace::Back,         PolygonMode::Fill};
+                                        {0.0, 0.0, 0.0, 1.0},
+                                        FrontFace::Ccw,
+                                        CullFace::Back,
+                                        PolygonMode::Fill};
 };
 } // namespace Aurora

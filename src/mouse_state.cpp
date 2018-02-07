@@ -1,8 +1,6 @@
 #include <mouse_state.hpp>
 namespace Aurora {
-MouseState::MouseState() : mX(0), mY(0), mXRel(0), mYRel(0) {
-    memset(mMouseButtonState, 0, NUM_MOUSE_BUTTONS);
-}
+MouseState::MouseState() : mX(0), mY(0), mXRel(0), mYRel(0) { memset(mMouseButtonState, 0, NUM_MOUSE_BUTTONS); }
 
 MouseState::~MouseState() {
     delete[] mPrevXRel;
@@ -23,8 +21,7 @@ void MouseState::update_prev() {
     mPrevY = mY;
     mXRel  = 0;
     mYRel  = 0;
-    memcpy(mPrevMouseButtonState, mMouseButtonState,
-           NUM_MOUSE_BUTTONS * sizeof(char));
+    memcpy(mPrevMouseButtonState, mMouseButtonState, NUM_MOUSE_BUTTONS * sizeof(char));
 }
 void MouseState::set_relative(int x, int y) {
     mXRel += x;

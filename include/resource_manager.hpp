@@ -26,18 +26,12 @@ struct Mesh;
 struct ResourceManager {
   public:
     ~ResourceManager();
-    void            load_defaults();
-    Scene*          load_scene(const std::string& name);
-    inline Texture* get_texture(const std::string& name) {
-        return &mTextures[name];
-    }
-    inline Mesh*   get_mesh(const std::string& name) { return mMeshes[name]; }
-    inline Shader* get_shader(const std::string& name) {
-        return mShaders[name];
-    }
-    inline Material* get_material(const std::string& name) {
-        return mMaterials[name];
-    }
+    void             load_defaults();
+    Scene*           load_scene(const std::string& name);
+    inline Texture*  get_texture(const std::string& name) { return &mTextures[name]; }
+    inline Mesh*     get_mesh(const std::string& name) { return mMeshes[name]; }
+    inline Shader*   get_shader(const std::string& name) { return mShaders[name]; }
+    inline Material* get_material(const std::string& name) { return mMaterials[name]; }
 
     static ResourceManager* instance() {
         if (!sInstance)
@@ -48,14 +42,12 @@ struct ResourceManager {
     void load_texture(const std::string& name);
     void load_model(const std::string& name, bool invert);
     void load_shader(const std::string& name);
-    void load_material(const std::string& name, Shader* shader,
-                       std::vector<Texture> tex);
+    void load_material(const std::string& name, Shader* shader, std::vector<Texture> tex);
 
   private:
-    static ResourceManager* sInstance;
-    Component*  parse_component(XMLElement& comp, GameObject* parent,
-                                Scene* scene);
-    GameObject* parse_game_object(GameObject* parent, XMLElement* o, Scene* s);
+    static ResourceManager*          sInstance;
+    Component*                       parse_component(XMLElement& comp, GameObject* parent, Scene* scene);
+    GameObject*                      parse_game_object(GameObject* parent, XMLElement* o, Scene* s);
     unordered_map<string, Mesh*>     mMeshes;
     unordered_map<string, Texture>   mTextures;
     unordered_map<string, Shader*>   mShaders;

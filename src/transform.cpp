@@ -8,8 +8,7 @@ Constructs a Transform Object
 */
 
 Transform::Transform()
-    : mParent(nullptr), mTranslation(Vector3()), mRotation(Quaternion()),
-      mScale(Vector3(1.0, 1.0, 1.0)) {}
+    : mParent(nullptr), mTranslation(Vector3()), mRotation(Quaternion()), mScale(Vector3(1.0, 1.0, 1.0)) {}
 Transform::~Transform() {}
 /**
 Get the transform in matrix form
@@ -33,9 +32,7 @@ Matrix4 Transform::get_local_transform() const {
     Matrix4 translation = glm::translate(mTranslation);
     return translation * rot * scale;
 }
-Matrix4 Transform::get_parent_transforms(Transform* parent) const {
-    return parent->get_transform();
-}
+Matrix4 Transform::get_parent_transforms(Transform* parent) const { return parent->get_transform(); }
 
 /**
 Sets the translation in world coordinates
@@ -55,9 +52,7 @@ Sets the translation in world coordinates
 @param translation The xyz values of the transformation
 */
 
-void Transform::set_translation(Vector3 translation) {
-    mTranslation = translation;
-}
+void Transform::set_translation(Vector3 translation) { mTranslation = translation; }
 
 /**
 Sets the uniform scale. Will scale equally in all directions
@@ -102,8 +97,7 @@ facing euler angles are expected however.
 
 void Transform::set_rotation(const float x, const float y, const float z) {
 
-    mRotation =
-        Quaternion(Vector3(glm::radians(x), glm::radians(y), glm::radians(z)));
+    mRotation = Quaternion(Vector3(glm::radians(x), glm::radians(y), glm::radians(z)));
 }
 
 void Transform::set_rotation(const Quaternion q) { mRotation = q; }
@@ -117,30 +111,22 @@ facing euler angles are expected however.
 void Transform::set_rotation(Vector3 rot) { set_rotation(rot.x, rot.y, rot.z); }
 
 void Transform::rotate_x(float degrees) {
-    mRotation =
-        glm::angleAxis(glm::radians(degrees), glm::vec3(1.0f, 0.0f, 0.0f)) *
-        mRotation;
+    mRotation = glm::angleAxis(glm::radians(degrees), glm::vec3(1.0f, 0.0f, 0.0f)) * mRotation;
 }
 
 void Transform::rotate_y(float degrees) {
-    mRotation =
-        glm::angleAxis(glm::radians(degrees), glm::vec3(0.0f, 1.0f, 0.0f)) *
-        mRotation;
+    mRotation = glm::angleAxis(glm::radians(degrees), glm::vec3(0.0f, 1.0f, 0.0f)) * mRotation;
 }
 
 void Transform::rotate_z(float degrees) {
-    mRotation =
-        glm::angleAxis(glm::radians(degrees), glm::vec3(0.0f, 0.0f, 1.0f)) *
-        mRotation;
+    mRotation = glm::angleAxis(glm::radians(degrees), glm::vec3(0.0f, 0.0f, 1.0f)) * mRotation;
 }
 void Transform::rotate_axis(Vector3 axis, float degrees) {
 
     mRotation = glm::angleAxis(glm::radians(degrees), axis) * mRotation;
 }
 
-void Transform::translate(const float x, const float y, const float z) {
-    mTranslation += Vector3(x, y, z);
-}
+void Transform::translate(const float x, const float y, const float z) { mTranslation += Vector3(x, y, z); }
 
 void Transform::transform_by(Matrix4 trans) {
     auto      transform = trans * get_local_transform();

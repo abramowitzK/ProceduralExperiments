@@ -63,44 +63,46 @@ struct RenderState {
     CullFace    CullFace;
     PolygonMode PolyMode;
 };
-static const RenderState DefaultRenderState = {
-    CullState::On,        BlendState::Off, DepthState::On,
+static const RenderState DefaultRenderState = {CullState::On,
+                                               BlendState::Off,
+                                               DepthState::On,
 
-    BlendFunc::Zero,      BlendFunc::Zero, DepthFunc::Less,
+                                               BlendFunc::Zero,
+                                               BlendFunc::Zero,
+                                               DepthFunc::Less,
 
-    {1.0, 1.0, 1.0, 1.0}, FrontFace::Ccw,  CullFace::Back,  PolygonMode::Fill};
-static const RenderState DefaultTTFState = {
-    CullState::Off,         BlendState::On,
-    DepthState::Off,
+                                               {1.0, 1.0, 1.0, 1.0},
+                                               FrontFace::Ccw,
+                                               CullFace::Back,
+                                               PolygonMode::Fill};
+static const RenderState DefaultTTFState    = {CullState::Off,
+                                            BlendState::On,
+                                            DepthState::Off,
 
-    BlendFunc::SourceAlpha, BlendFunc::OneMinusSourceAlpha,
-    DepthFunc::Less,
+                                            BlendFunc::SourceAlpha,
+                                            BlendFunc::OneMinusSourceAlpha,
+                                            DepthFunc::Less,
 
-    {0.0, 0.0, 0.0, 1.0},   FrontFace::Ccw,
-    CullFace::Back,         PolygonMode::Fill};
+                                            {0.0, 0.0, 0.0, 1.0},
+                                            FrontFace::Ccw,
+                                            CullFace::Back,
+                                            PolygonMode::Fill};
 
-static void apply_render_state(const RenderState& state,
-                               const RenderState* oldState = nullptr) {
+static void apply_render_state(const RenderState& state, const RenderState* oldState = nullptr) {
 
     if (oldState) {
         if (state.CullState != oldState->CullState)
-            state.CullState == CullState::On ? glEnable(GL_CULL_FACE)
-                                             : glDisable(GL_CULL_FACE);
+            state.CullState == CullState::On ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
         if (state.DepthState != oldState->DepthState)
-            state.DepthState == DepthState::On ? glEnable(GL_DEPTH_TEST)
-                                               : glDisable(GL_DEPTH_TEST);
+            state.DepthState == DepthState::On ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
         if (state.BlendState != oldState->BlendState)
-            state.BlendState == BlendState::On ? glEnable(GL_BLEND)
-                                               : glDisable(GL_BLEND);
+            state.BlendState == BlendState::On ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
         if (state.FrontFace != oldState->FrontFace)
             glFrontFace((GLenum)state.FrontFace);
         if (state.ClearColor != oldState->ClearColor)
-            glClearColor(state.ClearColor.x, state.ClearColor.y,
-                         state.ClearColor.z, state.ClearColor.z);
-        if (state.BlendFuncDest != oldState->BlendFuncDest ||
-            state.BlendFuncSource != oldState->BlendFuncSource)
-            glBlendFunc((GLenum)state.BlendFuncSource,
-                        (GLenum)state.BlendFuncDest);
+            glClearColor(state.ClearColor.x, state.ClearColor.y, state.ClearColor.z, state.ClearColor.z);
+        if (state.BlendFuncDest != oldState->BlendFuncDest || state.BlendFuncSource != oldState->BlendFuncSource)
+            glBlendFunc((GLenum)state.BlendFuncSource, (GLenum)state.BlendFuncDest);
         if (state.DepthFunc != oldState->DepthFunc)
             glDepthFunc((GLenum)state.DepthFunc);
         if (state.CullFace != oldState->CullFace)
@@ -108,15 +110,11 @@ static void apply_render_state(const RenderState& state,
         if (state.PolyMode != oldState->PolyMode)
             glPolygonMode(GL_FRONT_AND_BACK, (GLenum)state.PolyMode);
     } else {
-        state.CullState == CullState::On ? glEnable(GL_CULL_FACE)
-                                         : glDisable(GL_CULL_FACE);
-        state.DepthState == DepthState::On ? glEnable(GL_DEPTH_TEST)
-                                           : glDisable(GL_DEPTH_TEST);
-        state.BlendState == BlendState::On ? glEnable(GL_BLEND)
-                                           : glDisable(GL_BLEND);
+        state.CullState == CullState::On ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+        state.DepthState == DepthState::On ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+        state.BlendState == BlendState::On ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
         glFrontFace((GLenum)state.FrontFace);
-        glClearColor(state.ClearColor.x, state.ClearColor.y, state.ClearColor.z,
-                     state.ClearColor.z);
+        glClearColor(state.ClearColor.x, state.ClearColor.y, state.ClearColor.z, state.ClearColor.z);
         glBlendFunc((GLenum)state.BlendFuncSource, (GLenum)state.BlendFuncDest);
         glDepthFunc((GLenum)state.DepthFunc);
         glCullFace((GLenum)state.CullFace);

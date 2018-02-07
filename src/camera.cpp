@@ -14,8 +14,7 @@
 namespace Aurora {
 Camera::Camera(int w, int h) {
     EventManager::subscribe_to_resize_event([=](int width, int height) {
-        projection = glm::perspective(70.0f, (float)width / (float)height, 0.1f,
-                                      10000.0f);
+        projection = glm::perspective(70.0f, (float)width / (float)height, 0.1f, 10000.0f);
     });
     position     = {0, 0, 0, 1};
     up           = {0, 0, 0, 1};
@@ -30,21 +29,15 @@ void Camera::update(double dt) {
     if (EventManager::get_key_down(Keys::w))
         position += forward * (float)dt * acceleration * speed;
     if (EventManager::get_key_down(Keys::a))
-        position -= glm::vec4(glm::normalize(glm::cross(glm::vec3(forward),
-                                                        glm::vec3(up))),
-                              1.0f) *
-                    (float)dt * acceleration * speed;
+        position -= glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f) * (float)dt *
+                    acceleration * speed;
     if (EventManager::get_key_down(Keys::d))
-        position += glm::vec4(glm::normalize(glm::cross(glm::vec3(forward),
-                                                        glm::vec3(up))),
-                              1.0f) *
-                    (float)dt * acceleration * speed;
+        position += glm::vec4(glm::normalize(glm::cross(glm::vec3(forward), glm::vec3(up))), 1.0f) * (float)dt *
+                    acceleration * speed;
     if (EventManager::get_key_down(Keys::s))
         position -= forward * (float)dt * acceleration * speed;
-    auto look_x = EventManager::get_mouse_relative_x() / 9.0 * 2.0 *
-                  glm::pi<float>() * 4.0f;
-    auto look_y = EventManager::get_mouse_relative_y() / 9.0 * 2.0 *
-                  glm::pi<float>() * 4.0f;
+    auto look_x = EventManager::get_mouse_relative_x() / 9.0 * 2.0 * glm::pi<float>() * 4.0f;
+    auto look_y = EventManager::get_mouse_relative_y() / 9.0 * 2.0 * glm::pi<float>() * 4.0f;
 
     Vector2 now = {look_x, look_y};
     now         = glm::lerp(mPrevMouseTarget, now, 0.9f);
@@ -86,8 +79,7 @@ void Camera::render() {
 
     // Create the rotation matrix from the yaw, pitch, and roll values.
     // rotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
-    rotationMatrix = glm::eulerAngleYXZ(glm::radians(yaw), glm::radians(pitch),
-                                        glm::radians(roll));
+    rotationMatrix = glm::eulerAngleYXZ(glm::radians(yaw), glm::radians(pitch), glm::radians(roll));
     // Transform the lookAt and up vector by the rotation matrix so the view is
     // correctly rotated at the origin.
     // lookAtVector = XMVector3Normalize( XMVector3TransformCoord(lookAtVector,
@@ -102,7 +94,6 @@ void Camera::render() {
 
     // Finally create the view matrix from the three updated vectors.
     // m_viewMatrix = XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
-    view = glm::lookAt(glm::vec3(positionVector), glm::vec3(lookAtVector),
-                       glm::vec3(upVector));
+    view = glm::lookAt(glm::vec3(positionVector), glm::vec3(lookAtVector), glm::vec3(upVector));
 }
 } // namespace Aurora

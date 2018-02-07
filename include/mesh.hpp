@@ -12,8 +12,7 @@ struct MeshData {
     MeshData() {}
     std::vector<Vertex>   vertices;
     std::vector<unsigned> indices;
-    MeshData(MeshData&& o) noexcept
-        : vertices(std::move(o.vertices)), indices(std::move(o.indices)) {}
+    MeshData(MeshData&& o) noexcept : vertices(std::move(o.vertices)), indices(std::move(o.indices)) {}
     MeshData& operator=(MeshData&& other) {
         vertices = std::move(other.vertices);
         indices  = std::move(other.indices);
@@ -26,8 +25,7 @@ struct Mesh {
     Mesh() {}
     Mesh(MeshData& data);
     Mesh(Mesh&& o) noexcept
-        : mVbo(o.mVbo), mIbo(o.mIbo), mVao(o.mVao), mNumIndices(o.mNumIndices),
-          mData(std::move(o.mData)) {}
+        : mVbo(o.mVbo), mIbo(o.mIbo), mVao(o.mVao), mNumIndices(o.mNumIndices), mData(std::move(o.mData)) {}
     // Don't want to be copying these things around. Way too expensive.
     Mesh(const Mesh& o) = delete;
     Mesh&     operator=(Mesh other) = delete;

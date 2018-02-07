@@ -6,3 +6,10 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 AlignConsecutiveAssignments: true
 AlignConsecutiveDeclarations: true
+
+BinPackArguments: false
+BinPackParameters: false
+AllowAllParametersOfDeclarationOnNextLine : false
+
+ColumnLimit: 120
+UseTab: Never

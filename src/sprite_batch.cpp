@@ -6,8 +6,7 @@
 #include <sprite_batch.hpp>
 namespace Aurora {
 
-Glyph::Glyph(const Vector4& destRect, const Vector4& uvRect, float depth,
-             Texture* Texture, const Color& color) {
+Glyph::Glyph(const Vector4& destRect, const Vector4& uvRect, float depth, Texture* Texture, const Color& color) {
     texture = Texture;
     depth   = depth;
 
@@ -27,9 +26,7 @@ Glyph::Glyph(const Vector4& destRect, const Vector4& uvRect, float depth,
     topRight.position = {destRect.x + destRect.z, destRect.y + destRect.w};
     topRight.uvs      = {uvRect.x + uvRect.z, uvRect.y + uvRect.w};
 }
-SpriteBatch::SpriteBatch() {
-    default_shader = ResourceManager::instance()->get_shader("spriteBatch");
-}
+SpriteBatch::SpriteBatch() { default_shader = ResourceManager::instance()->get_shader("spriteBatch"); }
 
 SpriteBatch::~SpriteBatch() {
     glDisableVertexAttribArray(0);
@@ -47,12 +44,9 @@ void SpriteBatch::init() {
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D),
-                          (void*)offsetof(Vertex2D, position));
-    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex2D),
-                          (void*)offsetof(Vertex2D, color));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D),
-                          (void*)offsetof(Vertex2D, uvs));
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, position));
+    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, color));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, uvs));
     glBindVertexArray(0);
     mIsInitialized = true;
 }
@@ -72,14 +66,16 @@ void SpriteBatch::end() {
     create_render_batches();
 }
 
-void SpriteBatch::draw(const Vector4& destRect, const Vector4& uvRect,
-                       float depth, Texture* texture, const Color& color) {
+void SpriteBatch::draw(const Vector4& destRect,
+                       const Vector4& uvRect,
+                       float          depth,
+                       Texture*       texture,
+                       const Color&   color) {
     mGlyphData.emplace_back(destRect, uvRect, depth, texture, color);
 }
 
 void SpriteBatch::draw(const Sprite& s) {
-    mGlyphData.emplace_back(Vector4(s.Pos.x, s.Pos.y, s.Dim.x, s.Dim.y),
-                            Vector4(0, 0, 1, 1), s.depth, s.Tex, s.Col);
+    mGlyphData.emplace_back(Vector4(s.Pos.x, s.Pos.y, s.Dim.x, s.Dim.y), Vector4(0, 0, 1, 1), s.depth, s.Tex, s.Col);
 }
 
 void SpriteBatch::render_batches(Renderer* renderer) {
@@ -126,11 +122,9 @@ void SpriteBatch::create_render_batches() {
     }
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
     // orphan buffer
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex2D), nullptr,
-                 GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex2D), nullptr, GL_DYNAMIC_DRAW);
     // uploadData
-    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex2D),
-                    vertices.data());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex2D), vertices.data());
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -138,21 +132,18 @@ void SpriteBatch::sort_glyphs() {
     switch (mType) {
     case GlyphSortType::BackToFront: {
         std::stable_sort(
-            mGlyphs.begin(), mGlyphs.end(),
-            [](const Glyph* a, const Glyph* b) { return a->depth < b->depth; });
+            mGlyphs.begin(), mGlyphs.end(), [](const Glyph* a, const Glyph* b) { return a->depth < b->depth; });
         break;
     }
     case GlyphSortType::FrontToBack: {
         std::stable_sort(
-            mGlyphs.begin(), mGlyphs.end(),
-            [](const Glyph* a, const Glyph* b) { return a->depth > b->depth; });
+            mGlyphs.begin(), mGlyphs.end(), [](const Glyph* a, const Glyph* b) { return a->depth > b->depth; });
         break;
     }
     case GlyphSortType::Texture: {
-        std::stable_sort(mGlyphs.begin(), mGlyphs.end(),
-                         [](const Glyph* a, const Glyph* b) {
-                             return a->texture->Tex < b->texture->Tex;
-                         });
+        std::stable_sort(mGlyphs.begin(), mGlyphs.end(), [](const Glyph* a, const Glyph* b) {
+            return a->texture->Tex < b->texture->Tex;
+        });
         break;
     }
     default:

@@ -1,7 +1,7 @@
 # ProceduralExperiments
 First person game engine exploration. Investigating procedural terrain and physics
 
-
+Currently generates terrain using the marching cubes algorithm with cubic noise. Uses Bullet for physics and Lua for scripting.
 # Videos of current status
 
 ### Physics based character controller
